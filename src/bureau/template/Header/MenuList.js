@@ -18,6 +18,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
 import Ecard from '../../../assets/ecard.pdf';
 import EcardPopup from '../../component/popup/ecard/EcardPopup';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 const StyledMenu = styled((props) => (
     <Menu
@@ -72,99 +73,37 @@ export default function ButtonAppBar() {
     };
 
     return (
-        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-
-            <Toolbar>
-                <Button color="inherit">
-                    <Link to="/" className={bureau.menuLinks}>
-                        Home
-                    </Link></Button>
-                <Button color="inherit">
-                    <Link to="/about" className={bureau.menuLinks}>
-                        About
-                    </Link>
-                </Button>
-                <div>
-                    <Button
-                        id="demo-customized-button"
-                        aria-controls="demo-customized-menu"
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        // variant="contained"
-                        variant="text"
-                        className={bureau.menuLinks}
-                        disableElevation
-                        onClick={handleClick}
-                        endIcon={<KeyboardArrowDownIcon />}
-                    >
-                        Type of Care
-                    </Button>
-                    <StyledMenu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                        }}
-                        className={bureau.submenu}
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                    >
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/elderly-care-service"> Elderly Care Service</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/personal-care"> Personal Care</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/respite-care"> Respite Care</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/skilled-nursing"> Skilled Nursing</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/day-support"> Day Support</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/hospital-discharge"> Hospital Discharge</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/companion-care"> Companion Care</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/cronical-condition-care"> Cronical Condition Care</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/after-surgery-care"> After Surgery Care</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/end-of-life-care"> End of Life Care</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Link to="/typesofcare/special-need-care"> Special Need Care</Link>
-                        </MenuItem>
-                        {/* <Divider sx={{ my: 0.5 }} />
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <ArchiveIcon />
-                            Archive
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <MoreHorizIcon />
-                            More
-                        </MenuItem> */}
-                    </StyledMenu>
-                </div>
-                <Button color="inherit">
-                    <Link to="/contact" className={bureau.menuLinks}>
-                        Contact
-                    </Link>
-                </Button>
-                <Button color="inherit" variant="outlined" onClick={()=>{setShowPopup(!showPopup)}}>
-                   Get E-Card
-                </Button>
-                <EcardPopup showPopup={showPopup} setShowPopup={setShowPopup} />
-
-            </Toolbar>
-
-        </Box>
+       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+  <Container>
+  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav className="me-auto">
+      <Nav.Link href="#features">Features</Nav.Link>
+      <Nav.Link href="#pricing">Pricing</Nav.Link>
+      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+        <NavDropdown.Item href="/typesofcare/elderly-care-service">Elderly Care Service</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/personal-care">Personal Care</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/respite-care">Respite Care</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/skilled-nursing">Skilled Nursing</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/day-support">Day Support</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/hospital-discharge">Hospital Discharge</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/companion-care">Companion Care</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/cronical-condition-care">Cronical Condition Care</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/after-surgery-care">After Surgery Care</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/end-of-life-care">End of Life Care</NavDropdown.Item>
+        <NavDropdown.Item href="/typesofcare/special-need-care">Special Need Care</NavDropdown.Item>
+      
+      </NavDropdown>
+    </Nav>
+    <Nav>
+      <Nav.Link href="#deets">More deets</Nav.Link>
+      <Nav.Link eventKey={2} href="#memes">
+        Dank memes
+      </Nav.Link>
+    </Nav>
+  </Navbar.Collapse>
+  </Container>
+</Navbar>
     );
 }

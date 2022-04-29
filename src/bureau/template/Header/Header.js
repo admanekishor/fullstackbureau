@@ -1,93 +1,61 @@
 import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Drawer from "@mui/material/Drawer";
-import MenuIcon from "@mui/icons-material/Menu";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from '../../../assets/images/logo_white.png';
-import links from "./LinksData";
-import { Link } from "react-router-dom";
-import MenuList from './MenuList';
+import { Link, NavLink } from "react-router-dom";
 import bureau from '../../../assets/css/Custom.module.css';
-import { CssBaseline } from "@mui/material";
-import PropTypes from 'prop-types';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import useScrollPosition from "./useScrollPosition";
-import Button from '@mui/material/Button';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 const useStyles = makeStyles({
     drawer: {
         width: 250
+    },
+    purple: {
+        backgroundColor: '#810050'
     }
 });
 
-function ElevationScroll(props) {
-    const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-        target: window ? window() : undefined,
-    });
-
-    return React.cloneElement(children, {
-        elevation: trigger ? 4 : 0,
-    });
-}
-
-ElevationScroll.propTypes = {
-    children: PropTypes.element.isRequired,
-    window: PropTypes.func,
-};
-
 const Header = (props) => {
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
     const classes = useStyles();
-    const scrollPosition = useScrollPosition();
-
-
     return (
         <React.Fragment>
 
-            <CssBaseline />
-            <ElevationScroll {...props}>
-                <AppBar variant="outline" position={`${scrollPosition}` == 0 ? "relative" : "fixed"} style={{ background: "rgb(129, 0, 80)" }}>
-                    <Toolbar>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
+            <Navbar collapseOnSelect expand="lg" variant="dark" sticky="top" bg="dark">
+                <Container>
+                    <Navbar.Brand to="#home">
+                        <Link to="/"> <img src={logo} alt="Muktai Nurses Bureau" className={bureau.logo} /></Link>
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="ms-auto">
+                            <NavLink to="/" className="nav-link px-4">Home</NavLink>
+                            <NavLink to="/about" className="nav-link px-4">About</NavLink>
 
-                            <Typography sx={{ padding: { xs: '0px' } }} component="div">
-                                <Link to="/"> <img src={logo} alt="Muktai Nurses Bureau" className={bureau.logo} /></Link>
-                            </Typography>
-                            <MenuList />
+                            <NavDropdown title="Types Of Care" id="collasible-nav-dropdown">
+                                <NavLink to="/typesofcare/elderly-care-service" className="dropdown-item">Elderly Care Service</NavLink>
+                                <NavLink to="/typesofcare/personal-care" className="dropdown-item">Personal Care</NavLink>
+                                <NavLink to="/typesofcare/respite-care" className="dropdown-item">Respite Care</NavLink>
+                                <NavLink to="/typesofcare/skilled-nursing" className="dropdown-item">Skilled Nursing</NavLink>
+                                <NavLink to="/typesofcare/day-support" className="dropdown-item">Day Support</NavLink>
+                                <NavLink to="/typesofcare/hospital-discharge" className="dropdown-item">Hospital Discharge</NavLink>
+                                <NavLink to="/typesofcare/companion-care" className="dropdown-item">Companion Care</NavLink>
+                                <NavLink to="/typesofcare/cronical-condition-care" className="dropdown-item">Cronical Condition Care</NavLink>
+                                <NavLink to="/typesofcare/after-surgery-care" className="dropdown-item">After Surgery Care</NavLink>
+                                <NavLink to="/typesofcare/end-of-life-care" className="dropdown-item">End of Life Care</NavLink>
+                                <NavLink to="/typesofcare/special-need-care" className="dropdown-item">Special Need Care</NavLink>
 
-                            <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-                                <List className={classes.drawer}>
-                                    {links.map((menu) => (
-                                        <ListItem button key={menu.label} component={Link} to={menu.url}>
-                                            <ListItemText primary={menu.label} />
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            </Drawer>
-                            <Button
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                                onClick={() => setIsDrawerOpen(true)}
-                                sx={{ display: { xs: 'block', md: 'none' } }}
-                                style={{ position: "absolute", right: '0px' }}
-                            >
-                                <MenuIcon />
-                            </Button>
-                        </div>
-                    </Toolbar>
-                </AppBar>
-            </ElevationScroll>
+
+                            </NavDropdown>
+                            <NavLink to="/contact" className="nav-link px-4">Contact</NavLink>
+                        </Nav>
+                        {/* <Nav>
+                            <Nav.Link href="#deets">More deets</Nav.Link>
+                            <Nav.Link eventKey={2} href="#memes">
+                                Dank memes
+                            </Nav.Link>
+                        </Nav> */}
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </React.Fragment>
     );
 }

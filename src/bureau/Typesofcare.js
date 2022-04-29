@@ -614,7 +614,7 @@ function Typesofcare(props) {
                             <div className="tabs">
                                 {tabsData.map((data, i) => {
 
-                                    console.log("data.path",data.path)
+                                    // console.log("data.path",data.path)
                                     return (
 
                                         <div className={bureu.sidetabs} key={i}>
@@ -622,8 +622,8 @@ function Typesofcare(props) {
 
                                                 to={ `/${customurl}${data.path}`}
                                                 // activeClassName={bureu.active}
-                                                className={({ isActive }) => (isActive ? bureu.active : '') + " " + bureu.sidemenu}
-                                                onClick={(location) =>
+                                                className={({ isActive }) => (isActive ? bureu.active : '') + " " + `${bureu.sidemenu}`}
+                                                onClick={() =>
                                                     data.defaultTab
                                                         ? data.path
                                                         : data.path
