@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import Custom_Card from '../components/Custom_Card'
+import Custom_Card from '../component/Custom_Card'
 
 export default function InfoCards() {
     // const [carddata, SetCardData] = useState([{
@@ -32,8 +32,8 @@ export default function InfoCards() {
 
                 {
                     obj.map((item, i) => {
-                        return <Col xs={12} md={6} lg={3}>
-                            <Custom_Card key={i} cardtitle={item.name} message={item.price} />
+                        return <Col xs={12} md={6} lg={3} key={i}>
+                            <Custom_Card cardtitle={item.name} message={item.price} />
                         </Col>
                     })
                 }

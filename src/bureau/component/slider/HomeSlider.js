@@ -12,11 +12,11 @@ const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 
 let HomeSlider = () => {
-    const startupScreen = (
-        <div>
-            <img src="/path/to/image-loader.png" />
-        </div>
-    );
+    // const startupScreen = (
+    //     <div>
+    //         <img src="/path/to/image-loader.png" />
+    //     </div>
+    // );
 
     return (
         <AutoplaySlider

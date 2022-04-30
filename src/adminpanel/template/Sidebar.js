@@ -6,7 +6,7 @@ export default function Sidebar() {
 
     return <>
         <div style={{ height: '90vh', background: '#343a40' }}>
-            <ListGroup variant="flush">
+        <ListGroup variant="flush">
                 <ListGroup.Item action variant="dark" href="#link1"> 
                     Dashboard
                 </ListGroup.Item>
@@ -17,7 +17,7 @@ export default function Sidebar() {
                     Employees
                 </ListGroup.Item>
                 <ListGroup.Item action variant="dark" href="#link4">
-                    Staff Details
+                    Billing
                 </ListGroup.Item>
             </ListGroup>
         </div>

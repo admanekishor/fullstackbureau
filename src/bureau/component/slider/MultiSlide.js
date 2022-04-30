@@ -37,15 +37,15 @@ export default function MultiSlide() {
                 autoPlaySpeed={3000}
                 itemClass="carousel-item-padding-40-px"
                 >
-                    <div ><img src={service} /> </div>
-                    <div ><img src={service1} /> </div>
-                    <div ><img src={service2} /> </div>
-                    <div ><img src={service} /> </div>
-                    <div ><img src={service1} /> </div>
-                    <div ><img src={service2} /> </div>
-                    <div ><img src={service} /> </div>
-                    <div ><img src={service1} /> </div>
-                    <div ><img src={service2} /> </div>
+                    <div ><img src={service} alt={service} /> </div>
+                    <div ><img src={service1} alt={service1} /> </div>
+                    <div ><img src={service2} alt={service2} /> </div>
+                    <div ><img src={service} alt={service} /> </div>
+                    <div ><img src={service1} alt={service1} /> </div>
+                    <div ><img src={service2} alt={service2} /> </div>
+                    <div ><img src={service} alt={service} /> </div>
+                    <div ><img src={service1} alt={service1} /> </div>
+                    <div ><img src={service2} alt={service2} /> </div>
                 </Carousel>
             </div>
         </div>

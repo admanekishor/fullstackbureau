@@ -3,13 +3,13 @@ import bureau from '../../../../assets/css/Custom.module.css';
 import { useForm } from "react-hook-form";
 import emailjs from 'emailjs-com';
 import { Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
 let EcardForm = ({setShowPopup}) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onError = (errors, e) => {
     console.log(errors)
@@ -21,7 +21,7 @@ let EcardForm = ({setShowPopup}) => {
   
   useEffect(() => {
     setTimeout(() => {
-      reset();
+      // reset();
       setThanku("inactive");
     }, 3000);
   },[Thanku])
@@ -38,7 +38,7 @@ let EcardForm = ({setShowPopup}) => {
       e.target,
       'user_7fnUcS4f0h9fPp2uyoV4N'
     ).then(res => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         setThanku("active");
         resetForm();
         console.log(res);
@@ -53,7 +53,7 @@ let EcardForm = ({setShowPopup}) => {
 
     <Grid container rowSpacing={1} justifyContent="center">
       <Grid item xs={12}>
-        <div style={{ padding: '50px 0px' }} className={Thanku == 'active' ? `${bureau.active}` : `${bureau.inactive}`}>
+        <div style={{ padding: '50px 0px' }} className={Thanku === 'active' ? `${bureau.active}` : `${bureau.inactive}`}>
           <h2>Your Mail has been Sent. Our Team will contact you soon!</h2>
           <div><Icon color="green" name="thumbs up" size="huge" /></div>
         </div>

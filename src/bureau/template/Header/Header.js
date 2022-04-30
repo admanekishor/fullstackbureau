@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import logo from '../../../assets/images/logo_white.png';
 import { Link, NavLink } from "react-router-dom";
-import bureau from '../../../assets/css/Custom.module.css';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-const useStyles = makeStyles({
-    drawer: {
-        width: 250
-    },
-    purple: {
-        backgroundColor: '#810050'
-    }
-});
+// import bureau from '../../../assets/css/Custom.module.css';
+import  '../../../assets/css/layout.scss';
+import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
+import EcardPopup from '../../component/popup/ecard/EcardPopup'
 
 const Header = (props) => {
-
-    const classes = useStyles();
+    
+    const [showPopup, setShowPopup] = useState(false);
     return (
         <React.Fragment>
 
-            <Navbar collapseOnSelect expand="lg" variant="dark" sticky="top" bg="dark">
-                <Container>
+            <Navbar className="navbg py-0" collapseOnSelect expand="lg" variant="dark" sticky="top" >
+                <Container fluid>
                     <Navbar.Brand to="#home">
-                        <Link to="/"> <img src={logo} alt="Muktai Nurses Bureau" className={bureau.logo} /></Link>
+                        <Link to="/"> <img src={logo} alt="Muktai Nurses Bureau" className="logo" /></Link>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="ms-auto">
+                        <Nav className="ms-auto me-3">
                             <NavLink to="/" className="nav-link px-4">Home</NavLink>
                             <NavLink to="/about" className="nav-link px-4">About</NavLink>
 
@@ -46,6 +39,8 @@ const Header = (props) => {
 
                             </NavDropdown>
                             <NavLink to="/contact" className="nav-link px-4">Contact</NavLink>
+                            <Button className="px-4" size="sm" variant="outline-light" onClick={() => { setShowPopup(!showPopup) }}> Get E-Card</Button>
+                            <EcardPopup showPopup={showPopup} setShowPopup={setShowPopup} />
                         </Nav>
                         {/* <Nav>
                             <Nav.Link href="#deets">More deets</Nav.Link>

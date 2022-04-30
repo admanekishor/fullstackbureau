@@ -68,7 +68,7 @@ let ContactForm = () => {
                   id="outlined-basic"
                   label="Your Name"
                   error
-                  variant="outlined" error={errors.Name}
+                  variant="outlined" err={errors.Name}
                   {...register('Name', { required: true, maxLength: 30 })}
                 />
                 {/* {errors.Name && <div style={{ color: 'red', textAlign: 'left' }}>required*</div>} */}
@@ -90,7 +90,7 @@ let ContactForm = () => {
                   size="small"
                   error
                   variant="outlined"
-                  error={errors.Phone}
+                  err={errors.Phone}
                   {...register('Phone', {
                     required: true,
                     pattern: /^[+-]?\d*(?:[.,]\d*)?$/,
@@ -124,7 +124,7 @@ let ContactForm = () => {
                   size="small"
                   error
                   variant="outlined"
-                  error={errors.email}
+                  err={errors.email}
                   {...register('email', {
                     required: true,
                     pattern: /\S+@\S+\.\S+/,
@@ -148,7 +148,7 @@ let ContactForm = () => {
                   size="small"
                   error
                   variant="outlined"
-                  error={errors.subject}
+                  err={errors.subject}
                   {...register('subject', {
                     required: true,
                     maxLength: 60,

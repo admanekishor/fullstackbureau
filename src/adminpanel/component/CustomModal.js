@@ -1,11 +1,12 @@
 import {Button, Modal} from 'react-bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function CustomModal(props) {
+  
     return (
       <Modal
         {...props}
-        size="lg"
+        size={props.modalsize}
         className='ml-auto'
         aria-labelledby="contained-modal-title-vcenter"
         centered

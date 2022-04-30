@@ -1,6 +1,7 @@
 import React from 'react'
 import { Breadcrumb, Col, Container, Row, Tab } from 'react-bootstrap'
 import Clients from '../pages/Clients'
+import ClientsBilling from '../pages/Clients/ClientsBilling'
 import Dashboard from '../pages/Dashboard'
 import Employees from '../pages/Employees'
 import StaffDetails from '../pages/staff/StaffDetails'
@@ -26,17 +27,18 @@ export default function Main() {
                             </Row> */}
                             <Tab.Content style={{overflowY:'scroll', height:'90vh'}}>
                                 <Tab.Pane eventKey="#link1">
-                                    {/* <Dashboard /> */}
+                                    <Dashboard />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link2">
-                                    {/* <Clients /> */}
+                                    <Clients />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link3">
-                                    {/* <Employees /> */}
+                                    <Employees />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link4">
                                     {/* <Employees /> */}
                                     {/* <StaffDetails /> */}
+                                    <ClientsBilling />
                                 </Tab.Pane>
                             </Tab.Content>
 

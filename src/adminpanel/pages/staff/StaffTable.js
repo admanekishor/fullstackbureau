@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Table } from 'react-bootstrap';
-import CustomModal from '../../components/CustomModal';
-import AddNew from '../AddNew';
+import CustomModal from '../../component/CustomModal';
+import AddNew from '../staff/AddNewEmp';
 
 
 export default function StaffTable() {

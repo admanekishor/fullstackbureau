@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import testimonial from '../../../assets/images/testimonial/3.jpg';
@@ -58,7 +58,7 @@ let Testimonial = () => {
             {data.map((post, i) => {
                 return (
                     <div key={i}>
-                        <img src={testimonial} />
+                        <img src={testimonial} alt={testimonial} />
                         <div className="myCarousel">
                             <h3>{post.name}</h3>
                             <h4>{post.designation}</h4>

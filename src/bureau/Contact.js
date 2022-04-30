@@ -1,5 +1,6 @@
 import Header from "./template/Header/Header";
-import bureu from '../assets/css/Custom.module.css';
+// import bureu from '../assets/css/Custom.module.css';
+import '../assets/css/layout.scss';
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Button } from "./template/Header/NavbarElements";
 import { useState } from "react";
@@ -32,18 +33,18 @@ let Contact = () => {
 
         </Helmet>
             <Header />
-            <div className={bureu.aboutsection}>
-                <Container className={bureu.aboutbreadCrumb}>
+            <div className="aboutsection">
+                <Container className="aboutbreadCrumb">
                     <h1>Contact</h1>
                     <p>Home / Contact</p>
                 </Container>
             </div>
-            <div className={bureu.section2}>
+            <div className="section2">
                 <Container >
                     <Row>
                         <Col sm={12}>
-                            <h2 style={{ fontSize: '2em', fontWeight: 700, color:'#810050' }}>Get In Touch</h2>
-                            <Typography variant="subtitle1">Alternatively fill in the form and we will get back to you.</Typography>
+                            <h2 className="headingcenter">Get In Touch</h2>
+                            <p className="textCenter">Alternatively fill in the form and we will get back to you.</p>
                             <div>
                                 <ContactForm />
                             </div>

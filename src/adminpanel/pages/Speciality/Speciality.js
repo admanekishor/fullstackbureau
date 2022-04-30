@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
-import SelectDropdown from '../../components/SelectDropdown';
+import SelectDropdown from '../../component/SelectDropdown';
 
 
 export default function Speciality() {
