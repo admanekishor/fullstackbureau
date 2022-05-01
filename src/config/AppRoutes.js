@@ -1,5 +1,5 @@
 import React, { Children, createContext, useEffect, useReducer } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from '../bureau/Home';
 import Main from '../adminpanel/template/Main';
 import About from '../bureau/About';
@@ -21,6 +21,7 @@ function reducer(initialState, action) {
     switch (action.type) {
         case "SIGN_IN":
             console.log("Action", action)
+
             return {
                 ...initialState,
                 isSignedIn: true,
@@ -41,6 +42,13 @@ function reducer(initialState, action) {
 const AppRoutes = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
     // let isLoggedin = true;
+    const navigate = useNavigate();
+
+    const parentPath = window.location.pathname.split("/");
+    // const { category } = useParams();
+    let path = parentPath[1];
+    console.log("path", path);
+
 
     useEffect(() => {
         getasyncdata()
@@ -49,7 +57,14 @@ const AppRoutes = () => {
     async function getasyncdata() {
         const user = await localStorage.getItem("user");
         if (user) {
+            
             dispatch({ type: 'SIGN_IN', payload: JSON.parse(user) })
+
+if(path=='admin' || path=='login'){
+
+    navigate('/admin')
+
+}
         } else {
 
         }
@@ -58,6 +73,8 @@ const AppRoutes = () => {
 
     return (
         <>
+                    <Authcontext.Provider value={{ state: state, dispatch: dispatch }}>
+
             <Routes>
                 <Route index element={<Home />} />
                 <Route exact path="/about" element={<About />} />
@@ -66,15 +83,21 @@ const AppRoutes = () => {
                 </Route>
                 <Route exact path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin" element={ state.isSignedIn? <Main />: <Navigate to="/login" replace />} />
 
                 {/* <Route path='*' element={<h2>404 Page Not Found</h2>} /> */}
             </Routes>
-            <Authcontext.Provider value={{ state: state, dispatch: dispatch }}>
+            </Authcontext.Provider>
+
+
+            {/* <Authcontext.Provider value={{ state: state, dispatch: dispatch }}>
                 {
                     state.isSignedIn ? <Main /> : <Login />
                 }
+            </Authcontext.Provider> */}
+
+            
                 {/* <Route path="/admin" element={isLoggedin ? <Main /> : <Navigate to="/login" replace />} /> */}
-            </Authcontext.Provider>
 
         </>
     )

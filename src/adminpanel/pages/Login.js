@@ -17,7 +17,7 @@ export default function Login() {
         password: Password
     }
     
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     async function submitHandler() {
          await axios.post('http://localhost:9000/api/login', userdetails).then((res) => {
                 // console.log(userdetails.username)
@@ -30,7 +30,7 @@ export default function Login() {
 
                     
                     dispatch({ type: 'SIGN_IN', payload: res.data.message });
-                    // navigate('/');
+                    navigate('/admin');
                 } else {
                     dispatch({ type: 'SIGN_OUT', payload: null });
                 }
