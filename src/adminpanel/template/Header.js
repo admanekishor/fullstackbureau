@@ -37,15 +37,15 @@ export default function Header() {
                     </Nav> */}
                             <Nav className='ms-auto'>
                                 {/* <Nav.Link href="#deets">More deets</Nav.Link> */}
-                                <Nav.Link eventKey={2} href="#">
+                                {/* <Nav.Link eventKey={2} href="#">
                                     {
-                                        user.map((admin) => {
-                                            // console.log("admin", admin.username)
-                                            return admin.username
-                                        })
+                                        // user.map((admin) => {
+                                            console.log("admin", admin.username)
+                                        //     return admin.username
+                                        // })
                                     }
 
-                                </Nav.Link>
+                                </Nav.Link> */}
                                 <Button size='sm' variant="outline-danger" onClick={() => logout()}>logout</Button>
                             </Nav>
                         </Navbar.Collapse>

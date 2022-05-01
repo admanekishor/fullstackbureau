@@ -20,7 +20,7 @@ const initialState = {
 function reducer(initialState, action) {
     switch (action.type) {
         case "SIGN_IN":
-            console.log("Action", action)
+            // console.log("Action", action)
 
             return {
                 ...initialState,
@@ -47,7 +47,7 @@ const AppRoutes = () => {
     const parentPath = window.location.pathname.split("/");
     // const { category } = useParams();
     let path = parentPath[1];
-    console.log("path", path);
+    // console.log("path", path);
 
 
     useEffect(() => {
@@ -57,14 +57,12 @@ const AppRoutes = () => {
     async function getasyncdata() {
         const user = await localStorage.getItem("user");
         if (user) {
-            
+
             dispatch({ type: 'SIGN_IN', payload: JSON.parse(user) })
 
-if(path=='admin' || path=='login'){
-
-    navigate('/admin')
-
-}
+            if (path == 'admin' || path == 'login') {
+                navigate('/admin')
+            }
         } else {
 
         }
@@ -73,20 +71,20 @@ if(path=='admin' || path=='login'){
 
     return (
         <>
-                    <Authcontext.Provider value={{ state: state, dispatch: dispatch }}>
+            <Authcontext.Provider value={{ state: state, dispatch: dispatch }}>
 
-            <Routes>
-                <Route index element={<Home />} />
-                <Route exact path="/about" element={<About />} />
-                <Route path="/typesofcare/*" element={<Typesofcare />}>
-                    <Route exact path=":category" element={<Typesofcare />} />
-                </Route>
-                <Route exact path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/admin" element={ state.isSignedIn? <Main />: <Navigate to="/login" replace />} />
+                <Routes>
+                    <Route index element={<Home />} />
+                    <Route exact path="/about" element={<About />} />
+                    <Route path="/typesofcare/*" element={<Typesofcare />}>
+                        <Route exact path=":category" element={<Typesofcare />} />
+                    </Route>
+                    <Route exact path="/contact" element={<Contact />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/admin" element={state.isSignedIn ? <Main /> : <Navigate to="/login" replace />} />
 
-                {/* <Route path='*' element={<h2>404 Page Not Found</h2>} /> */}
-            </Routes>
+                    {/* <Route path='*' element={<h2>404 Page Not Found</h2>} /> */}
+                </Routes>
             </Authcontext.Provider>
 
 
@@ -96,8 +94,8 @@ if(path=='admin' || path=='login'){
                 }
             </Authcontext.Provider> */}
 
-            
-                {/* <Route path="/admin" element={isLoggedin ? <Main /> : <Navigate to="/login" replace />} /> */}
+
+            {/* <Route path="/admin" element={isLoggedin ? <Main /> : <Navigate to="/login" replace />} /> */}
 
         </>
     )
