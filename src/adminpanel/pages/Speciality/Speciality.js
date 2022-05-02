@@ -16,7 +16,7 @@ export default function Speciality() {
   }, []);
 
   async function getspeciality() {
-  await  axios.get('http://localhost:9000/speciality').then((res) => {
+  await  axios.get('http://www.muktainursesbureau.in/API//speciality').then((res) => {
       // console.log("res", res.data)
       var arr = [];
       res.data.map((item) => {

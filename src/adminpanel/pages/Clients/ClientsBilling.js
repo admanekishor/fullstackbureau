@@ -13,7 +13,7 @@ export default function ClientsBilling() {
     const [modalShow, setModalShow] = React.useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:9000/clientvisit').then((res) => {
+        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
             setVisit(res.data)
         })
 

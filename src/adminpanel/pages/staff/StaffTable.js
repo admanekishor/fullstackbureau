@@ -13,8 +13,8 @@ export default function StaffTable() {
 
     // console.log(props)
     useEffect(() => {
-        axios.get('http://localhost:9000/staffdetails').then((res) => {
-        // axios.get('http://localhost/project/provisonstoreAPiPHP/staffdetails.php').then((res) => {
+        axios.get('http://www.muktainursesbureau.in/API//staffdetails').then((res) => {
+        // axios.get('http://www.muktainursesbureau.in/API/staffdetails.php').then((res) => {
             setEmployeeList(res.data.result)
             console.log("stafftable", EmployeeList);
         });

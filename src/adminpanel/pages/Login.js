@@ -19,26 +19,25 @@ export default function Login() {
     
     const navigate = useNavigate();
     async function submitHandler() {
-        //  await axios.post('http://localhost:9000/api/login', userdetails).then((res) => {
-         await axios.post('http://muktainursesbureau.in/API/login.php', userdetails).then((res) => {
+        //  await axios.post('http://www.muktainursesbureau.in/API//api/login', userdetails).then((res) => {
+         await axios.post('http://www.muktainursesbureau.in/API/login.php', userdetails).then((res) => {
                 // console.log(userdetails.username)
 
-                // console.log("res login1",res.data.message)
-                if (res.data.message.length > 0) {
+                console.log("res login1",res.data)
+                if (res.status == "200") {
                     // console.log("res login2",res.data.message)
-
                     localStorage.setItem("user", JSON.stringify(res.data.message));
-
-                    
                     dispatch({ type: 'SIGN_IN', payload: res.data.message });
                     navigate('/admin');
+
                 } else {
+
                     dispatch({ type: 'SIGN_OUT', payload: null });
                 }
             
             // return res
         }).catch((err) => {
-            console.log("err", ...err)
+            console.log("err", {...err})
         })
 
     }

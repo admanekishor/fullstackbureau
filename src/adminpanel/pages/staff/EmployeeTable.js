@@ -27,8 +27,8 @@ useEffect(() => {
 
     async function getemployeedata() {
 
-        await axios.get('http://localhost:9000/staff').then((res) => {
-            // axios.get('http://localhost/project/provisonstoreAPiPHP/View.php').then((res) => {
+        // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
+            axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
             setEmployeeList(res.data)
             // console.log("emplist", EmployeeList);
         })
@@ -36,7 +36,8 @@ useEffect(() => {
     async function deleteemployee(e) {
         const empData = {empId: e}
         // console.log("deleted id", empData);
-       await axios.post('http://localhost:9000/staff/delete', empData).then((res) => {
+    //    await axios.post('http://www.muktainursesbureau.in/API//staff/delete', empData).then((res) => {
+       await axios.post('http://www.muktainursesbureau.in/API/deletestaff.php', empData).then((res) => {
             // console.log("deleted res", res);
             getemployeedata()
         })

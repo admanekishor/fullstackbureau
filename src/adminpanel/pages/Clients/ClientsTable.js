@@ -21,13 +21,13 @@ export default function ClientsTable() {
 
     var activeclent = [];
     async function getClientdata() {
-        await axios.get('http://localhost:9000/clients').then((res) => {
-            // axios.get('http://localhost/project/provisonstoreAPiPHP/ClientView.php').then((res) => {
+        // await axios.get('http://www.muktainursesbureau.in/API//clients').then((res) => {
+            axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
             setClient(res.data)
             // console.log("client", Client);
         })
-        await axios.get('http://localhost:9000/activeclients').then((resII) => {
-            // axios.get('http://localhost/project/provisonstoreAPiPHP/ClientView.php').then((res) => {
+        // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
+            axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
             setactiveClient(resII.data)
 
                

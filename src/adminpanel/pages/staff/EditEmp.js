@@ -122,7 +122,7 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
       // setValidated(true)
       // console.log("first", Validated);
       console.log("empData", empData);
-      // axios.post('http://localhost:9000/api/employee/insert', empData).then((res) => {
+      // axios.post('http://www.muktainursesbureau.in/API//api/employee/insert', empData).then((res) => {
       //   console.log(res.data)
       //   return res
       // }).catch((err) => {
@@ -151,7 +151,7 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
   }, [])
 
   async function getspeciality() {
-    await axios.get('http://localhost:9000/speciality').then((res) => {
+    await axios.get('http://www.muktainursesbureau.in/API//speciality').then((res) => {
       // console.log(res.data)
       var arr = [];
       res.data.map((item) => {

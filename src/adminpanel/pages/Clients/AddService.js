@@ -93,7 +93,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
       // setValidated(true)
       // console.log("first", Validated);
       console.log("empData", empData);
-      axios.post('http://localhost:9000/clientvisit/insert', empData).then((res) => {
+      axios.post('http://www.muktainursesbureau.in/API/insertclientvisit.php', empData).then((res) => {
         console.log(res.data)
         getClientdata()
         notify()
@@ -121,7 +121,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
 
 
   async function getspeciality() {
-    await axios.get('http://localhost:9000/speciality').then((res) => {
+    await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
       var arr = [];
       res.data.map((item) => {
         arr.push(
@@ -140,7 +140,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
 
     console.log("specialitydata", specialitydata);
 
-    axios.post('http://localhost:9000/getstaffbyspeciality', specialitydata).then((res) => {
+    axios.post('http://www.muktainursesbureau.in/API/getstaffbyspeciality.php', specialitydata).then((res) => {
       var staffs = [];
       res.data.map((option) => {
         staffs.push({

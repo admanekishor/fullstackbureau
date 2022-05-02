@@ -10,8 +10,8 @@ export default function Clientvisits() {
     const [modalShow, setModalShow] = React.useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:9000/clientvisit').then((res) => {
-        // axios.get('http://localhost/project/provisonstoreAPiPHP/View.php').then((res) => {
+        // axios.get('http://www.muktainursesbureau.in/API//clientvisit').then((res) => {
+        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
             setVisit(res.data)
             
             // console.log("clientvisit", res.data);

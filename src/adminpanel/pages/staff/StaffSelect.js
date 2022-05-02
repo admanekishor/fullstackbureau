@@ -10,7 +10,7 @@ export default function StaffSelect({setclientVisitor, clientVisitor}) {
     }, []);
 
     async function getstaff() {
-        await axios.get('http://localhost:9000/staff').then((res) => {
+        await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
             var arr = [];
             res.data.map((item) => {
                 arr.push(

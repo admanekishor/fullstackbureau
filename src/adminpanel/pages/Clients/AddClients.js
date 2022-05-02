@@ -93,7 +93,7 @@ const AddClients = ({ getClientdata }) => {
   const isError = obj => obj.error && obj.touched && obj.required;
 
   async function getAreas() {
-    await axios.get('http://localhost:9000/areas').then((res) => {
+    await axios.get('http://www.muktainursesbureau.in/API//areas').then((res) => {
       var localareas = [];
       res.data.map((item) => {
         localareas.push(
@@ -142,7 +142,7 @@ const AddClients = ({ getClientdata }) => {
       // setValidated(true)
       // console.log("first", Validated);
       console.log("empData", empData);
-      axios.post('http://localhost:9000/api/client/insert', empData).then((res) => {
+      axios.post('http://www.muktainursesbureau.in/API//api/client/insert', empData).then((res) => {
         // console.log(res.data);
         getClientdata();
         notify()

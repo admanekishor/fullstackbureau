@@ -7,6 +7,7 @@ import Typesofcare from '../bureau/Typesofcare';
 import Contact from '../bureau/Contact';
 import Login from '../adminpanel/pages/Login';
 import { Action } from 'history';
+import NotFoundPage from '../bureau/NotFoundPage';
 
 export const Authcontext = createContext();
 
@@ -75,15 +76,15 @@ const AppRoutes = () => {
 
                 <Routes>
                     <Route index element={<Home />} />
-                    <Route exact path="/about" element={<About />} />
+                    <Route path="/about" element={<About />} />
                     <Route path="/typesofcare/*" element={<Typesofcare />}>
                         <Route exact path=":category" element={<Typesofcare />} />
                     </Route>
-                    <Route exact path="/contact" element={<Contact />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/admin" element={state.isSignedIn ? <Main /> : <Navigate to="/login" replace />} />
 
-                    {/* <Route path='*' element={<h2>404 Page Not Found</h2>} /> */}
+                    <Route path='*' element={<NotFoundPage />} />
                 </Routes>
             </Authcontext.Provider>
 
@@ -99,6 +100,7 @@ const AppRoutes = () => {
 
         </>
     )
+    
 }
 
 export default AppRoutes;

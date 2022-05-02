@@ -80,7 +80,8 @@ const AddNewEmp = ({ getemployeedata }) => {
   }, []);
 
   async function getspeciality() {
-    await axios.get('http://localhost:9000/speciality').then((res) => {
+    // await axios.get('http://localhost:9000/speciality').then((res) => {
+    await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
       var arr = [];
       res.data.map((item) => {
         arr.push(
@@ -138,7 +139,7 @@ const AddNewEmp = ({ getemployeedata }) => {
         empService: empService.value.map((spId) => spId.value),
       }
       console.log("empdata", empData)
-      axios.post('http://localhost:9000/api/staff/insert', empData).then((res) => {
+      axios.post('http://www.muktainursesbureau.in/API/insertstaff.php', empData).then((res) => {
         console.log("inserted id", res)
         getemployeedata()
         return res
