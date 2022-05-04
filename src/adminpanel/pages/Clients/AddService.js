@@ -123,7 +123,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
   async function getspeciality() {
     await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
       var arr = [];
-      res.data.map((item) => {
+      res.data.result.map((item) => {
         arr.push(
           {
             value: item.id,
@@ -142,7 +142,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
 
     axios.post('http://www.muktainursesbureau.in/API/getstaffbyspeciality.php', specialitydata).then((res) => {
       var staffs = [];
-      res.data.map((option) => {
+      res.data.result.map((option) => {
         staffs.push({
           value: option.id,
           label: option.name,
@@ -237,7 +237,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
         </Container>
         <hr />
         {/* <Button className='float-right'>Submit</Button> */}
-        <Button className='float-right' type="submit" disabled={isSubmitting}>
+        <Button className='float-end' type="submit" disabled={isSubmitting}>
           Submit
         </Button>
       </form>

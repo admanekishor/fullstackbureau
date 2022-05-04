@@ -93,9 +93,10 @@ const AddClients = ({ getClientdata }) => {
   const isError = obj => obj.error && obj.touched && obj.required;
 
   async function getAreas() {
-    await axios.get('http://www.muktainursesbureau.in/API//areas').then((res) => {
+    await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
+      
       var localareas = [];
-      res.data.map((item) => {
+      res.data.result.map((item) => {
         localareas.push(
           {
             value: item.id,
@@ -237,6 +238,7 @@ const AddClients = ({ getClientdata }) => {
                     isMulti={false}
                     isSearchable={true}
                     onChange={(e) => {
+                      console.log("clientArea", e);
                       setclientArea({ ...clientArea, value: e })
                     }}
                   />
@@ -304,7 +306,7 @@ const AddClients = ({ getClientdata }) => {
         </Container>
         <hr />
         {/* <Button className='float-right'>Submit</Button> */}
-        <Button className='float-right' type="submit" disabled={isSubmitting}>
+        <Button className='float-end' type="submit" disabled={isSubmitting}>
           Submit
         </Button>
       </form>
