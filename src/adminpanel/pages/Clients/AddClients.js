@@ -139,12 +139,11 @@ const AddClients = ({ getClientdata }) => {
         clientAltContact: clientAltContact.value,
         clientAmount: clientAmount.value
       }
-      // console.log("empData", empData)
-      // setValidated(true)
-      // console.log("first", Validated);
+      
       console.log("empData", empData);
-      axios.post('http://www.muktainursesbureau.in/API//api/client/insert', empData).then((res) => {
-        // console.log(res.data);
+      
+      axios.post('http://www.muktainursesbureau.in/API/insertclient.php', empData).then((res) => {
+        console.log("res", res);
         getClientdata();
         notify()
         return res
@@ -238,7 +237,6 @@ const AddClients = ({ getClientdata }) => {
                     isMulti={false}
                     isSearchable={true}
                     onChange={(e) => {
-                      console.log("clientArea", e);
                       setclientArea({ ...clientArea, value: e })
                     }}
                   />

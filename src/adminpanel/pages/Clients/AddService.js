@@ -141,6 +141,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
     console.log("specialitydata", specialitydata);
 
     axios.post('http://www.muktainursesbureau.in/API/getstaffbyspeciality.php', specialitydata).then((res) => {
+      console.log("resspeciality", res);
       var staffs = [];
       res.data.result.map((option) => {
         staffs.push({

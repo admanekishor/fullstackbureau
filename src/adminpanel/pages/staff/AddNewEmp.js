@@ -138,7 +138,7 @@ const AddNewEmp = ({ getemployeedata }) => {
         empContact: empContact.value,
         empService: empService.value.map((spId) => spId.value),
       }
-      console.log("empdata", empData)
+      // console.log("empdata", empData)
       axios.post('http://www.muktainursesbureau.in/API/insertstaff.php', empData).then((res) => {
         console.log("inserted id", res)
         getemployeedata()

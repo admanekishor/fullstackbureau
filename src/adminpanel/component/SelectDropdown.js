@@ -12,8 +12,13 @@ export default function SelectDropdown(props) {
       <Select
         isClearable="true"
         options={props.data.list}
-        isSearchable="true"
-        isMulti="true"
+        isSearchable={props.isSearchable}
+        isMulti= {props.isMulti}
+        onChange={(e)=> {
+          //  console.log(e);
+          props.onChange(e)
+        }}
+        isDisabled={props.isDisabled}
       />
     </div>
   )

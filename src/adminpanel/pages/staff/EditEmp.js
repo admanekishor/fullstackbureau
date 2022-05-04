@@ -151,10 +151,10 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
   }, [])
 
   async function getspeciality() {
-    await axios.get('http://www.muktainursesbureau.in/API//speciality').then((res) => {
+    await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
       // console.log(res.data)
       var arr = [];
-      res.data.map((item) => {
+      res.data.result.map((item) => {
         arr.push({
           value: item.id,
           label: item.name
@@ -296,7 +296,7 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
         </Container>
         <hr />
         {/* <Button className='float-right'>Submit</Button> */}
-        <Button className='float-right' type="submit" disabled={isSubmitting}>
+        <Button className='float-end' type="submit" disabled={isSubmitting}>
           Sumbit
         </Button>
       </form>
