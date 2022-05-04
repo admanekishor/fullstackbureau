@@ -53,13 +53,13 @@ let EcardForm = ({setShowPopup}) => {
 
     <Grid container rowSpacing={1} justifyContent="center">
       <Grid item xs={12}>
-        <div style={{ padding: '50px 0px' }} className={Thanku === 'active' ? `${bureau.active}` : `${bureau.inactive}`}>
+        <div style={{ padding: '50px 0px' }} className={Thanku === 'active' ? "active" : "inactive"}>
           <h2>Your Mail has been Sent. Our Team will contact you soon!</h2>
           <div><Icon color="green" name="thumbs up" size="huge" /></div>
         </div>
       </Grid>
       <Grid item xs={12}>
-        <form onSubmit={handleSubmit(sendmail, onError)} className={Thanku !== 'active' ? `${bureau.active}` : `${bureau.inactive}`} method="post">
+        <form onSubmit={handleSubmit(sendmail, onError)} className={Thanku !== 'active' ? "active" : "inactive"} method="post">
           <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={12}>
               <div>
@@ -120,8 +120,8 @@ let EcardForm = ({setShowPopup}) => {
            
            
             <Grid item xs={12} justifyContent="flex-end" display="flex"> 
-            <Button variant="contained" color="secondary" className={bureau.buttontheme} size="medium" sx={{mx:2}} onClick={()=>{setShowPopup(false)}}>Cancel</Button>
-            <Button variant="contained" color="secondary" className={bureau.buttontheme} size="medium" type="submit">Submit</Button>
+            <Button variant="contained" color="secondary" className="buttontheme" size="medium" sx={{mx:2}} onClick={()=>{setShowPopup(false)}}>Cancel</Button>
+            <Button variant="contained" color="secondary" className="buttontheme" size="medium" type="submit">Submit</Button>
             </Grid>
           </Grid>
         </form>
