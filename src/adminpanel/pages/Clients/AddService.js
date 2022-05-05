@@ -89,9 +89,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
         clientId: clientUpdate.id,
         startDate: startDate
       }
-      // console.log("empData", empData)
-      // setValidated(true)
-      // console.log("first", Validated);
+    
       console.log("empData", empData);
       axios.post('http://www.muktainursesbureau.in/API/insertclientvisit.php', empData).then((res) => {
         console.log(res.data)
@@ -138,10 +136,12 @@ const AddService = ({ clientUpdate, getClientdata }) => {
   async function getstaff(e) {
     const specialitydata = { specialityId: e.value }
 
-    console.log("specialitydata", specialitydata);
+    // console.log("specialitydata", specialitydata);
 
     axios.post('http://www.muktainursesbureau.in/API/getstaffbyspeciality.php', specialitydata).then((res) => {
-      console.log("resspeciality", res);
+      
+    console.log("speciality", res);
+
       var staffs = [];
       res.data.result.map((option) => {
         staffs.push({
@@ -196,7 +196,6 @@ const AddService = ({ clientUpdate, getClientdata }) => {
                     isMulti={false}
                     isSearchable={false}
                     onChange={(e) => {
-                      console.log("getstaff", e)
                       setempService({ ...empService, value: e.value })
                       getstaff(e)
                     }}
@@ -212,6 +211,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
                     isMulti={false}
                     isSearchable={false}
                     onChange={(e) => {
+                      console.log("getstaff", e)
                       setclientVisitor({ ...clientVisitor, value: e.value })
 
                     }}
