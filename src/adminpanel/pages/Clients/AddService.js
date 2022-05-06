@@ -87,7 +87,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
         clientVisitor: clientVisitor.value,
         empService: empService.value,
         clientId: clientUpdate.id,
-        startDate: startDate
+        startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }
     
       console.log("empData", empData);
