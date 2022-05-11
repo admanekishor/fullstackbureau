@@ -4,12 +4,11 @@ import { Button, Table } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
-import DatePicker from 'react-datepicker';
-
+import SelectDropdown from '../../component/SelectDropdown';
 export default function ClientsBilling() {
 
     const [Visit, setVisit] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
+    const [getMonth, setMonth] = useState(new Date());
     const [printClient, setprintClient] = useState("");
     const [modalShow, setModalShow] = React.useState(false);
 
@@ -58,14 +57,15 @@ export default function ClientsBilling() {
 
                                 {/* <td>{dateobj(record.start_date)}</td> */}
                                 <td>
-                                    <DatePicker
-                                        selected={startDate}
-                                        dateFormat="MM/yyyy"
-                                        onChange={(date) => setStartDate(date)}
-                                        customInput={<ExampleCustomInput />}
-                                        showMonthYearPicker
-                                        showFullMonthYearPicker
-                                    />
+                                   <SelectDropdown 
+                                   data={{ list: getMonth }}
+                                   isMulti={false}
+                                   isSearchable={false}
+                                   onChange={(e) => {
+                                     setMonth(e.value)
+                                    //  getstaff(e)
+                                   }}
+                                   />
                                 </td>
                                 {/* <td>{dateobj(record.end_date)}</td> */}
                                 <td>
