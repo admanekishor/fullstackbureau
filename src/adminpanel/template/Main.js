@@ -1,5 +1,6 @@
 import React from 'react'
 import { Breadcrumb, Col, Container, Row, Tab } from 'react-bootstrap'
+import Helmet from 'react-helmet'
 import Clients from '../pages/Clients'
 import ClientsBilling from '../pages/Clients/ClientsBilling'
 import Dashboard from '../pages/Dashboard'
@@ -8,10 +9,14 @@ import StaffDetails from '../pages/staff/StaffDetails'
 import BreacdCrumb from './BreadCrumb'
 import Header from './Header'
 import Sidebar from './Sidebar'
-
+import logourl from '../../assets/images/logo_white.png'
 export default function Main() {
     return (
         <>
+            <Helmet>
+                <title>Admin</title>
+
+            </Helmet>
             <Header />
             <Container fluid>
                 <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
@@ -25,7 +30,7 @@ export default function Main() {
                                     <BreacdCrumb />
                                 </Col>
                             </Row> */}
-                            <Tab.Content style={{overflowY:'scroll', height:'90vh'}}>
+                            <Tab.Content style={{ overflowY: 'scroll', height: '90vh' }}>
                                 <Tab.Pane eventKey="#link1">
                                     <Dashboard />
                                 </Tab.Pane>

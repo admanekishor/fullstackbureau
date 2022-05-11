@@ -13,12 +13,31 @@ import Footer from "./template/Footer";
 import { Link } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import Testimonial from "./component/slider/Testimonial";
-// import { AuthContext } from './../auth/Auth';
-
+import Helmet from 'react-helmet';
+import logourl from '../assets/images/logo_white.png';
 let HomePage = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Muktai Nurses Bureau</title>
+                <link rel="canonical" href="http://muktainursesbureau.in" />
+                <meta name="description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients." />
+                <meta name="keywords" content="carying services, criticle condition patients, senior citizen, Paralize" />
+                <meta itemProp="name" content="Muktai Nurses Bureau and Carying Services" />
+                <meta itemProp="description" content="Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta itemProp="image" content={logourl} />
+                <meta property="og:url" content="http://muktainursesbureau.in" />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Muktai Nurses Bureau" />
+                <meta property="og:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta property="og:image" content={logourl} />
+                <meta name="twitter:card" content="Muktai Nurses Bureau and Carying Services" />
+                <meta name="twitter:title" content="Muktai Nurses Bureau and Carying Services" />
+                <meta name="twitter:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta name="twitter:image" content={logourl} />
+
+            </Helmet>
             <Header />
             <HomeSlider />
             <div className="section3">

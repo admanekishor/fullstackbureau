@@ -1,20 +1,22 @@
 import React from 'react'
-import { Route, Routes, NavLink } from 'react-router-dom'
+import { Route, Routes, NavLink, useParams } from 'react-router-dom'
 import Header from './template/Header/Header';
 import 'react-tabs/style/react-tabs.css';
-import bureu from '../assets/css/Custom.module.css';
+// import bureu from '../assets/css/Custom.module.css';
+import '../assets/css/layout.scss';
 import { Col, Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import elderlyimg from '../assets/images/about/service-15.jpg';
 import supportclient from '../assets/images/typeofcare/service-16.jpg';
 import respite from '../assets/images/typeofcare/service-19.jpg';
 import Footer from './template/Footer';
-// import { Helmet } from 'react-helmet';
-// import logourl from '../assets/images/logo_white.png';
+import Helmet from 'react-helmet';
+import logourl from '../assets/images/logo_white.png';
 
 function Typesofcare(props) {
     const parentPath = window.location.pathname.split("/");
-    // const { category } = useParams();
+    const { category } = useParams();
+    const urlname = category.replace(/-/g, " ");;
     let customurl = parentPath[1];
     console.log("category", customurl);
 
@@ -557,16 +559,33 @@ function Typesofcare(props) {
 
     return (
         <div>
-
+            <Helmet>
+                <title>Muktai Nurses Bureau | types of care</title>
+                <link rel="canonical" href="http://muktainursesbureau.in/typesofcare" />
+                <meta name="description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients." />
+                <meta name="keywords" content="carying services, criticle condition patients, senior citizen, Paralize" />
+                <meta itemProp="name" content="Muktai Nurses Bureau and Carying Services" />
+                <meta itemProp="description" content="Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta itemProp="image" content={logourl} />
+                <meta property="og:url" content="http://muktainursesbureau.in/typesofcare" />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Muktai Nurses Bureau, typesofcare" />
+                <meta property="og:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta property="og:image" content={logourl} />
+                <meta name="twitter:card" content="Muktai Nurses Bureau and Carying Services" />
+                <meta name="twitter:title" content="Muktai Nurses Bureau and Carying Services" />
+                <meta name="twitter:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta name="twitter:image" content={logourl} />
+            </Helmet>
 
             <Header />
-            <div className={bureu.aboutsection}>
-                <Container className={bureu.aboutbreadCrumb}>
+            <div className="aboutsection">
+                <Container className="aboutbreadCrumb">
                     <h1>Type of Care</h1>
-                    <p>Home / About</p>
+                    <p className="textcapitaliz">Home / {urlname}</p>
                 </Container>
             </div>
-            <div className={bureu.section1}>
+            <div className="section1">
                 <Container>
                     <Row>
                         <Col xs={12} md={4}>
@@ -576,12 +595,12 @@ function Typesofcare(props) {
                                     // console.log("data.path",data.path)
                                     return (
 
-                                        <div className={bureu.sidetabs} key={i}>
+                                        <div className="sidetabs" key={i}>
                                             <NavLink
 
                                                 to={`/${customurl}${data.path}`}
                                                 // activeClassName={bureu.active}
-                                                className={({ isActive }) => (isActive ? bureu.active : '') + " " + `${bureu.sidemenu}`}
+                                                className={({ isActive }) => (isActive ? 'active' : '') + " " + 'sidemenu'}
                                                 onClick={() =>
                                                     data.defaultTab
                                                         ? data.path

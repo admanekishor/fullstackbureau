@@ -86,21 +86,6 @@ export default function ClientsTable() {
                                 <td>
                                     {
                                         getactiveclient(client)
-
-                                        // activeClient.map((item, idty) => {
-                                        //     //    return item.id;
-                                        //     if (item.id !== client.id) {
-                                        //         return (<Button className='btn-sm'
-                                        //             key={idty}
-                                        //             onClick={() => {
-                                        //                 setClientUpdate(client);
-                                        //                 setAddServiceModal(true);
-                                        //             }}
-                                        //         >Activate</Button>)
-                                        //     } else {
-                                        //         return "";
-                                        //     }
-                                        // })
                                     }
                                 </td>
                             </tr>)

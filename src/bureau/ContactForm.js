@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import bureau from '../assets/css/Custom.module.css';
 import { useForm } from "react-hook-form";
 import emailjs from 'emailjs-com';
 import { Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import {Button} from 'react-bootstrap'
+import styles from '../assets/css/layout.scss';
 
 let ContactForm = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -52,7 +53,7 @@ let ContactForm = () => {
 
     <Grid container rowSpacing={1} justifyContent="center">
       <Grid item xs={12}>
-        <div style={{ padding: '50px 0px' }} className={Thanku ? `${bureau.inactive}` : `${bureau.active}`}>
+        <div style={{ padding: '50px 0px' }} className={Thanku ? `${styles.inactive}` : `${styles.active}`}>
           <h2>Your Mail has been Sent. Our Team will contact you soon!</h2>
           <div><Icon color="green" name="thumbs up" size="huge" /></div>
         </div>
@@ -67,7 +68,7 @@ let ContactForm = () => {
                   size="small"
                   id="outlined-basic"
                   label="Your Name"
-                  error
+                  error={errors.Name}
                   variant="outlined" err={errors.Name}
                   {...register('Name', { required: true, maxLength: 30 })}
                 />
@@ -88,7 +89,7 @@ let ContactForm = () => {
                   label="Phone Number"
                   fullWidth
                   size="small"
-                  error
+                  error={errors.Phone}
                   variant="outlined"
                   err={errors.Phone}
                   {...register('Phone', {
@@ -122,7 +123,7 @@ let ContactForm = () => {
                   label="Your Email Id"
                   fullWidth
                   size="small"
-                  error
+                  error={errors.email}
                   variant="outlined"
                   err={errors.email}
                   {...register('email', {
@@ -146,7 +147,7 @@ let ContactForm = () => {
                   label="Subject"
                   fullWidth
                   size="small"
-                  error
+                  error={errors.subject}
                   variant="outlined"
                   err={errors.subject}
                   {...register('subject', {
@@ -198,7 +199,7 @@ let ContactForm = () => {
               
             </Grid>
             <Grid item xs={12} justifyContent="flex-end" display="flex"> 
-            <Button variant="outlined" color="error" size="large" type="submit">Submit</Button>
+            <Button className={styles.buttontheme} type="submit">Submit</Button>
             </Grid>
           </Grid>
         </form>

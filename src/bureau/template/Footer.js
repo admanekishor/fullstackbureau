@@ -22,7 +22,7 @@ let Footer = () => {
                             {/* <div >
                             <img src={logourl} width="70%" />
                         </div> */}
-                            <p className="textJustify">CareGiver is a WordPress theme to build Elderly People Care. It has good features and you will love.</p>
+                            <p className="textJustify">CareGiver is a agency to build Elderly People Care. It has good features and you will love.</p>
                         </Col>
                         <Col xs={12} md={6}>
                             <h4 className="textCenter">Quick Links</h4>

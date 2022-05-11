@@ -11,6 +11,9 @@ p {
 .buttontheme{
   background-color: #810050;
 }
+/* .nav-link {
+  color: rgba(255,255,255,.75);
+} */
 .buttontheme:hover{
   background-color: #9e0061;
 }

@@ -12,8 +12,25 @@ import logourl from '../assets/images/logo_white.png';
 let About = () => {
     return (
         <div>
+            <Helmet>
+                <title>Muktai Nurses Bureau | about</title>
+                <link rel="canonical" href="http://muktainursesbureau.in/about" />
+                <meta name="description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients." />
+                <meta name="keywords" content="Muktai Nurses Bureau, about us, our services, our team" />
+                <meta itemProp="name" content="Muktai Nurses Bureau and Carying Services" />
+                <meta itemProp="description" content="Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta itemProp="image" content={logourl} />
+                <meta property="og:url" content="http://muktainursesbureau.in/about" />
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="Muktai Nurses Bureau" />
+                <meta property="og:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta property="og:image" content={logourl} />
+                <meta name="twitter:card" content="Muktai Nurses Bureau and Carying Services" />
+                <meta name="twitter:title" content="Muktai Nurses Bureau and Carying Services" />
+                <meta name="twitter:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
+                <meta name="twitter:image" content={logourl} />
 
-           
+            </Helmet>
             <Header />
             <div className="aboutsection">
                 <Container className="aboutbreadCrumb">
@@ -121,7 +138,7 @@ let About = () => {
                                     <img src={team1} className="w-100" />
                                 </div>
                                 <div className="position-absolute overlay">
-                                    <h4 className="text-center">Shital Admane</h4>
+                                    <h5 className="text-center">Shital Admane</h5>
                                 </div>
                             </div>
                         </Col>

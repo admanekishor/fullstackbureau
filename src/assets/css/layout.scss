@@ -2,6 +2,7 @@
 :root {
 	font-size: 16px;
 }
+
 .navbg{
 background-color:#810050;
 text-transform: uppercase;
@@ -14,6 +15,7 @@ font-weight: 400;
 p {
 	font-size: 18px !important;
 }
+
 .buttontheme {
 	background-color: #810050;
 	&:hover {
@@ -41,14 +43,10 @@ p {
 .textjustify {
 	text-align: justify;
 }
-// nav.navbar {
-// 	display: flex;
-// 	align-items: center;
-// 	justify-content: space-between;
-// }
-// .brand {
-// 	color: #fff;
-// }
+.textcapitaliz{
+	text-transform: capitalize;
+}
+
 .section1 {
 	padding: 50px 0px;
 }

@@ -1,16 +1,19 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
-import AddNewEmp from '../staff/AddNewEmp';
+import DatePicker from 'react-datepicker';
 
 export default function ClientsBilling() {
 
     const [Visit, setVisit] = useState([]);
+    const [startDate, setStartDate] = useState(new Date());
     const [printClient, setprintClient] = useState("");
     const [modalShow, setModalShow] = React.useState(false);
+
+
 
     useEffect(() => {
         axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
@@ -42,14 +45,29 @@ export default function ClientsBilling() {
                 <tbody>
                     {
                         Visit.map((record, i) => {
+                            const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+                                <Button size='sm' onClick={onClick} ref={ref}>
+                                    {value}
+                                </Button>
+                            ));
 
                             return (<tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{record.client_name}</td>
                                 <td>{record.client_address}</td>
 
-                                <td>{record.start_date}</td>
-                                <td>{record.end_date}</td>
+                                {/* <td>{dateobj(record.start_date)}</td> */}
+                                <td>
+                                    <DatePicker
+                                        selected={startDate}
+                                        dateFormat="MM/yyyy"
+                                        onChange={(date) => setStartDate(date)}
+                                        customInput={<ExampleCustomInput />}
+                                        showMonthYearPicker
+                                        showFullMonthYearPicker
+                                    />
+                                </td>
+                                {/* <td>{dateobj(record.end_date)}</td> */}
                                 <td>
                                     {
                                         record.start_date && record.end_date

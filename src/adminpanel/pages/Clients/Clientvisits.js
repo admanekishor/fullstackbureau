@@ -13,7 +13,7 @@ export default function Clientvisits() {
         // axios.get('http://www.muktainursesbureau.in/API//clientvisit').then((res) => {
         axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
             setVisit(res.data)
-            
+
             // console.log("clientvisit", res.data);
         })
 
@@ -43,14 +43,19 @@ export default function Clientvisits() {
                 <tbody>
                     {
                         Visit.map((record, i) => {
+                            var dateobj = (i) =>{
+                                return i = new Date().toJSON().slice(0,10).split('-').reverse().join('/')
+                            }
                             return (<tr key={i}>
-                                <td>{i+1}</td>
+                                <td>{i + 1}</td>
                                 <td>{record.client_name}</td>
                                 <td>{record.client_address}</td>
                                 <td>{record.staff_name}</td>
                                 <td>{record.spaciality_name}</td>
-                                <td>{record.start_date}</td>
-                                <td>{record.end_date}</td>
+                                <td>{dateobj(record.start_date)}</td>
+                                <td className='text-center'>
+                                    {record.end_date ? dateobj(record.end_date) : <Button size='sm'>End</Button>}
+                                </td>
                             </tr>)
                         })
                     }

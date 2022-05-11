@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Authcontext } from '../../config/AppRoutes';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import Helmet from 'react-helmet';
 export default function Login() {
 
     const user = useContext(Authcontext);
@@ -47,6 +48,10 @@ export default function Login() {
 
     return (
         <div className='d-flex align-items-center justify-content-center' style={{ height: '100vh', backgroundColor: "#810050" }}>
+            <Helmet>
+                <title>Login</title>
+
+            </Helmet>
             <Container>
                 <Row>
                     <Col sm="8" md="6" lg="4" className='mx-auto'>

@@ -8,26 +8,26 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
-let EcardForm = ({setShowPopup}) => {
+let EcardForm = ({ setShowPopup }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onError = (errors, e) => {
     console.log(errors)
   };
 
-  
+
   const [Thanku, setThanku] = useState("inactive")
 
-  
+
   useEffect(() => {
     setTimeout(() => {
       // reset();
       setThanku("inactive");
     }, 3000);
-  },[Thanku])
+  }, [Thanku])
 
   const resetForm = () => {
-    
+
     setThanku("active");
   };
   const sendmail = (data, e) => {
@@ -68,9 +68,8 @@ let EcardForm = ({setShowPopup}) => {
                   size="small"
                   id="outlined-basic"
                   label="Your Name"
-                  error
-                  variant="outlined" 
-                  // error={errors.Name}
+                  variant="outlined"
+                  error={errors.Name}
                   {...register('Name', { required: true, maxLength: 30 })}
                 />
                 {/* {errors.Name && <div style={{ color: 'red', textAlign: 'left' }}>required*</div>} */}
@@ -80,7 +79,7 @@ let EcardForm = ({setShowPopup}) => {
                 {errors.Name && errors.Name.type === "maxLength" && (
                   <div style={{ color: 'red', textAlign: 'left' }}>maxLength exceeded*</div>
                 )}
-              
+
               </div>
             </Grid>
             <Grid item xs={12}>
@@ -90,9 +89,8 @@ let EcardForm = ({setShowPopup}) => {
                   label="Phone Number"
                   fullWidth
                   size="small"
-                  error
                   variant="outlined"
-                  // error={errors.Phone}
+                  error={errors.Phone}
                   {...register('Phone', {
                     required: true,
                     pattern: /^[+-]?\d*(?:[.,]\d*)?$/,
@@ -117,11 +115,11 @@ let EcardForm = ({setShowPopup}) => {
                 )}
               </div>
             </Grid>
-           
-           
-            <Grid item xs={12} justifyContent="flex-end" display="flex"> 
-            <Button variant="contained" color="secondary" className="buttontheme" size="medium" sx={{mx:2}} onClick={()=>{setShowPopup(false)}}>Cancel</Button>
-            <Button variant="contained" color="secondary" className="buttontheme" size="medium" type="submit">Submit</Button>
+
+
+            <Grid item xs={12} justifyContent="flex-end" display="flex">
+              <Button variant="contained" color="secondary" className="buttontheme" size="medium" sx={{ mx: 2 }} onClick={() => { setShowPopup(false) }}>Cancel</Button>
+              <Button variant="contained" color="secondary" className="buttontheme" size="medium" type="submit">Submit</Button>
             </Grid>
           </Grid>
         </form>
