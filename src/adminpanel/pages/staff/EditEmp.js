@@ -1,12 +1,8 @@
-// import logo from './logo.svg';
-// import '../../App.css';
 import React, { useState, useContext, useEffect } from 'react';
-// import { Button } from 'bootstrap';
 import axios from 'axios';
 import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
-
 
 const initialName = {
   key: "empName",
@@ -60,13 +56,11 @@ const initialService = {
   required: true
 };
 
-
 const EditEmp = ({ Empupdate, setEmpupdate }) => {
 
   console.log("Empupdate", Empupdate);
 
   const auth = useContext(Authcontext);
-  // console.log("Auth", auth.state)
   const [empName, setempName] = useState({ ...initialName, value: Empupdate.name });
   const [empAddress, setempAddress] = useState({ ...initialAddress, value: Empupdate.address });
   const [empAge, setempAge] = useState({ ...initialAge, value: Empupdate.age });
@@ -90,10 +84,7 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
 
   const isError = obj => obj.error && obj.touched && obj.required;
 
-
-  // console.log("empData", empData);
-  // const [Selected, setSelected] = useState("")
-  const option = [{ value: "male", label: "Male" },
+ const option = [{ value: "male", label: "Male" },
   { value: "female", label: "FeMale" },
   { value: "other", label: "Other" }
   ];
@@ -120,7 +111,6 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
       }
       console.log("empData", empData)
       // setValidated(true)
-      // console.log("first", Validated);
       console.log("empData", empData);
       // axios.post('http://www.muktainursesbureau.in/API//api/employee/insert', empData).then((res) => {
       //   console.log(res.data)
@@ -128,8 +118,6 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
       // }).catch((err) => {
       //   console.log("err", ...err)
       // })
-
-
 
       setTimeout(() => {
         setempName(initialName);

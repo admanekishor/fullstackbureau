@@ -19,11 +19,11 @@ const Header = (props) => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="ms-auto me-3">
+                        <Nav className="ms-auto me-2">
                             <NavLink to="/" className="nav-link px-4">Home</NavLink>
                             <NavLink to="/about" className="nav-link px-4">About</NavLink>
 
-                            <NavDropdown title="Types Of Care" id="collasible-nav-dropdown">
+                            <NavDropdown title="Types Of Care" className="px-2" id="collasible-nav-dropdown">
                                 <NavLink to="/typesofcare/elderly-care-service" className="dropdown-item">Elderly Care Service</NavLink>
                                 <NavLink to="/typesofcare/personal-care" className="dropdown-item">Personal Care</NavLink>
                                 <NavLink to="/typesofcare/respite-care" className="dropdown-item">Respite Care</NavLink>
@@ -39,7 +39,7 @@ const Header = (props) => {
 
                             </NavDropdown>
                             <NavLink to="/contact" className="nav-link px-4">Contact</NavLink>
-                            <Button className="px-4" size="sm" variant="outline-light" onClick={() => { setShowPopup(!showPopup) }}> Get E-Card</Button>
+                            <Button className="ms-4 px-4" size="sm" variant="outline-light" onClick={() => { setShowPopup(!showPopup) }}> Get E-Card</Button>
                             <EcardPopup showPopup={showPopup} setShowPopup={setShowPopup} />
                         </Nav>
                         {/* <Nav>
