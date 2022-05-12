@@ -7,6 +7,7 @@
 background-color:#810050;
 text-transform: uppercase;
 font-weight: 400;
+text-align: center;
 }
 .logo {
 	width: 100%;
@@ -15,7 +16,16 @@ font-weight: 400;
 p {
 	font-size: 18px !important;
 }
-
+.customdropdown:hover{
+	background-color: #81005091;
+}
+.customdropdown.active{
+	background-color: #810050;
+	
+}
+.customdropdown:active{
+	background-color: #810050;
+}
 .buttontheme {
 	background-color: #810050;
 	&:hover {
@@ -241,7 +251,7 @@ p {
 	}
 }
 .sidemenu.active {
-	color: #c8a294;
+	color: #ffa3ef;
 }
 .lavendercircle {
 	background: #810050;

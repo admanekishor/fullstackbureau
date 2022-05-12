@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 // import Button from '@mui/material/Button';
 import {Button} from 'react-bootstrap'
-import styles from '../assets/css/layout.scss';
+import  '../assets/css/layout.scss';
 
 let ContactForm = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -53,13 +53,13 @@ let ContactForm = () => {
 
     <Grid container rowSpacing={1} justifyContent="center">
       <Grid item xs={12}>
-        <div style={{ padding: '50px 0px' }} className={Thanku ? `${styles.inactive}` : `${styles.active}`}>
+        <div style={{ padding: '50px 0px' }} className={Thanku ? "inactive" : "active"}>
           <h2>Your Mail has been Sent. Our Team will contact you soon!</h2>
           <div><Icon color="green" name="thumbs up" size="huge" /></div>
         </div>
       </Grid>
       <Grid item xs={8}>
-        <form onSubmit={handleSubmit(sendmail, onError)} className={status} method="post">
+        <form onSubmit={handleSubmit(sendmail, onError)} className="status" method="post">
           <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={6}>
               <div>
@@ -199,7 +199,7 @@ let ContactForm = () => {
               
             </Grid>
             <Grid item xs={12} justifyContent="flex-end" display="flex"> 
-            <Button className={styles.buttontheme} type="submit">Submit</Button>
+            <Button className="buttontheme" type="submit">Submit</Button>
             </Grid>
           </Grid>
         </form>

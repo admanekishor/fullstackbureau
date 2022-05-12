@@ -19,22 +19,22 @@ const Header = (props) => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="ms-auto me-2">
+                        <Nav className="ms-auto me-2 navflex">
                             <NavLink to="/" className="nav-link px-4">Home</NavLink>
                             <NavLink to="/about" className="nav-link px-4">About</NavLink>
 
                             <NavDropdown title="Types Of Care" className="px-2" id="collasible-nav-dropdown">
-                                <NavLink to="/typesofcare/elderly-care-service" className="dropdown-item">Elderly Care Service</NavLink>
-                                <NavLink to="/typesofcare/personal-care" className="dropdown-item">Personal Care</NavLink>
-                                <NavLink to="/typesofcare/respite-care" className="dropdown-item">Respite Care</NavLink>
-                                <NavLink to="/typesofcare/skilled-nursing" className="dropdown-item">Skilled Nursing</NavLink>
-                                <NavLink to="/typesofcare/day-support" className="dropdown-item">Day Support</NavLink>
-                                <NavLink to="/typesofcare/hospital-discharge" className="dropdown-item">Hospital Discharge</NavLink>
-                                <NavLink to="/typesofcare/companion-care" className="dropdown-item">Companion Care</NavLink>
-                                <NavLink to="/typesofcare/cronical-condition-care" className="dropdown-item">Cronical Condition Care</NavLink>
-                                <NavLink to="/typesofcare/after-surgery-care" className="dropdown-item">After Surgery Care</NavLink>
-                                <NavLink to="/typesofcare/end-of-life-care" className="dropdown-item">End of Life Care</NavLink>
-                                <NavLink to="/typesofcare/special-need-care" className="dropdown-item">Special Need Care</NavLink>
+                                <NavLink to="/typesofcare/elderly-care-service" className="dropdown-item customdropdown">Elderly Care Service</NavLink>
+                                <NavLink to="/typesofcare/personal-care" className="dropdown-item customdropdown">Personal Care</NavLink>
+                                <NavLink to="/typesofcare/respite-care" className="dropdown-item customdropdown">Respite Care</NavLink>
+                                <NavLink to="/typesofcare/skilled-nursing" className="dropdown-item customdropdown">Skilled Nursing</NavLink>
+                                <NavLink to="/typesofcare/day-support" className="dropdown-item customdropdown">Day Support</NavLink>
+                                <NavLink to="/typesofcare/hospital-discharge" className="dropdown-item customdropdown">Hospital Discharge</NavLink>
+                                <NavLink to="/typesofcare/companion-care" className="dropdown-item customdropdown">Companion Care</NavLink>
+                                <NavLink to="/typesofcare/cronical-condition-care" className="dropdown-item customdropdown">Cronical Condition Care</NavLink>
+                                <NavLink to="/typesofcare/after-surgery-care" className="dropdown-item customdropdown">After Surgery Care</NavLink>
+                                <NavLink to="/typesofcare/end-of-life-care" className="dropdown-item customdropdown">End of Life Care</NavLink>
+                                <NavLink to="/typesofcare/special-need-care" className="dropdown-item customdropdown">Special Need Care</NavLink>
 
 
                             </NavDropdown>
