@@ -40,13 +40,15 @@ export default function ClientsTable() {
         // console.log("active client", activeclent);
         // activeClient.map((item) => {
             if (!activeclent.includes(client.id)) {
-                return (<Button className='btn-sm'
+                return (<Button className='btn-sm w-100'
 
                     onClick={() => {
                         setClientUpdate(client);
                         setAddServiceModal(true);
                     }}
                 >Activate</Button>)
+            }else{
+                return <Button className='btn-sm btn-danger w-100 disabled'>Activated</Button>
             }
         // })
 
