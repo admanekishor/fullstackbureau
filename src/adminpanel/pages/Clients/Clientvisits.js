@@ -1,39 +1,68 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Table } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 // import CustomModal from '../component/CustomModal';
 // import AddNewEmp from '../staff/AddNewEmp';
 import DatePicker from 'react-datepicker';
+import CustomModal from '../../component/CustomModal';
 import SelectDropdown from '../../component/SelectDropdown';
+import AddNewEmp from '../staff/AddNewEmp';
 export default function Clientvisits() {
 
     const [Visit, setVisit] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
     const [startDate, setstartDate] = useState(new Date())
-    const [getAction, setgetAction] = useState(null)
+    const [endDate, setendDate] = useState(new Date())
+    const [selectclint, setselectclint] = useState(null)
+    // const [getAction, setgetAction] = useState(null)
     useEffect(() => {
-        // axios.get('http://www.muktainursesbureau.in/API//clientvisit').then((res) => {
-        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
-            setVisit(res.data)
-
-            // console.log("clientvisit", res.data);
-        })
+        getclientvisitdata()
 
     }, []);
 
-     var optionlist =  [{ value: "", label: "Select Option" },
-    { value: 1, label: "Renew" },{ value: 2, label: "End" }]
+    const getclientvisitdata = () =>{
+        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
+
+        if(res.data){
+            setVisit(res.data)
+
+        }else{
+
+            setVisit([])
+
+        }
+
+            // console.log("clientvisit", res);
+        })
+    }
+
+    const updateenddate = () => {
+
+        if (!selectclint) {
+            alert("pelese select clint")
+            return
+
+        }
+
+        // console.log("updateenddate", selectclint)
+
+        var senddataapi = {
+            visitId: selectclint.id,
+            endDate: endDate
+        }
+        console.log("senddataapi", senddataapi)
+
+        axios.post('http://www.muktainursesbureau.in/API/updateclientvisit.php', senddataapi).then((res) => {
+            getclientvisitdata()
+            setModalShow(false)
+        })
+    }
 
     return (
         <div>
-            {/* <Button size='sm' onClick={() => setModalShow(true)}>+</Button>
+            {/* <Button size='sm' onClick={() => setModalShow(true)}>+</Button> */}
 
-            <CustomModal
-                data={{ title: "Add New Employee", component: <AddNewEmp /> }}
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                modalSize="lg"
-            /> */}
+
             <Table striped bordered hover size="sm" responsive>
                 <thead>
                     <tr>
@@ -50,6 +79,8 @@ export default function Clientvisits() {
                 <tbody>
                     {
                         Visit.map((record, i) => {
+
+                            console.log("map record", i, record)
 
                             // startDate
                             var st = record.start_date.split(/[- :]/);
@@ -75,7 +106,6 @@ export default function Clientvisits() {
                                         dateFormat="dd/MM/yyyy"
                                         className='form-control btn btn-sm btn-danger'
                                         selected={setdate}
-                                    // onChange={(date) => setstartDate(date)}
                                     />
                                 </td>
                                 <td className='text-center'>
@@ -85,7 +115,6 @@ export default function Clientvisits() {
                                             dateFormat="dd/MM/yyyy"
                                             className='form-control btn btn-sm btn-danger'
                                             selected={setenddate}
-                                        // onChange={(date) => setstartDate(date)}
                                         />
                                         :
                                         <DatePicker
@@ -93,27 +122,53 @@ export default function Clientvisits() {
                                             dateFormat="dd/MM/yyyy"
                                             className='form-control btn btn-sm btn-primary'
                                             selected={startDate}
-                                        onChange={(date) => setstartDate(date)}
+                                            onChange={(date) => setstartDate(date)}
                                         />}
                                 </td>
                                 <td>{
-                                    record.end_date ? <Button className='btn btn-sm w-100'>Renew</Button>
-                                        :
-                                     <Button className='btn btn-sm w-100'>End</Button>
-                                        // <SelectDropdown
-                                        
-                                        //     data={{
-                                        //         list: optionlist
-                                        //     }}
-                                        //     isMulti={false}
-                                        //     isSearchable={false}
-                                        //     onChange={(e) => {
-                                        //         console.log("getstaff", e)
-                                        //         setgetAction(e.value)
+                                   
+                                        <>
+                                            <Button className='btn btn-sm w-100' onClick={() => {
+                                                console.log("end", record, i)
+                                                setselectclint(record)
+                                                setModalShow(true)
+                                            }}>End</Button>
+                                            <CustomModal
+                                                data={{
+                                                    title: "Select End Date", component: <>
 
-                                        //     }}
-                                        
-                                        // />
+                                                        <Row>
+                                                            <Col>
+                                                                <label>Select End Date</label>
+                                                            </Col>
+                                                            <Col>
+                                                                <DatePicker
+
+                                                                    placeholderText='Enter End Date'
+                                                                    dateFormat="dd/MM/yyyy"
+                                                                    className='form-control'
+                                                                    selected={endDate}
+                                                                    onChange={(date) => setendDate(date)}
+                                                                />
+                                                            </Col>
+                                                        </Row>
+                                                        <hr />
+                                                        <Button className='float-end'
+
+                                                            onClick={() => {
+                                                                console.log("submit", record, i)
+                                                                updateenddate()
+                                                            }}
+                                                        >
+                                                            Submit
+                                                        </Button>
+                                                    </>
+                                                }}
+                                                show={modalShow}
+                                                onHide={() => setModalShow(false)}
+                                            // modalSize="lg"
+                                            />
+                                        </>
 
                                 }</td>
                             </tr>)

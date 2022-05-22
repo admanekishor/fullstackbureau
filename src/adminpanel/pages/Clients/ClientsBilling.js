@@ -15,7 +15,7 @@ export default function ClientsBilling() {
 
 
     useEffect(() => {
-        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
+        axios.get('http://www.muktainursesbureau.in/API/Billing.php').then((res) => {
             setVisit(res.data)
         })
 
@@ -67,7 +67,7 @@ export default function ClientsBilling() {
                                    }}
                                    />
                                 </td>
-                                {/* <td>{dateobj(record.end_date)}</td> */}
+                                <td>{record.end_date}</td>
                                 <td>
                                     {
                                         record.start_date && record.end_date

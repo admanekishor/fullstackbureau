@@ -28,7 +28,16 @@ export default function ClientsTable() {
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
             axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
-            setactiveClient(resII.data)
+
+            if(resII.data){
+
+                setactiveClient(resII.data)
+            }else{
+
+                setactiveClient([])
+            }
+
+
 
                
 
