@@ -90,6 +90,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
         console.log(res.data)
         getClientdata()
         notify()
+        // setAddServiceModal(false)
         return res
       }).catch((err) => {
         console.log("err", ...err)

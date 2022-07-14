@@ -4,12 +4,14 @@ import { Button, Table } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import AddClients from './AddClients';
 import AddService from './AddService';
+import DeleteClient from './DeleteClient';
 
 
 export default function ClientsTable() {
 
     const [newclientmodalShow, setnewclientmodalShow] = React.useState(false);
     const [AddServiceModal, setAddServiceModal] = React.useState(false);
+    const [DeleteClientModal, setDeleteClientModal] = React.useState(false);
     const [clientUpdate, setClientUpdate] = useState({});
     const [Client, setClient] = useState([]);
     const [activeClient, setactiveClient] = useState([]);
@@ -22,46 +24,51 @@ export default function ClientsTable() {
     var activeclent = [];
     async function getClientdata() {
         // await axios.get('http://www.muktainursesbureau.in/API//clients').then((res) => {
-            axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
+        axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
             setClient(res.data)
             // console.log("client", Client);
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-            axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
+        axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
 
-            if(resII.data){
+            if (resII.data) {
 
                 setactiveClient(resII.data)
-            }else{
+            } else {
 
                 setactiveClient([])
             }
-
-
-
-               
-
         })
     }
 
+    
     function getactiveclient(client) {
         activeclent = activeClient.map((item) => item.id)
-        // console.log("active client", activeclent);
-        // activeClient.map((item) => {
-            if (!activeclent.includes(client.id)) {
-                return (<Button className='btn-sm w-100'
+        if (!activeclent.includes(client.id)) {
+            
+            return (<Button className='btn-sm w-100'
 
-                    onClick={() => {
-                        setClientUpdate(client);
-                        setAddServiceModal(true);
-                    }}
-                >Activate</Button>)
-            }else{
-                return <Button className='btn-sm btn-danger w-100 disabled'>Activated</Button>
-            }
-        // })
-
+                onClick={() => {
+                    setClientUpdate(client);
+                    setAddServiceModal(true);
+                }}
+            >Activate</Button>)
+        } else {
+            return <Button className='btn-sm btn-danger w-100 disabled'>Activated</Button>
+        }
     }
+
+    function deleteclient(client) {
+        return(<Button className='btn-sm w-100'
+
+        onClick={() => {
+            setClientUpdate(client);
+            setDeleteClientModal(true);
+        }}
+    >Delete</Button>)
+    }
+    
+    
     return <>
         <div>
             <Button size='sm' onClick={() => setnewclientmodalShow(true)}>+</Button>
@@ -81,7 +88,8 @@ export default function ClientsTable() {
                         <th>area</th>
                         <th>Contact</th>
                         <th>Amount</th>
-                        <th>active</th>
+                        <th colSpan={2}>Action</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -99,6 +107,7 @@ export default function ClientsTable() {
                                         getactiveclient(client)
                                     }
                                 </td>
+                                <td>{deleteclient(client)}</td>
                             </tr>)
                         })
                     }
@@ -106,9 +115,16 @@ export default function ClientsTable() {
             </Table>
 
             <CustomModal
-                data={{ title: "Add Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
+                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
                 show={AddServiceModal}
                 onHide={() => setAddServiceModal(false)}
+                modalsize="md"
+
+            />
+            <CustomModal
+                data={{ title: "Delete Client", component: <DeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
+                show={DeleteClientModal}
+                onHide={() => setDeleteClientModal(false)}
                 modalsize="md"
 
             />

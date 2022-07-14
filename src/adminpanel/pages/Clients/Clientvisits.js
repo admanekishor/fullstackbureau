@@ -20,8 +20,8 @@ export default function Clientvisits() {
 
     }, []);
 
-    const getclientvisitdata = () =>{
-        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
+    const getclientvisitdata = async () =>{
+       await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
 
         if(res.data){
             setVisit(res.data)
@@ -72,7 +72,7 @@ export default function Clientvisits() {
                         <th>Staff Name</th>
                         <th>spaciality name</th>
                         <th>start date</th>
-                        <th>End date</th>
+                        {/* <th>End date</th> */}
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -80,7 +80,7 @@ export default function Clientvisits() {
                     {
                         Visit.map((record, i) => {
 
-                            console.log("map record", i, record)
+                            // console.log("map record", i, record)
 
                             // startDate
                             var st = record.start_date.split(/[- :]/);
@@ -108,7 +108,7 @@ export default function Clientvisits() {
                                         selected={setdate}
                                     />
                                 </td>
-                                <td className='text-center'>
+                                {/* <td className='text-center'>
                                     {record.end_date ?
                                         <DatePicker
                                             disabled
@@ -124,7 +124,7 @@ export default function Clientvisits() {
                                             selected={startDate}
                                             onChange={(date) => setstartDate(date)}
                                         />}
-                                </td>
+                                </td> */}
                                 <td>{
                                    
                                         <>

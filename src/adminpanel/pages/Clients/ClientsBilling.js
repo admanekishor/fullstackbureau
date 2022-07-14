@@ -8,18 +8,32 @@ import SelectDropdown from '../../component/SelectDropdown';
 export default function ClientsBilling() {
 
     const [Visit, setVisit] = useState([]);
-    const [getMonth, setMonth] = useState(new Date());
+    // const [getMonth, setMonth] = useState(new Date());
     const [printClient, setprintClient] = useState("");
-    const [modalShow, setModalShow] = React.useState(false);
-
+    const [modalShow, setModalShow] = useState(false);
+    const [workingDays, setworkingDays] = useState(0);
 
 
     useEffect(() => {
         axios.get('http://www.muktainursesbureau.in/API/Billing.php').then((res) => {
             setVisit(res.data)
         })
-
     }, [])
+    
+    console.log("visit", Visit);
+    
+    const daycalculate = (start_date, end_date) => {
+        const start = new Date(start_date);
+        const end = new Date(end_date);
+        let dayCount = 0
+        while (end > start) {
+            dayCount++
+            start.setDate(start.getDate() + 1)
+        }
+        return dayCount;
+
+    }
+
     return (
         <div>
             <br />
@@ -36,8 +50,8 @@ export default function ClientsBilling() {
                         <th>Client Name</th>
                         <th>Address</th>
 
-                        <th>start date</th>
-                        <th>End date</th>
+                        {/* <th>start date</th> */}
+                        <th>Service Days</th>
                         <th>action</th>
                     </tr>
                 </thead>
@@ -55,19 +69,15 @@ export default function ClientsBilling() {
                                 <td>{record.client_name}</td>
                                 <td>{record.client_address}</td>
 
-                                {/* <td>{dateobj(record.start_date)}</td> */}
+                                {/* <td>{record.start_date}</td> */}
                                 <td>
-                                   <SelectDropdown 
-                                   data={{ list: getMonth }}
-                                   isMulti={false}
-                                   isSearchable={false}
-                                   onChange={(e) => {
-                                     setMonth(e.value)
-                                    //  getstaff(e)
-                                   }}
-                                   />
+
+                                    {
+                                        daycalculate(record.start_date, record.end_date)
+                                    }
                                 </td>
-                                <td>{record.end_date}</td>
+
+                                {/* <td>{record.end_date}</td> */}
                                 <td>
                                     {
                                         record.start_date && record.end_date

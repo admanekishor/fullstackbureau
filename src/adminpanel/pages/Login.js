@@ -24,11 +24,11 @@ export default function Login() {
         //  await axios.post('http://www.muktainursesbureau.in/API//api/login', userdetails).then((res) => {
         await axios.post('http://www.muktainursesbureau.in/API/login.php', data).then((res) => {
 
-            console.log("res login1", res.data);
+            // console.log("res login1", res.data);
 
             if (res.data.response.status == "200") {
                 localStorage.setItem("user", JSON.stringify(res.data.user));
-                dispatch({ type: 'SIGN_IN', payload: res.data.message });
+                dispatch({ type: 'SIGN_IN', payload: res.data.user });
                 navigate('/admin');
 
             } else if (res.data.response.status === '401') {

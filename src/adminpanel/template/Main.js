@@ -5,12 +5,13 @@ import Clients from '../pages/Clients'
 import ClientsBilling from '../pages/Clients/ClientsBilling'
 import Dashboard from '../pages/Dashboard'
 import Employees from '../pages/Employees'
-import StaffDetails from '../pages/staff/StaffDetails'
-import BreacdCrumb from './BreadCrumb'
+// import StaffDetails from '../pages/staff/StaffDetails'
+// import BreacdCrumb from './BreadCrumb'
 import Header from './Header'
 import Sidebar from './Sidebar'
-import logourl from '../../assets/images/logo_white.png'
+// import logourl from '../../assets/images/logo_white.png'
 export default function Main() {
+    
     return (
         <>
             <Helmet>

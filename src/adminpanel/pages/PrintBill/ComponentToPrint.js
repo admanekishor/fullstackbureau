@@ -1,31 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "react-bootstrap";
 
-const ComponentToPrint = React.forwardRef(({printClient, setprintClient}, ref) => {
+const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref) => {
 
-    console.log("printClient", printClient);
+    const daycalculate = (start_date, end_date) => {
+        const start = new Date(start_date);
+        const end = new Date(end_date);
+        let dayCount = 0
+        // let getmonth = 0
+        while (end > start) {
+            dayCount++
+            start.setDate(start.getDate() + 1)
+            //    getmonth = start.setDate(start.getMonth() + 1)
+        }
+        return dayCount;
+
+    }
+    const today = new Date();
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1;
+    const yy = today.getFullYear();
+
+    console.log("today", mm)
     const value = {
         basicDetails: {
             CompanyName: "Muktai Nurses Bureau ",
             email: "muktaibureau@gmail.com",
             phoneNumber: "+91 9834301398 / 8208960038",
             website: "http://www.muktainursesbureau.in/",
-            location: "Dattawadi 999, Pune"
+            location: "Dattawadi 999, Pune",
+            date: dd + "/" + mm + "/" + yy
         },
 
 
         clientDetails: [
             {
+
                 clientName: printClient.client_name,
-                // clientName: "Lata Purandarey",
+                // clientName: "Lata Purandare",
                 location: printClient.client_address,
-                // location: "F. No 401 Nandanwan apt Near pratidnya hall Opp orchid Nursary Karvenagar",
+                // location: "F.No 401, Nandanwan Apt. Near Pratidnya Hall, Opp Orchid Nursary, Karve Nagar",
                 contact: printClient.client_contact,
                 // contact: "9860572488",
                 email: "-",
-                workingDays: "30",
-                amount: printClient.client_amount
-                // amount: "7,800"
+                workingDays: daycalculate(printClient.start_date, printClient.end_date),
+                // workingDays: "30 Days",
+                servicemonth: new Date().toUTCString().slice(7, 12),
+                workinghour: "24 hr",
+                amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
+                // amount: "5872/-"
             }
         ],
         signatureTxt: {
@@ -43,7 +66,7 @@ const ComponentToPrint = React.forwardRef(({printClient, setprintClient}, ref) =
                         <div className="a4-screen-sized">
                             <div className="aspect-ratio-box rounded-lg overflow-hidden">
                                 <div className="aspect-ratio-box-inside overflow-hidden">
-                                    <div className="w-full object-cover object-center p-5 bg-gray-100 text-center">
+                                    <div className="w-full object-cover object-center p-2 bg-gray-100 text-center">
                                         <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3 uppercase">
                                             {value.basicDetails.CompanyName} {value.basicDetails.lastName}
                                         </h1>
@@ -58,24 +81,25 @@ const ComponentToPrint = React.forwardRef(({printClient, setprintClient}, ref) =
                                         <p className="mb-1">Phone: {value.basicDetails.phoneNumber}{" "}</p>
 
                                     </div>
-                                    <div className="flex flex-wrap w-full p-1">
+                                    <div className="flex flex-wrap w-full px-1">
                                         <h2 className="text-md bold title-font text-gray-500 tracking-widest text-center">
                                             Bill Invoice
                                         </h2>
                                     </div>
                                     <div className="flex flex-wrap w-full p-5">
-                                        <div className="w-2/3">
-                                            <h5 className="text-md bold title-font text-gray-500 tracking-widest text-right">
-                                                Date: 30/04/2022
-                                            </h5>
+                                        <div className="">
+                                            <p className="float-end"><strong className="text-md bold title-font text-gray-500 tracking-widest text-end">
+                                                Date: {value.basicDetails.date}
+                                            </strong>
+                                            </p>
                                             <div className="flex flex-wrap">
                                                 <div className="w-1/2">
-                                                    <Table className="table table-bordered">
+                                                    <Table className="table table-bordered" style={{ border: '1px solid' }}>
                                                         <thead>
                                                             <tr>
                                                                 <th colSpan="3">
                                                                     {" "}
-                                                                    <h5>Client Details</h5>
+                                                                    <p className="p-0 m-0">Client Details</p>
                                                                 </th>
 
                                                             </tr>
@@ -87,68 +111,79 @@ const ComponentToPrint = React.forwardRef(({printClient, setprintClient}, ref) =
                                                                 <tr>
                                                                     <td rowSpan="3">
                                                                         {" "}
-                                                                        <h5>{workItem.clientName}</h5>
+                                                                        <p className="m-0">
+                                                                            <strong>
+                                                                                {workItem.clientName}
+                                                                            </strong>
+                                                                        </p>
                                                                         {" "}
-                                                                        <h5>{workItem.location}</h5>
+                                                                        <h5 className="m-0">{workItem.location}</h5>
                                                                     </td>
+                                                                    <th style={{ width: "160px" }}>
+                                                                        {" "}
+                                                                        <p className="m-0">Invoice Month</p>
+                                                                    </th>
                                                                     <td>
                                                                         {" "}
-                                                                        <h5>Invoice Month</h5>
-                                                                    </td>
-                                                                    <td>
-                                                                        {" "}
-                                                                       <h5>April</h5>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        {" "}
-                                                                        <h5>Phone</h5>
-                                                                    </td>
-                                                                    <td>
-                                                                        {" "}
-                                                                        <h5>{workItem.contact}</h5>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        {" "}
-                                                                      <h5>Email</h5>
-                                                                    </td>
-                                                                    <td>
-                                                                        {" "}
-                                                                        <h5>{workItem.email}</h5>
+                                                                        <p className="m-0">{workItem.servicemonth}</p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>
                                                                         {" "}
-                                                                        <h5>Description</h5>
+                                                                        <p className="m-0">Phone</p>
+                                                                    </th>
+                                                                    <td>
+                                                                        {" "}
+                                                                        <p className="m-0">{workItem.contact}</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        {" "}
+                                                                        <p className="m-0">Email</p>
+                                                                    </th>
+                                                                    <td>
+                                                                        {" "}
+                                                                        <p className="m-0">{workItem.email}</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>
+                                                                        {" "}
+                                                                        <p className="m-0">Description</p>
                                                                     </th>
                                                                     <th>
                                                                         {" "}
-                                                                        <h5>Service By Hours</h5>
+                                                                        <p className="m-0">Service By Hours</p>
                                                                     </th>
                                                                     <th>
                                                                         {" "}
-                                                                        <h5>Amount</h5>
+                                                                        <p className="m-0">Amount</p>
                                                                     </th>
 
                                                                 </tr>
                                                                 <tr>
+                                                                    <th>
+                                                                        {" "}
+                                                                        <p className="m-0"> Working Days ({workItem.workingDays})</p>
+                                                                    </th>
                                                                     <td>
                                                                         {" "}
-                                                                       <h5> {workItem.workingDays} working Days</h5>
+                                                                        <p className="m-0">{workItem.workinghour}</p>
                                                                     </td>
                                                                     <td>
                                                                         {" "}
-                                                                        <h5>24 hrs.</h5>
-                                                                    </td>
-                                                                    <td>
-                                                                        {" "}
-                                                                       <h5> {workItem.amount}</h5>
+                                                                        <p className="m-0"> {workItem.amount}</p>
                                                                     </td>
                                                                 </tr>
+                                                                {/* <tr>
+                                                                    <td>
+
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td>&nbsp;</td>
+                                                                </tr> */}
                                                                 <tr>
                                                                     <td>
 
@@ -157,27 +192,22 @@ const ComponentToPrint = React.forwardRef(({printClient, setprintClient}, ref) =
                                                                     <td>&nbsp;</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>
+                                                                    <th rowSpan="3">
+                                                                        <p className="m-0">Comments or Special Instructions:</p>
 
-                                                                    </td>
-                                                                    <td></td>
-                                                                    <td>&nbsp;</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td rowSpan="3">
-                                                                        <h5>Comments or Special Instructions:</h5>
-
-                                                                    </td>
-                                                                    <td rowSpan="3">
+                                                                    </th>
+                                                                    <th rowSpan="3">
                                                                         {" "}
-                                                                        <h5>Subtotal</h5>
-                                                                        <h5>Tax</h5>
-                                                                        <h5>Total</h5>
+                                                                        <p className="m-0">Subtotal</p>
+                                                                        <p className="m-0">Tax</p>
+                                                                        <p className="m-0">Total</p>
+                                                                    </th>
+                                                                    <td>
+                                                                        <p></p>
                                                                     </td>
-                                                                    <td></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td></td>
+                                                                    <td><p></p></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><h5 className="mb-0">{workItem.amount} Rs.</h5></td>
@@ -190,11 +220,11 @@ const ComponentToPrint = React.forwardRef(({printClient, setprintClient}, ref) =
                                             </div>
 
                                             <div
-                                                className="leading-relaxed mt-5 text-sm font-weight-bold pt-5 col-3"
+                                                className="leading-relaxed mt-5 text-sm font-weight-bold pt-5 col-4"
 
                                             >
-                                                <p className="text-center">{value.signatureTxt.message}<br />
-                                                    {value.signatureTxt.subtxt}</p>
+                                                <p className="text-center"><strong>{value.signatureTxt.message}</strong><br />
+                                                    <strong>{value.signatureTxt.subtxt}</strong></p>
                                             </div>
                                             {/* <div
                                                 className="leading-relaxed text-sm"

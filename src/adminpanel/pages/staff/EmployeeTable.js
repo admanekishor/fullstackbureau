@@ -28,7 +28,7 @@ useEffect(() => {
     async function getemployeedata() {
 
         // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
-            axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
+           await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
             setEmployeeList(res.data.result)
             // console.log("emplist", EmployeeList);
         })

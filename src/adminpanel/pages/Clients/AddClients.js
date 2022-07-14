@@ -62,6 +62,8 @@ const initialclientAmount = {
 
 
 const AddClients = ({ getClientdata }) => {
+
+
   const auth = useContext(Authcontext);
   // console.log("Auth", auth.state)
   const [clientName, setclientName] = useState(initialName);
@@ -90,7 +92,7 @@ const AddClients = ({ getClientdata }) => {
 
   async function getAreas() {
     await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
-      
+
       var localareas = [];
       res.data.result.map((item) => {
         localareas.push(
@@ -135,11 +137,11 @@ const AddClients = ({ getClientdata }) => {
         clientAltContact: clientAltContact.value,
         clientAmount: clientAmount.value
       }
-      
-      console.log("empData", empData);
-      
+
+      // console.log("empData", empData);
+
       axios.post('http://www.muktainursesbureau.in/API/insertclient.php', empData).then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         getClientdata();
         notify()
         return res
