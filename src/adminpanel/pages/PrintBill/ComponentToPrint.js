@@ -30,6 +30,7 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
             website: "http://www.muktainursesbureau.in/",
             location: "Dattawadi 999, Pune",
             date: dd + "/" + mm + "/" + yy
+            // date: "31" + "/" + "08" + "/" + "2022"
         },
 
 
@@ -46,9 +47,10 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
                 workingDays: daycalculate(printClient.start_date, printClient.end_date),
                 // workingDays: "30 Days",
                 servicemonth: new Date().toUTCString().slice(7, 12),
+                // servicemonth: "July",
                 workinghour: "24 hr",
                 amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
-                // amount: "5872/-"
+                // amount: "23690/-"
             }
         ],
         signatureTxt: {

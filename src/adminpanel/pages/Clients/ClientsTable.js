@@ -5,13 +5,16 @@ import CustomModal from '../../component/CustomModal';
 import AddClients from './AddClients';
 import AddService from './AddService';
 import DeleteClient from './DeleteClient';
-
+import { FaCheck, FaPencilAlt } from 'react-icons/fa';
+import { RiDeleteBinFill } from "react-icons/ri";
+import UpdateClients from './UpdateClient';
 
 export default function ClientsTable() {
 
     const [newclientmodalShow, setnewclientmodalShow] = React.useState(false);
     const [AddServiceModal, setAddServiceModal] = React.useState(false);
     const [DeleteClientModal, setDeleteClientModal] = React.useState(false);
+    const [UpdateClientModal, setUpdateClientModal] = React.useState(false);
     const [clientUpdate, setClientUpdate] = useState({});
     const [Client, setClient] = useState([]);
     const [activeClient, setactiveClient] = useState([]);
@@ -24,12 +27,12 @@ export default function ClientsTable() {
     var activeclent = [];
     async function getClientdata() {
         // await axios.get('http://www.muktainursesbureau.in/API//clients').then((res) => {
-        axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
+       await axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
             setClient(res.data)
             // console.log("client", Client);
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-        axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
+       await axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
 
             if (resII.data) {
 
@@ -41,43 +44,47 @@ export default function ClientsTable() {
         })
     }
 
-    
+
     function getactiveclient(client) {
         activeclent = activeClient.map((item) => item.id)
         if (!activeclent.includes(client.id)) {
-            
-            return (<Button className='btn-sm w-100'
 
+            return (<Button className='btn-sm d-flex'
+                title='Activate'
                 onClick={() => {
                     setClientUpdate(client);
                     setAddServiceModal(true);
                 }}
-            >Activate</Button>)
+            ><FaCheck size={15} /></Button>)
         } else {
-            return <Button className='btn-sm btn-danger w-100 disabled'>Activated</Button>
+            return <Button className='btn-sm btn-danger d-flex' title='Activated'> <FaCheck size={15} /></Button>
         }
     }
 
     function deleteclient(client) {
-        return(<Button className='btn-sm w-100'
-
-        onClick={() => {
-            setClientUpdate(client);
-            setDeleteClientModal(true);
-        }}
-    >Delete</Button>)
+        return (<Button className='btn-sm d-flex'
+            title='Delete'
+            onClick={() => {
+                setClientUpdate(client);
+                setDeleteClientModal(true);
+            }}
+        ><RiDeleteBinFill /></Button>)
     }
-    
-    
+
+    function Editclient(client) {
+        return (<Button className='btn-sm d-flex'
+            title='Edit'
+            onClick={() => {
+                setClientUpdate(client);
+                setUpdateClientModal(true);
+            }}
+        ><FaPencilAlt /></Button>)
+    }
+
+
     return <>
         <div>
             <Button size='sm' onClick={() => setnewclientmodalShow(true)}>+</Button>
-
-            <CustomModal
-                data={{ title: "Add New Client", component: <AddClients getClientdata={getClientdata} /> }}
-                show={newclientmodalShow}
-                onHide={() => setnewclientmodalShow(false)}
-            />
             <hr />
             <Table striped bordered hover size="sm" responsive>
                 <thead>
@@ -88,8 +95,8 @@ export default function ClientsTable() {
                         <th>area</th>
                         <th>Contact</th>
                         <th>Amount</th>
-                        <th colSpan={2}>Action</th>
-                        
+                        <th colSpan={3}>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -102,11 +109,8 @@ export default function ClientsTable() {
                                 <td>{client.areacode}</td>
                                 <td>{client.contact}</td>
                                 <td>{client.amount}</td>
-                                <td>
-                                    {
-                                        getactiveclient(client)
-                                    }
-                                </td>
+                                <td>{getactiveclient(client)}</td>
+                                <td>{Editclient(client)}</td>
                                 <td>{deleteclient(client)}</td>
                             </tr>)
                         })
@@ -115,16 +119,29 @@ export default function ClientsTable() {
             </Table>
 
             <CustomModal
-                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
-                show={AddServiceModal}
-                onHide={() => setAddServiceModal(false)}
+                data={{ title: "Add New Client", component: <AddClients getClientdata={getClientdata} /> }}
+                show={newclientmodalShow}
+                onHide={() => setnewclientmodalShow(false)}
+            />
+
+            <CustomModal
+                data={{ title: "Update Client", component: <UpdateClients getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
+                show={UpdateClientModal}
+                onHide={() => setUpdateClientModal(false)}
+            />
+
+            <CustomModal
+                data={{ title: "Delete Client", component: <DeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate}  /> }}
+                show={DeleteClientModal}
+                onHide={() => setDeleteClientModal(false)}
                 modalsize="md"
 
             />
+
             <CustomModal
-                data={{ title: "Delete Client", component: <DeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
-                show={DeleteClientModal}
-                onHide={() => setDeleteClientModal(false)}
+                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} /> }}
+                show={AddServiceModal}
+                onHide={() => setAddServiceModal(false)}
                 modalsize="md"
 
             />

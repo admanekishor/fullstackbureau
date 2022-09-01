@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { forwardRef, useEffect, useState } from 'react'
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Tab, Tabs } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
@@ -19,9 +19,9 @@ export default function ClientsBilling() {
             setVisit(res.data)
         })
     }, [])
-    
+
     console.log("visit", Visit);
-    
+
     const daycalculate = (start_date, end_date) => {
         const start = new Date(start_date);
         const end = new Date(end_date);
@@ -43,56 +43,124 @@ export default function ClientsBilling() {
                 onHide={() => setModalShow(false)}
                 modalsize="lg"
             />
-            <Table striped bordered hover size="sm" responsive>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Client Name</th>
-                        <th>Address</th>
+            <Tabs
+                defaultActiveKey="pendingbill"
+                id="uncontrolled-tab-example"
+                className="mb-3"
+            >
+                <Tab eventKey="pendingbill" title="Pending Bill">
+                    <Table striped bordered hover size="sm" responsive>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Client Name</th>
+                                <th>Address</th>
 
-                        {/* <th>start date</th> */}
-                        <th>Service Days</th>
-                        <th>action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        Visit.map((record, i) => {
-                            const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-                                <Button size='sm' onClick={onClick} ref={ref}>
-                                    {value}
-                                </Button>
-                            ));
+                                <th>start date</th>
+                                <th>Service Days</th>
+                                <th>action</th>
+                                <th>pending</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                Visit.map((record, i) => {
+                                    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+                                        <Button size='sm' onClick={onClick} ref={ref}>
+                                            {value}
+                                        </Button>
+                                    ));
 
-                            return (<tr key={i}>
-                                <td>{i + 1}</td>
-                                <td>{record.client_name}</td>
-                                <td>{record.client_address}</td>
+                                    return (<tr key={i}>
+                                        <td>{i + 1}</td>
+                                        <td>{record.client_name}</td>
+                                        <td>{record.client_address}</td>
 
-                                {/* <td>{record.start_date}</td> */}
-                                <td>
+                                        <td>{record.start_date}</td>
+                                        <td>
 
-                                    {
-                                        daycalculate(record.start_date, record.end_date)
-                                    }
-                                </td>
+                                            {
+                                                daycalculate(record.start_date, record.end_date)
+                                            }
+                                        </td>
 
-                                {/* <td>{record.end_date}</td> */}
-                                <td>
-                                    {
-                                        record.start_date && record.end_date
-                                            ? <Button size="sm" onClick={() => {
-                                                setprintClient(record)
-                                                setModalShow(true)
-                                            }}>Print</Button> : ""
+                                        {/* <td>{record.end_date}</td> */}
+                                        <td>
+                                            {
+                                                record.start_date && record.end_date
+                                                    ? <Button size="sm" onClick={() => {
+                                                        setprintClient(record)
+                                                        setModalShow(true)
+                                                    }}>Print</Button> : ""
 
-                                    }
-                                </td>
-                            </tr>)
-                        })
-                    }
-                </tbody>
-            </Table>
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                record.ispaid?"Pending":""
+                                            }
+                                        </td>
+                                    </tr>)
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </Tab>
+                <Tab eventKey="paidbill" title="Paid Bill">
+                    <Table striped bordered hover size="sm" responsive>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Client Name</th>
+                                <th>Address</th>
+
+                                <th>start date</th>
+                                <th>Service Days</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                Visit.map((record, i) => {
+                                    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+                                        <Button size='sm' onClick={onClick} ref={ref}>
+                                            {value}
+                                        </Button>
+                                    ));
+
+                                    return (<tr key={i}>
+                                        <td>{i + 1}</td>
+                                        <td>{record.client_name}</td>
+                                        <td>{record.client_address}</td>
+
+                                        <td>{record.start_date}</td>
+                                        <td>
+
+                                            {
+                                                daycalculate(record.start_date, record.end_date)
+                                            }
+                                        </td>
+
+                                        {/* <td>{record.end_date}</td> */}
+                                        <td>
+                                            {
+                                                record.start_date && record.end_date
+                                                    ? <Button size="sm" onClick={() => {
+                                                        setprintClient(record)
+                                                        setModalShow(true)
+                                                    }}>Print</Button> : ""
+
+                                            }
+                                        </td>
+                                    </tr>)
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </Tab>
+
+            </Tabs>
+
         </div>
     )
 }

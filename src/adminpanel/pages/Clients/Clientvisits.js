@@ -23,6 +23,7 @@ export default function Clientvisits() {
     const getclientvisitdata = async () =>{
        await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
 
+       console.log("res", res)
         if(res.data){
             setVisit(res.data)
 
@@ -36,10 +37,10 @@ export default function Clientvisits() {
         })
     }
 
-    const updateenddate = () => {
+    const updateenddate = async() => {
 
         if (!selectclint) {
-            alert("pelese select clint")
+            alert("pelese select client")
             return
 
         }
@@ -52,7 +53,7 @@ export default function Clientvisits() {
         }
         console.log("senddataapi", senddataapi)
 
-        axios.post('http://www.muktainursesbureau.in/API/updateclientvisit.php', senddataapi).then((res) => {
+        await axios.post('http://www.muktainursesbureau.in/API/updateclientvisit.php', senddataapi).then((res) => {
             getclientvisitdata()
             setModalShow(false)
         })
