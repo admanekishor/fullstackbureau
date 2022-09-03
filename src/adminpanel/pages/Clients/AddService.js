@@ -28,7 +28,7 @@ const initialClientvisitor = {
 };
 
 
-const AddService = ({ clientUpdate, getClientdata }) => {
+const AddService = ({ clientUpdate, getClientdata, afterclose }) => {
   const auth = useContext(Authcontext);
 
   const [clientVisitor, setclientVisitor] = useState(initialClientvisitor);
@@ -90,6 +90,7 @@ const AddService = ({ clientUpdate, getClientdata }) => {
         console.log(res.data)
         getClientdata()
         notify()
+        afterclose()
         // setAddServiceModal(false)
         return res
       }).catch((err) => {

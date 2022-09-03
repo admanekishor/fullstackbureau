@@ -7,6 +7,8 @@ import DatePicker from 'react-datepicker';
 import CustomModal from '../../component/CustomModal';
 import SelectDropdown from '../../component/SelectDropdown';
 import AddNewEmp from '../staff/AddNewEmp';
+import { IoClose } from "react-icons/io5";
+
 export default function Clientvisits() {
 
     const [Visit, setVisit] = useState([]);
@@ -20,24 +22,24 @@ export default function Clientvisits() {
 
     }, []);
 
-    const getclientvisitdata = async () =>{
-       await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
+    const getclientvisitdata = async () => {
+        await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
 
-       console.log("res", res)
-        if(res.data){
-            setVisit(res.data)
+            console.log("res", res)
+            if (res.data) {
+                setVisit(res.data)
 
-        }else{
+            } else {
 
-            setVisit([])
+                setVisit([])
 
-        }
+            }
 
             // console.log("clientvisit", res);
         })
     }
 
-    const updateenddate = async() => {
+    const updateenddate = async () => {
 
         if (!selectclint) {
             alert("pelese select client")
@@ -127,49 +129,50 @@ export default function Clientvisits() {
                                         />}
                                 </td> */}
                                 <td>{
-                                   
-                                        <>
-                                            <Button className='btn btn-sm w-100' onClick={() => {
+
+                                    <>
+                                        <Button className='btn btn-sm w-100'
+                                            title="End" onClick={() => {
                                                 console.log("end", record, i)
                                                 setselectclint(record)
                                                 setModalShow(true)
-                                            }}>End</Button>
-                                            <CustomModal
-                                                data={{
-                                                    title: "Select End Date", component: <>
+                                            }}><IoClose size={20} /></Button>
+                                        <CustomModal
+                                            data={{
+                                                title: "Select End Date", component: <>
 
-                                                        <Row>
-                                                            <Col>
-                                                                <label>Select End Date</label>
-                                                            </Col>
-                                                            <Col>
-                                                                <DatePicker
+                                                    <Row>
+                                                        <Col>
+                                                            <label>Select End Date</label>
+                                                        </Col>
+                                                        <Col>
+                                                            <DatePicker
 
-                                                                    placeholderText='Enter End Date'
-                                                                    dateFormat="dd/MM/yyyy"
-                                                                    className='form-control'
-                                                                    selected={endDate}
-                                                                    onChange={(date) => setendDate(date)}
-                                                                />
-                                                            </Col>
-                                                        </Row>
-                                                        <hr />
-                                                        <Button className='float-end'
+                                                                placeholderText='Enter End Date'
+                                                                dateFormat="dd/MM/yyyy"
+                                                                className='form-control'
+                                                                selected={endDate}
+                                                                onChange={(date) => setendDate(date)}
+                                                            />
+                                                        </Col>
+                                                    </Row>
+                                                    <hr />
+                                                    <Button className='float-end'
 
-                                                            onClick={() => {
-                                                                console.log("submit", record, i)
-                                                                updateenddate()
-                                                            }}
-                                                        >
-                                                            Submit
-                                                        </Button>
-                                                    </>
-                                                }}
-                                                show={modalShow}
-                                                onHide={() => setModalShow(false)}
-                                            // modalSize="lg"
-                                            />
-                                        </>
+                                                        onClick={() => {
+                                                            console.log("submit", record, i)
+                                                            updateenddate()
+                                                        }}
+                                                    >
+                                                        Submit
+                                                    </Button>
+                                                </>
+                                            }}
+                                            show={modalShow}
+                                            onHide={() => setModalShow(false)}
+                                        // modalSize="lg"
+                                        />
+                                    </>
 
                                 }</td>
                             </tr>)

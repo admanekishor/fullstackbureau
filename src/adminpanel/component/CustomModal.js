@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 
 function CustomModal(props) {
   
-  useEffect(() => {
-   setTimeout(() => {
-    props.onHide()
-   },10000);
-  }, [props])
+  // useEffect(() => {
+  //  setTimeout(() => {
+  //   props.onHide()
+  //  },10000);
+  // }, [props])
   
     return (
       <Modal

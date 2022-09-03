@@ -4,11 +4,13 @@ import { Button, Table } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import AddNewEmp from '../staff/AddNewEmp';
 import EditEmp from '../staff/EditEmp';
+import { FaPencilAlt } from 'react-icons/fa';
+import { RiDeleteBinFill } from 'react-icons/ri';
 
 
 export default function EmployeeTable() {
 
-    
+
     const [NewempmodalShow, setNewempModalShow] = React.useState(false);
     const [EditmodalShow, setEditmodalShow] = React.useState(false);
 
@@ -19,25 +21,25 @@ export default function EmployeeTable() {
     useEffect(() => {
         getemployeedata()
     }, [])
-useEffect(() => {
-    deleteemployee()
-}, [])
+    useEffect(() => {
+        deleteemployee()
+    }, [])
 
 
 
     async function getemployeedata() {
 
         // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
-           await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
+        await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
             setEmployeeList(res.data.result)
             // console.log("emplist", EmployeeList);
         })
     }
     async function deleteemployee(e) {
-        const empData = {empId: e}
+        const empData = { empId: e }
         // console.log("deleted id", empData);
-    //    await axios.post('http://www.muktainursesbureau.in/API//staff/delete', empData).then((res) => {
-       await axios.post('http://www.muktainursesbureau.in/API/deletestaff.php', empData).then((res) => {
+        //    await axios.post('http://www.muktainursesbureau.in/API//staff/delete', empData).then((res) => {
+        await axios.post('http://www.muktainursesbureau.in/API/deletestaff.php', empData).then((res) => {
             // console.log("deleted res", res);
             getemployeedata()
         })
@@ -47,13 +49,6 @@ useEffect(() => {
         <div>
             <Button size='sm' onClick={() => setNewempModalShow(true)}>+</Button>
 
-            <CustomModal
-                data={{ title: "Add New Staff", component: <AddNewEmp getemployeedata={getemployeedata} /> }}
-                show={NewempmodalShow}
-                onHide={() => setNewempModalShow(false)}
-                modalsize="md"
-
-            />
             <hr />
             <Table striped bordered hover size="sm" responsive>
                 <thead>
@@ -66,7 +61,7 @@ useEffect(() => {
                         <th>Contact</th>
                         <th>Active</th>
                         <th>Speciality</th>
-                        <th>Action</th>
+                        <th colSpan={2}>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,31 +77,44 @@ useEffect(() => {
                                 <td>{employee.active ? "Active" : "InActive"}</td>
                                 <td>{employee.specialityname}</td>
                                 <td valign='middle'>
-                                    <div className='d-flex justify-content-center align-items-center'>
-                                        <Button className='btn-sm' onClick={() => {
-                                            setEmpupdate(employee)
-                                            setEditmodalShow(true)
-                                        }}>Edit</Button>&nbsp;
-                                        <Button className='btn-sm' onClick={() => {
-                                            if(window.confirm('Are you sure to delete this record?')){ 
-                                                deleteemployee(employee.id)
-                                            }
-                                        }}>
-                                            Delete
-                                        </Button>
-                                    </div>
+                                    {/* <div className='d-flex justify-content-center align-items-center'> */}
+                                    <Button className='btn-sm' onClick={() => {
+                                        setEmpupdate(employee)
+                                        setEditmodalShow(true)
+                                    }}><FaPencilAlt /></Button>
+                                    {/* </div> */}
+                                </td>
+                                <td valign='middle'>
+                                    <Button className='btn-sm' onClick={() => {
+                                        if (window.confirm('Are you sure to delete this record?')) {
+                                            deleteemployee(employee.id)
+                                        }
+                                    }}>
+                                        <RiDeleteBinFill size={16} />
+                                    </Button>
+                                    {/* </div> */}
                                 </td>
                             </tr>)
                         })
                     }
                 </tbody>
             </Table>
+
+            
+            <CustomModal
+                data={{ title: "Add New Staff", component: <AddNewEmp getemployeedata={getemployeedata} /> }}
+                show={NewempmodalShow}
+                onHide={() => setNewempModalShow(false)}
+                modalsize="md"
+
+            />
+            
             <CustomModal
                 data={{ title: "Edit Staff", component: <EditEmp Empupdate={Empupdate} setEmpupdate={setEmpupdate} /> }}
                 show={EditmodalShow}
                 onHide={() => setEditmodalShow(false)}
                 modalSize="md"
             />
-        </div>
+        </div >
     </>
 }

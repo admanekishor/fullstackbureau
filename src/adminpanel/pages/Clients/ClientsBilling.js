@@ -5,6 +5,7 @@ import CustomModal from '../../component/CustomModal';
 import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
 import SelectDropdown from '../../component/SelectDropdown';
+import { FaPrint } from 'react-icons/fa';
 export default function ClientsBilling() {
 
     const [Visit, setVisit] = useState([]);
@@ -88,16 +89,16 @@ export default function ClientsBilling() {
                                         <td>
                                             {
                                                 record.start_date && record.end_date
-                                                    ? <Button size="sm" onClick={() => {
+                                                    ? <Button size="sm" title="Print" onClick={() => {
                                                         setprintClient(record)
                                                         setModalShow(true)
-                                                    }}>Print</Button> : ""
+                                                    }}><FaPrint /></Button> : ""
 
                                             }
                                         </td>
                                         <td>
                                             {
-                                                record.ispaid?"Pending":""
+                                                record.ispaid ? "Pending" : ""
                                             }
                                         </td>
                                     </tr>)
@@ -145,10 +146,11 @@ export default function ClientsBilling() {
                                         <td>
                                             {
                                                 record.start_date && record.end_date
-                                                    ? <Button size="sm" onClick={() => {
-                                                        setprintClient(record)
-                                                        setModalShow(true)
-                                                    }}>Print</Button> : ""
+                                                    ? <Button size="sm"
+                                                        title="Print" onClick={() => {
+                                                            setprintClient(record)
+                                                            setModalShow(true)
+                                                        }}><FaPrint /></Button> : ""
 
                                             }
                                         </td>

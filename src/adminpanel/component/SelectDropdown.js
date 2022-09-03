@@ -10,7 +10,7 @@ export default function SelectDropdown(props) {
   return (
     <div style={{ width: '100%' }}>
       <Select
-        // value={props.value}
+        value={props.value}
         
         isClearable="true"
         options={props.data.list}

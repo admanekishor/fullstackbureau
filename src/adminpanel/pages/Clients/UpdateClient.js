@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const UpdateClients = ({ clientUpdate, getClientdata }) => {
+const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
   const initialName = {
     key: "clientName",
@@ -64,7 +64,7 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
   };
 
 
-  // console.log("clientUpdate", clientUpdate);
+  console.log("clientUpdate", clientUpdate);
 
   const auth = useContext(Authcontext);
   // console.log("Auth", auth.state)
@@ -76,12 +76,12 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
   const [clientAmount, setclientAmount] = useState(initialclientAmount);
   const [areaOptions, setAreaOptions] = useState(null)
   // areacode
-  // const [area, setAreacode] = useState(initialclientArea)
+  const [Selected, setSelected] = useState(null)
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
 
-  
+
   const validate = (obj) => {
     let error;
     if (!obj.value) {
@@ -99,15 +99,24 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
     await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
 
       var localareas = [];
+      var selected = []
       res.data.result.map((item) => {
+        if(clientUpdate.areacode == item.id){
+          selected.push({
+            value: item.id,
+            label: item.areaname,
+          })
+          setSelected(selected)
+        }
+        // console.log("Selected", selected)
         localareas.push(
           {
             value: item.id,
             label: item.areaname,
           });
-          setAreaOptions(localareas)
+        setAreaOptions(localareas)
       });
-      console.log("areaOptions", areaOptions)
+      // console.log("clientArea", clientArea)
     })
 
   }
@@ -121,8 +130,8 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
     draggable: true,
   });
 
-  // console.log("clientArea", clientArea)
-  
+  console.log("Selected", Selected)
+
   const submitData = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -153,6 +162,7 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
         // console.log("res", res);
         getClientdata();
         notify()
+        afterclose()
         return res
       }).catch((err) => {
         console.log("err", ...err)
@@ -240,12 +250,12 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
                   <Form.Label>Select Client Area</Form.Label>
                   <SelectDropdown
                     name="clientArea"
+                    value={Selected}
                     // value={{ optionsState: clientArea.value }}
-                    // value={{ optionsState: clientArea.value }}
-                  //   value = {
-                  //     areaOptions.filter(option => 
-                  //        option.value === clientArea.value)
-                  //  }
+                    //   value = {
+                    //     areaOptions.filter(option => 
+                    //        option.value === clientArea.value)
+                    //  }
                     // value={clientArea.value}
                     data={{ list: areaOptions }}
                     isMulti={false}
@@ -294,7 +304,7 @@ const UpdateClients = ({ clientUpdate, getClientdata }) => {
                   <Form.Label>Enter Client Alt. Contact</Form.Label>
                   <Form.Control type="text"
                     name="clientAltContact"
-                    value={clientAltContact.value}
+                    value={clientAltContact.value == "" ? clientContact.value : clientAltContact.value}
                     // value={clientUpdate.alternate_contact}
                     placeholder="Enter Alternate Contact"
                     onChange={(e) => setclientAltContact({ ...clientAltContact, value: e.target.value })}

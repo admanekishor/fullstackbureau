@@ -61,7 +61,7 @@ const initialclientAmount = {
 };
 
 
-const AddClients = ({ getClientdata }) => {
+const AddClients = ({ getClientdata, afterclose }) => {
 
 
   const auth = useContext(Authcontext);
@@ -144,6 +144,7 @@ const AddClients = ({ getClientdata }) => {
         // console.log("res", res);
         getClientdata();
         notify()
+        afterclose();
         return res
       }).catch((err) => {
         console.log("err", ...err)
