@@ -18,6 +18,7 @@ export default function ClientsTable() {
     const [clientUpdate, setClientUpdate] = useState({});
     const [Client, setClient] = useState([]);
     const [activeClient, setactiveClient] = useState([]);
+    const [InactiveClient, setInactiveClient] = useState([]);
     // console.log(props)
     useEffect(() => {
         getClientdata()
@@ -32,16 +33,20 @@ export default function ClientsTable() {
             // console.log("client", Client);
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-        await axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
-
-            if (resII.data) {
-
-                setactiveClient(resII.data)
-            } else {
-
-                setactiveClient([])
-            }
-        })
+            await axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
+                
+                if (resII.data) {
+                    
+                    setactiveClient(resII.data)
+                } else {
+                    
+                    setactiveClient([])
+                }
+            })
+            await axios.get('http://www.muktainursesbureau.in/API/InActiveClients.php').then((resIII) => {
+                setInactiveClient(resIII.data)
+                // console.log("client", Client);
+            })
     }
 
 
@@ -148,7 +153,7 @@ export default function ClientsTable() {
                         </thead>
                         <tbody>
                             {
-                                Client.map((client, i) => {
+                                InactiveClient.map((client, i) => {
                                     return (<tr key={i + 1}>
                                         <td>{i + 1}</td>
                                         <td>{client.name}</td>

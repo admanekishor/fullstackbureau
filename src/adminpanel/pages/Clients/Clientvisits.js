@@ -19,7 +19,7 @@ export default function Clientvisits() {
     // const [getAction, setgetAction] = useState(null)
     useEffect(() => {
         getclientvisitdata()
-
+console.log("Visit Updated")
     }, []);
 
     const getclientvisitdata = async () => {
@@ -38,6 +38,7 @@ export default function Clientvisits() {
             // console.log("clientvisit", res);
         })
     }
+    // getclientvisitdata();
 
     const updateenddate = async () => {
 
