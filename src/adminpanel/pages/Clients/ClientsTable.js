@@ -10,7 +10,7 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import UpdateClients from './UpdateClient';
 
 export default function ClientsTable() {
-
+    const [isLoading, setisLoading] = useState(false);
     const [newclientmodalShow, setnewclientmodalShow] = React.useState(false);
     const [AddServiceModal, setAddServiceModal] = React.useState(false);
     const [DeleteClientModal, setDeleteClientModal] = React.useState(false);
@@ -27,26 +27,30 @@ export default function ClientsTable() {
 
     var activeclent = [];
     async function getClientdata() {
+        setisLoading(true)
         // await axios.get('http://www.muktainursesbureau.in/API//clients').then((res) => {
         await axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
             setClient(res.data)
             // console.log("client", Client);
+            setisLoading(false)
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-            await axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
-                
-                if (resII.data) {
-                    
-                    setactiveClient(resII.data)
-                } else {
-                    
-                    setactiveClient([])
-                }
-            })
-            await axios.get('http://www.muktainursesbureau.in/API/InActiveClients.php').then((resIII) => {
-                setInactiveClient(resIII.data)
-                // console.log("client", Client);
-            })
+        await axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
+
+            if (resII.data) {
+
+                setactiveClient(resII.data)
+                setisLoading(false)
+            } else {
+
+                setactiveClient([])
+            }
+        })
+        await axios.get('http://www.muktainursesbureau.in/API/InActiveClients.php').then((resIII) => {
+            setInactiveClient(resIII.data)
+            // console.log("client", Client);
+            setisLoading(false)
+        })
     }
 
 
@@ -104,71 +108,76 @@ export default function ClientsTable() {
                 className="mb-3"
             >
                 <Tab eventKey="ActiveClient" title="Active Clients">
-                    <Table striped bordered hover size="sm" responsive>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>area</th>
-                                <th>Contact</th>
-                                <th>Amount</th>
-                                <th colSpan={3}>Action</th>
+                    <div className='text-center'>
+                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                            <Table striped bordered hover size="sm" responsive>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>area</th>
+                                        <th>Contact</th>
+                                        <th>Amount</th>
+                                        <th colSpan={3}>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                Client.map((client, i) => {
-                                    return (<tr key={i + 1}>
-                                        <td>{i + 1}</td>
-                                        <td>{client.name}</td>
-                                        <td>{client.address}</td>
-                                        <td>{client.areacode}</td>
-                                        <td>{client.contact}</td>
-                                        <td>{client.amount}</td>
-                                        <td>{getactiveclient(client)}</td>
-                                        <td>{Editclient(client)}</td>
-                                        <td>{deleteclient(client)}</td>
-                                    </tr>)
-                                })
-                            }
-                        </tbody>
-                    </Table>
-
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        Client.map((client, i) => {
+                                            return (<tr key={i + 1}>
+                                                <td>{i + 1}</td>
+                                                <td>{client.name}</td>
+                                                <td>{client.address}</td>
+                                                <td>{client.areacode}</td>
+                                                <td>{client.contact}</td>
+                                                <td>{client.amount}</td>
+                                                <td>{getactiveclient(client)}</td>
+                                                <td>{Editclient(client)}</td>
+                                                <td>{deleteclient(client)}</td>
+                                            </tr>)
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
                 </Tab>
                 <Tab eventKey="InActiveClient" title="InActive Clients">
-                <Table striped bordered hover size="sm" responsive>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>area</th>
-                                <th>Contact</th>
-                                <th>Amount</th>
-                                <th colSpan={3}>Action</th>
+                    <div className='text-center'>
+                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} /> : <Table striped bordered hover size="sm" responsive>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>area</th>
+                                    <th>Contact</th>
+                                    <th>Amount</th>
+                                    <th colSpan={3}>Action</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                InactiveClient.map((client, i) => {
-                                    return (<tr key={i + 1}>
-                                        <td>{i + 1}</td>
-                                        <td>{client.name}</td>
-                                        <td>{client.address}</td>
-                                        <td>{client.areacode}</td>
-                                        <td>{client.contact}</td>
-                                        <td>{client.amount}</td>
-                                        <td>{getactiveclient(client)}</td>
-                                        <td>{Editclient(client)}</td>
-                                        <td>{deleteclient(client)}</td>
-                                    </tr>)
-                                })
-                            }
-                        </tbody>
-                    </Table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    InactiveClient.map((client, i) => {
+                                        return (<tr key={i + 1}>
+                                            <td>{i + 1}</td>
+                                            <td>{client.name}</td>
+                                            <td>{client.address}</td>
+                                            <td>{client.areacode}</td>
+                                            <td>{client.contact}</td>
+                                            <td>{client.amount}</td>
+                                            <td>{getactiveclient(client)}</td>
+                                            <td>{Editclient(client)}</td>
+                                            <td>{deleteclient(client)}</td>
+                                        </tr>)
+                                    })
+                                }
+                            </tbody>
+                        </Table>}
+                    </div>
                 </Tab>
             </Tabs>
             <CustomModal

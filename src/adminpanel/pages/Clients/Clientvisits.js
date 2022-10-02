@@ -10,7 +10,7 @@ import AddNewEmp from '../staff/AddNewEmp';
 import { IoClose } from "react-icons/io5";
 
 export default function Clientvisits() {
-
+    const [isLoading, setisLoading] = useState(false);
     const [Visit, setVisit] = useState([]);
     const [modalShow, setModalShow] = React.useState(false);
     const [startDate, setstartDate] = useState(new Date())
@@ -19,16 +19,17 @@ export default function Clientvisits() {
     // const [getAction, setgetAction] = useState(null)
     useEffect(() => {
         getclientvisitdata()
-console.log("Visit Updated")
+        console.log("Visit Updated")
     }, []);
 
     const getclientvisitdata = async () => {
+        setisLoading(true)
         await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
 
             console.log("res", res)
             if (res.data) {
                 setVisit(res.data)
-
+                setisLoading(!true)
             } else {
 
                 setVisit([])
@@ -63,124 +64,128 @@ console.log("Visit Updated")
     }
 
     return (
-        <div>
+        <div className="text-center">
             {/* <Button size='sm' onClick={() => setModalShow(true)}>+</Button> */}
 
-
-            <Table striped bordered hover size="sm" responsive>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Client Name</th>
-                        <th>Address</th>
-                        <th>Staff Name</th>
-                        <th>spaciality name</th>
-                        <th>start date</th>
-                        {/* <th>End date</th> */}
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        Visit.map((record, i) => {
-
-                            // console.log("map record", i, record)
-
-                            // startDate
-                            var st = record.start_date.split(/[- :]/);
-                            var setdate = new Date(Date.UTC(st[0], st[1] - 1, st[2], st[3], st[4], st[5]));
-                            // end date
-                            if (record.end_date !== null) {
-                                var et = record.end_date.split(/[- :]/);
-                                var setenddate = new Date(Date.UTC(et[0], et[1] - 1, et[2], et[3], et[4], et[5]));
-                            }
+            {isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                <Table striped bordered hover size="sm" responsive>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Client Name</th>
+                            <th>Address</th>
+                            <th>Staff Name</th>
+                            <th>spaciality name</th>
+                            <th>start date</th>
+                            {/* <th>End date</th> */}
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
 
-                            return (<tr key={i}>
-                                <td>{i + 1}</td>
-                                <td>{record.client_name}</td>
-                                <td>{record.client_address}</td>
-                                <td>{record.staff_name}</td>
-                                <td>{record.spaciality_name}</td>
-                                {/* <td>{dateobj(record.start_date)}</td> */}
-                                <td>
-                                    <DatePicker
+                    <tbody>
+                        {
+                            Visit.map((record, i) => {
 
-                                        disabled
-                                        dateFormat="dd/MM/yyyy"
-                                        className='form-control btn btn-sm btn-danger'
-                                        selected={setdate}
-                                    />
-                                </td>
-                                {/* <td className='text-center'>
-                                    {record.end_date ?
+                                // console.log("map record", i, record)
+
+                                // startDate
+                                var st = record.start_date.split(/[- :]/);
+                                var setdate = new Date(Date.UTC(st[0], st[1] - 1, st[2], st[3], st[4], st[5]));
+                                // end date
+                                if (record.end_date !== null) {
+                                    var et = record.end_date.split(/[- :]/);
+                                    var setenddate = new Date(Date.UTC(et[0], et[1] - 1, et[2], et[3], et[4], et[5]));
+                                }
+
+
+                                return (<tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td>{record.client_name}</td>
+                                    <td>{record.client_address}</td>
+                                    <td>{record.staff_name}</td>
+                                    <td>{record.spaciality_name}</td>
+                                    {/* <td>{dateobj(record.start_date)}</td> */}
+                                    <td>
                                         <DatePicker
+
                                             disabled
                                             dateFormat="dd/MM/yyyy"
                                             className='form-control btn btn-sm btn-danger'
-                                            selected={setenddate}
+                                            selected={setdate}
                                         />
-                                        :
-                                        <DatePicker
+                                    </td>
+                                    {/* <td className='text-center'>
+                                {record.end_date ?
+                                    <DatePicker
+                                        disabled
+                                        dateFormat="dd/MM/yyyy"
+                                        className='form-control btn btn-sm btn-danger'
+                                        selected={setenddate}
+                                    />
+                                    :
+                                    <DatePicker
 
-                                            dateFormat="dd/MM/yyyy"
-                                            className='form-control btn btn-sm btn-primary'
-                                            selected={startDate}
-                                            onChange={(date) => setstartDate(date)}
-                                        />}
-                                </td> */}
-                                <td>{
+                                        dateFormat="dd/MM/yyyy"
+                                        className='form-control btn btn-sm btn-primary'
+                                        selected={startDate}
+                                        onChange={(date) => setstartDate(date)}
+                                    />}
+                            </td> */}
+                                    <td>{
 
-                                    <>
-                                        <Button className='btn btn-sm w-100'
-                                            title="End" onClick={() => {
-                                                console.log("end", record, i)
-                                                setselectclint(record)
-                                                setModalShow(true)
-                                            }}><IoClose size={20} /></Button>
-                                        <CustomModal
-                                            data={{
-                                                title: "Select End Date", component: <>
+                                        <>
+                                            <Button className='btn btn-sm w-100'
+                                                title="End" onClick={() => {
+                                                    console.log("end", record, i)
+                                                    setselectclint(record)
+                                                    setModalShow(true)
+                                                }}><IoClose size={20} /></Button>
+                                            <CustomModal
+                                                data={{
+                                                    title: "Select End Date", component: <>
 
-                                                    <Row>
-                                                        <Col>
-                                                            <label>Select End Date</label>
-                                                        </Col>
-                                                        <Col>
-                                                            <DatePicker
+                                                        <Row>
+                                                            <Col>
+                                                                <label>Select End Date</label>
+                                                            </Col>
+                                                            <Col>
+                                                                <DatePicker
 
-                                                                placeholderText='Enter End Date'
-                                                                dateFormat="dd/MM/yyyy"
-                                                                className='form-control'
-                                                                selected={endDate}
-                                                                onChange={(date) => setendDate(date)}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                    <hr />
-                                                    <Button className='float-end'
+                                                                    placeholderText='Enter End Date'
+                                                                    dateFormat="dd/MM/yyyy"
+                                                                    className='form-control'
+                                                                    selected={endDate}
+                                                                    onChange={(date) => setendDate(date)}
+                                                                />
+                                                            </Col>
+                                                        </Row>
+                                                        <hr />
+                                                        <Button className='float-end'
 
-                                                        onClick={() => {
-                                                            console.log("submit", record, i)
-                                                            updateenddate()
-                                                        }}
-                                                    >
-                                                        Submit
-                                                    </Button>
-                                                </>
-                                            }}
-                                            show={modalShow}
-                                            onHide={() => setModalShow(false)}
-                                        // modalSize="lg"
-                                        />
-                                    </>
+                                                            onClick={() => {
+                                                                console.log("submit", record, i)
+                                                                updateenddate()
+                                                            }}
+                                                        >
+                                                            Submit
+                                                        </Button>
+                                                    </>
+                                                }}
+                                                show={modalShow}
+                                                onHide={() => setModalShow(false)}
+                                            // modalSize="lg"
+                                            />
+                                        </>
 
-                                }</td>
-                            </tr>)
-                        })
-                    }
-                </tbody>
-            </Table>
+                                    }</td>
+                                </tr>)
+                            })
+                        }
+                    </tbody>
+                </Table>
+            }
+
         </div>
     )
 }

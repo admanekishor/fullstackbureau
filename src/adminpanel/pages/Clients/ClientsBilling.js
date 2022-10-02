@@ -7,7 +7,7 @@ import PrintBill from '../PrintBill/PrintBill';
 import SelectDropdown from '../../component/SelectDropdown';
 import { FaPrint } from 'react-icons/fa';
 export default function ClientsBilling() {
-
+    const [isLoading, setisLoading] = useState(false);
     const [Visit, setVisit] = useState([]);
     // const [getMonth, setMonth] = useState(new Date());
     const [printClient, setprintClient] = useState("");
@@ -16,8 +16,10 @@ export default function ClientsBilling() {
 
 
     useEffect(() => {
+        setisLoading(true)
         axios.get('http://www.muktainursesbureau.in/API/Billing.php').then((res) => {
             setVisit(res.data)
+            setisLoading(false)
         })
     }, [])
 
@@ -50,115 +52,126 @@ export default function ClientsBilling() {
                 className="mb-3"
             >
                 <Tab eventKey="pendingbill" title="Pending Bill">
-                    <Table striped bordered hover size="sm" responsive>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Client Name</th>
-                                <th>Address</th>
 
-                                <th>start date</th>
-                                <th>Service Days</th>
-                                <th>action</th>
-                                <th>pending</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                Visit.map((record, i) => {
-                                    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-                                        <Button size='sm' onClick={onClick} ref={ref}>
-                                            {value}
-                                        </Button>
-                                    ));
+                    <div className='text-center'>
+                        {
+                            isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                                <Table striped bordered hover size="sm" responsive>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Client Name</th>
+                                            <th>Address</th>
 
-                                    return (<tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td>{record.client_name}</td>
-                                        <td>{record.client_address}</td>
+                                            <th>start date</th>
+                                            <th>Service Days</th>
+                                            <th>action</th>
+                                            <th>pending</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            Visit.map((record, i) => {
+                                                const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+                                                    <Button size='sm' onClick={onClick} ref={ref}>
+                                                        {value}
+                                                    </Button>
+                                                ));
 
-                                        <td>{record.start_date}</td>
-                                        <td>
+                                                return (<tr key={i}>
+                                                    <td>{i + 1}</td>
+                                                    <td>{record.client_name}</td>
+                                                    <td>{record.client_address}</td>
 
-                                            {
-                                                daycalculate(record.start_date, record.end_date)
-                                            }
-                                        </td>
+                                                    <td>{record.start_date}</td>
+                                                    <td>
 
-                                        {/* <td>{record.end_date}</td> */}
-                                        <td>
-                                            {
-                                                record.start_date && record.end_date
-                                                    ? <Button size="sm" title="Print" onClick={() => {
-                                                        setprintClient(record)
-                                                        setModalShow(true)
-                                                    }}><FaPrint /></Button> : ""
+                                                        {
+                                                            daycalculate(record.start_date, record.end_date)
+                                                        }
+                                                    </td>
 
-                                            }
-                                        </td>
-                                        <td>
-                                            {
-                                                record.ispaid ? "Pending" : ""
-                                            }
-                                        </td>
-                                    </tr>)
-                                })
-                            }
-                        </tbody>
-                    </Table>
+                                                    {/* <td>{record.end_date}</td> */}
+                                                    <td>
+                                                        {
+                                                            record.start_date && record.end_date
+                                                                ? <Button size="sm" title="Print" onClick={() => {
+                                                                    setprintClient(record)
+                                                                    setModalShow(true)
+                                                                }}><FaPrint /></Button> : ""
+
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            record.ispaid ? "Pending" : ""
+                                                        }
+                                                    </td>
+                                                </tr>)
+                                            })
+                                        }
+                                    </tbody>
+                                </Table>
+                        }
+                    </div>
                 </Tab>
                 <Tab eventKey="paidbill" title="Paid Bill">
-                    <Table striped bordered hover size="sm" responsive>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Client Name</th>
-                                <th>Address</th>
+                    <div className='text-center'>
+                        {
+                            isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                                <Table striped bordered hover size="sm" responsive>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Client Name</th>
+                                            <th>Address</th>
 
-                                <th>start date</th>
-                                <th>Service Days</th>
-                                <th>action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                Visit.map((record, i) => {
-                                    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-                                        <Button size='sm' onClick={onClick} ref={ref}>
-                                            {value}
-                                        </Button>
-                                    ));
+                                            <th>start date</th>
+                                            <th>Service Days</th>
+                                            <th>action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            Visit.map((record, i) => {
+                                                const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+                                                    <Button size='sm' onClick={onClick} ref={ref}>
+                                                        {value}
+                                                    </Button>
+                                                ));
 
-                                    return (<tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td>{record.client_name}</td>
-                                        <td>{record.client_address}</td>
+                                                return (<tr key={i}>
+                                                    <td>{i + 1}</td>
+                                                    <td>{record.client_name}</td>
+                                                    <td>{record.client_address}</td>
 
-                                        <td>{record.start_date}</td>
-                                        <td>
+                                                    <td>{record.start_date}</td>
+                                                    <td>
 
-                                            {
-                                                daycalculate(record.start_date, record.end_date)
-                                            }
-                                        </td>
+                                                        {
+                                                            daycalculate(record.start_date, record.end_date)
+                                                        }
+                                                    </td>
 
-                                        {/* <td>{record.end_date}</td> */}
-                                        <td>
-                                            {
-                                                record.start_date && record.end_date
-                                                    ? <Button size="sm"
-                                                        title="Print" onClick={() => {
-                                                            setprintClient(record)
-                                                            setModalShow(true)
-                                                        }}><FaPrint /></Button> : ""
+                                                    {/* <td>{record.end_date}</td> */}
+                                                    <td>
+                                                        {
+                                                            record.start_date && record.end_date
+                                                                ? <Button size="sm"
+                                                                    title="Print" onClick={() => {
+                                                                        setprintClient(record)
+                                                                        setModalShow(true)
+                                                                    }}><FaPrint /></Button> : ""
 
-                                            }
-                                        </td>
-                                    </tr>)
-                                })
-                            }
-                        </tbody>
-                    </Table>
+                                                        }
+                                                    </td>
+                                                </tr>)
+                                            })
+                                        }
+                                    </tbody>
+                                </Table>
+                        }
+                    </div>
                 </Tab>
 
             </Tabs>
