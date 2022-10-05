@@ -19,14 +19,14 @@ export default function Clientvisits() {
     // const [getAction, setgetAction] = useState(null)
     useEffect(() => {
         getclientvisitdata()
-        console.log("Visit Updated")
+        // console.log("Visit Updated")
     }, []);
 
     const getclientvisitdata = async () => {
         setisLoading(true)
         await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
 
-            console.log("res", res)
+            // console.log("res", res)
             if (res.data) {
                 setVisit(res.data)
                 setisLoading(!true)

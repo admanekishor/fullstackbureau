@@ -23,7 +23,7 @@ export default function ClientsBilling() {
         })
     }, [])
 
-    console.log("visit", Visit);
+    // console.log("visit", Visit);
 
     const daycalculate = (start_date, end_date) => {
         const start = new Date(start_date);

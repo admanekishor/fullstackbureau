@@ -1,6 +1,7 @@
 import React from 'react'
 import { Breadcrumb, Col, Container, Row, Tab } from 'react-bootstrap'
 import Helmet from 'react-helmet'
+import Areas from '../pages/Areas'
 import Clients from '../pages/Clients'
 import ClientsBilling from '../pages/Clients/ClientsBilling'
 import Dashboard from '../pages/Dashboard'
@@ -42,6 +43,9 @@ export default function Main() {
                                     <Employees />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="#link4">
+                                   <Areas />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="#link5">
                                     {/* <Employees /> */}
                                     {/* <StaffDetails /> */}
                                     <ClientsBilling />

@@ -17,6 +17,9 @@ export default function Sidebar() {
                     Employees
                 </ListGroup.Item>
                 <ListGroup.Item action variant="dark" href="#link4">
+                    Local Areas
+                </ListGroup.Item>
+                <ListGroup.Item action variant="dark" href="#link5">
                     Billing
                 </ListGroup.Item>
             </ListGroup>

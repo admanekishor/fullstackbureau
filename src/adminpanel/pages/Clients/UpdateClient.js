@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
 import { ToastContainer, toast } from 'react-toastify';
@@ -66,8 +65,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
   console.log("clientUpdate", clientUpdate);
 
-  const auth = useContext(Authcontext);
-  // console.log("Auth", auth.state)
   const [clientName, setclientName] = useState(initialName);
   const [clientAddress, setclientAddress] = useState(initialAddress);
   const [clientArea, setclientArea] = useState(initialclientArea);
@@ -76,7 +73,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
   const [clientAmount, setclientAmount] = useState(initialclientAmount);
   const [areaOptions, setAreaOptions] = useState(null)
   // areacode
-  const [Selected, setSelected] = useState(null)
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -101,14 +98,15 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
       var localareas = [];
       var selected = []
       res.data.result.map((item) => {
-        if(clientUpdate.areacode == item.id){
+        if (clientUpdate.areacode === item.id) {
           selected.push({
             value: item.id,
             label: item.areaname,
           })
-          setSelected(selected)
+
+          setclientArea({ ...clientArea, value: selected })
         }
-        // console.log("Selected", selected)
+
         localareas.push(
           {
             value: item.id,
@@ -129,8 +127,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
     pauseOnHover: true,
     draggable: true,
   });
-
-  console.log("Selected", Selected)
 
   const submitData = (e) => {
     e.preventDefault();
@@ -235,7 +231,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Control type="text"
                     name="clientName"
                     value={clientName.value}
-                    // value={clientUpdate.name}
                     placeholder="Enter Name"
                     onChange={(e) => setclientName({ ...clientName, value: e.target.value })}
                     onBlur={() => setclientName({ ...clientName, touched: true })}
@@ -250,13 +245,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Label>Select Client Area</Form.Label>
                   <SelectDropdown
                     name="clientArea"
-                    value={Selected}
-                    // value={{ optionsState: clientArea.value }}
-                    //   value = {
-                    //     areaOptions.filter(option => 
-                    //        option.value === clientArea.value)
-                    //  }
-                    // value={clientArea.value}
+                    value={clientArea.value}
                     data={{ list: areaOptions }}
                     isMulti={false}
                     isSearchable={true}
@@ -273,7 +262,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Control type="text"
                     name="clientAddress"
                     value={clientAddress.value}
-                    // value={clientUpdate.address}
                     placeholder="Enter Address"
                     onChange={(e) => setclientAddress({ ...clientAddress, value: e.target.value })}
                     onBlur={() => setclientAddress({ ...clientAddress, touched: true })}
@@ -291,7 +279,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Control type="text"
                     name="clientContact"
                     value={clientContact.value}
-                    // value={clientUpdate.contact}
                     placeholder="Enter Contact"
                     onChange={(e) => setclientContact({ ...clientContact, value: e.target.value })}
                     onBlur={() => setclientContact({ ...clientContact, touched: true })}
@@ -304,8 +291,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Label>Enter Client Alt. Contact</Form.Label>
                   <Form.Control type="text"
                     name="clientAltContact"
-                    value={clientAltContact.value == "" ? clientContact.value : clientAltContact.value}
-                    // value={clientUpdate.alternate_contact}
+                    value={clientAltContact.value === clientContact.value ? clientContact.value : clientAltContact.value}
                     placeholder="Enter Alternate Contact"
                     onChange={(e) => setclientAltContact({ ...clientAltContact, value: e.target.value })}
                     onBlur={() => setclientAltContact({ ...clientAltContact, touched: true })}
@@ -342,18 +328,3 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
 }
 
 export default UpdateClients;
-
-
-const formstyle = {
-  border: '1px solid',
-  // width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  width: '30vw',
-  margin: '0 auto',
-}
-const forminputfield = {
-  margin: '10px'
-}
