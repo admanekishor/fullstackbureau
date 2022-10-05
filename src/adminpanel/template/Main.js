@@ -32,7 +32,7 @@ export default function Main() {
                                     <BreacdCrumb />
                                 </Col>
                             </Row> */}
-                            <Tab.Content style={{ overflowY: 'scroll', height: '90vh' }}>
+                            <Tab.Content style={{height: '90vh' }}>
                                 <Tab.Pane eventKey="#link1">
                                     <Dashboard />
                                 </Tab.Pane>
