@@ -3,13 +3,28 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import MUIDataTable from "mui-datatables";
+import { Button, FormControlLabel, Switch } from '@material-ui/core';
+import CustomToolbar from '../component/CustomToolbar';
+import CustomDialogBox from '../component/CustomDialogBox';
 
 export default function Areas() {
     const [Areas, setAreas] = useState([]);
+    const [ShowModal, setShowModal] = useState(false)
     useEffect(() => {
         getAreas();
-    }, [])
-    const columns = [{ label: "ID", name: "id" }, { label: "Name", name: "areaname" }, { label: "Pincode", name: "pincode" }];
+    }, []);
+    const handleClick = () => {
+        console.log("demo", ShowModal);
+        ShowModal === true ? setShowModal(false) : setShowModal(true)
+
+    };
+
+
+    const columns = [
+        { label: "ID", name: "id" },
+        { label: "Name", name: "areaname" },
+        { label: "Pincode", name: "pincode" },
+    ];
     const options = {
         filter: false,
         sort: true,
@@ -24,7 +39,10 @@ export default function Areas() {
         rowsPerPage: 7,
         rowsPerPageOptions: [7, 14, 21, 28],
         serverSide: false,
-        page: 0
+        page: 0,
+        customToolbar: () => {
+            return <CustomToolbar onclick={handleClick} />;
+        }
     };
 
     async function getAreas() {
@@ -47,6 +65,7 @@ export default function Areas() {
     }
     return (
         <>
+            <CustomDialogBox ShowModal={ShowModal} setShowModal={setShowModal} />
             <MUIDataTable
                 title={"ACME Employee list"}
                 data={Areas}
