@@ -57,26 +57,7 @@ function CustomDialogBox(props) {
                         To subscribe to this website, please enter your email address here.
                         We will send updates occasionally.
                     </DialogContentText>
-                    {/* <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Name"
-                        type="text"
-                        value={state.dname || ""}
-                        onChange={handleChange("dname")}
-                        fullWidth
-                    />
-                    <Select
-                        native
-                        fullWidth
-                        value={state.dsource || ""}
-                        onChange={handleChange("dsource")}
-                    >
-                        <option value="" />
-                        <option value={"mssql"}>mssql</option>
-                        <option value={"oracle"}>oracle</option>
-                    </Select> */}
+                   {props.data.component}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

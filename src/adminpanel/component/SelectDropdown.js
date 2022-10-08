@@ -5,7 +5,7 @@ export default function SelectDropdown(props) {
 
   // const [selected, SetSelected] = useState(null)
 
-  console.log("prpd", props);
+  // console.log("prpd", props);
 
   return (
     <div style={{ width: '100%' }}>

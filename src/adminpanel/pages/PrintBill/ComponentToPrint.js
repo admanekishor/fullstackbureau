@@ -48,7 +48,7 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
                 // workingDays: "30 Days",
                 servicemonth: new Date().toUTCString().slice(7, 12),
                 // servicemonth: "July",
-                workinghour: "24 hr",
+                workinghour: "8 hr",
                 amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
                 // amount: "23690/-"
             }

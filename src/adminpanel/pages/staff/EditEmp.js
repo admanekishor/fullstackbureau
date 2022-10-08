@@ -4,69 +4,70 @@ import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
 
-const initialName = {
-  key: "empName",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /^[A-Za-z]/,
-  required: true
-};
+const EditEmp = ({ Empupdate }) => {
 
-const initialAddress = {
-  key: "empAddress",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /^[A-Za-z0-9]/,
-  required: true
-};
 
-const initialAge = {
-  key: "empAge",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /^[0-9]/,
-  required: true
-};
+  const initialName = {
+    key: "empName",
+    value: Empupdate.name,
+    error: false,
+    touched: false,
+    regex: /^[A-Za-z]/,
+    required: true
+  };
 
-// const initialGender = {
-//   key: "empGender",
-//   value: "",
-//   error: false,
-//   touched: false,
-//   regex: /^[a-z]/,
-//   required: true
-// };
-const initialContact = {
-  key: "empContact",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /(?=.{10})(?=.*[0-9]+)/g,
-  required: true
-};
-const initialService = {
-  key: "empService",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /^[A-Za-z]/,
-  required: true
-};
+  const initialAddress = {
+    key: "empAddress",
+    value: Empupdate.address,
+    error: false,
+    touched: false,
+    regex: /^[A-Za-z0-9]/,
+    required: true
+  };
 
-const EditEmp = ({ Empupdate, setEmpupdate }) => {
+  const initialAge = {
+    key: "empAge",
+    value: Empupdate.age,
+    error: false,
+    touched: false,
+    regex: /^[0-9]/,
+    required: true
+  };
 
-  console.log("Empupdate", Empupdate);
+  // const initialGender = {
+  //   key: "empGender",
+  //   value: "",
+  //   error: false,
+  //   touched: false,
+  //   regex: /^[a-z]/,
+  //   required: true
+  // };
+  const initialContact = {
+    key: "empContact",
+    value: Empupdate.contact,
+    error: false,
+    touched: false,
+    regex: /(?=.{10})(?=.*[0-9]+)/g,
+    required: true
+  };
+  const initialService = {
+    key: "empService",
+    value: Empupdate.specialityname,
+    error: false,
+    touched: false,
+    regex: /^[A-Za-z]/,
+    required: true
+  };
+
+  // console.log("Empupdate", Empupdate.specialityname);
 
   const auth = useContext(Authcontext);
-  const [empName, setempName] = useState({ ...initialName, value: Empupdate.name });
-  const [empAddress, setempAddress] = useState({ ...initialAddress, value: Empupdate.address });
-  const [empAge, setempAge] = useState({ ...initialAge, value: Empupdate.age });
+  const [empName, setempName] = useState(initialName);
+  const [empAddress, setempAddress] = useState(initialAddress);
+  const [empAge, setempAge] = useState(initialAge);
   // const [empGender, setempGender] = useState({...initialGender, value:Empupdate.gender});
-  const [empContact, setempContact] = useState({ ...initialContact, value: Empupdate.contact });
-  const [empService, setempService] = useState({ ...initialService, value: Empupdate.specialityname });
+  const [empContact, setempContact] = useState(initialContact);
+  const [empService, setempService] = useState(initialService);
   const [specialityOptions, setspecialityOptions] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -84,7 +85,7 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
 
   const isError = obj => obj.error && obj.touched && obj.required;
 
- const option = [{ value: "male", label: "Male" },
+  const option = [{ value: "male", label: "Male" },
   { value: "female", label: "FeMale" },
   { value: "other", label: "Other" }
   ];
@@ -109,9 +110,9 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
         empContact: empContact.value,
         empService: empService.value,
       }
-      console.log("empData", empData)
+      // console.log("empData", empData)
       // setValidated(true)
-      console.log("empData", empData);
+      // console.log("empData", empData);
       // axios.post('http://www.muktainursesbureau.in/API//api/employee/insert', empData).then((res) => {
       //   console.log(res.data)
       //   return res
@@ -141,14 +142,23 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
   async function getspeciality() {
     await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
       // console.log(res.data)
-      var arr = [];
+      var selected = [];
+      var specialityList = [];
       res.data.result.map((item) => {
-        arr.push({
+
+        if (Empupdate.specialityname === item.name) {
+          selected.push({
+            value: item.id,
+            label: item.name
+          })
+          setempService({ ...empService, value: selected })
+        }
+        specialityList.push({
           value: item.id,
           label: item.name
         })
+        setspecialityOptions(specialityList)
       })
-      setspecialityOptions(arr)
     }).catch((err) => {
       console.log("err", ...err)
     })
@@ -262,20 +272,16 @@ const EditEmp = ({ Empupdate, setEmpupdate }) => {
                 <Col sm="12">
                   <SelectDropdown
                     name="empService"
-                    value={Empupdate.specialityname}
+                    value={empService.value}
                     data={{ list: specialityOptions }}
+                    isMulti={false}
+                    isSearchable={true}
                     onChange={(e) => {
                       setempService({ ...empService, value: e })
                       getspeciality(e)
                     }}
                   />
-                  {/* <Form.Control type="text"
-                    name="empService"
-                    value={empService.value}
-                    placeholder="Enter service type"
-                    onChange={(e) => setempService({ ...empService, value: e.target.value })}
-                    onBlur={() => setempService({ ...empService, touched: true })}
-                  /> */}
+                  
                   {isError(empService) && <p className='text-danger'>{empService.error}</p>}
                 </Col>
               </Form.Group>

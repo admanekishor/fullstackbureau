@@ -20,7 +20,7 @@ export default function Clientvisits() {
     useEffect(() => {
         getclientvisitdata()
         // console.log("Visit Updated")
-    }, []);
+    }, [setVisit]);
 
     const getclientvisitdata = async () => {
         setisLoading(true)

@@ -62,7 +62,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
     required: true
   };
 
-
   console.log("clientUpdate", clientUpdate);
 
   const [clientName, setclientName] = useState(initialName);
@@ -73,11 +72,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
   const [clientAmount, setclientAmount] = useState(initialclientAmount);
   const [areaOptions, setAreaOptions] = useState(null)
   // areacode
-
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-
 
   const validate = (obj) => {
     let error;

@@ -1,16 +1,14 @@
 import React from 'react'
 import { Breadcrumb, Col, Container, Row, Tab } from 'react-bootstrap'
 import Helmet from 'react-helmet'
-import Areas from '../pages/Areas'
+import Areas from '../pages/Locations/Areas'
 import Clients from '../pages/Clients'
 import ClientsBilling from '../pages/Clients/ClientsBilling'
 import Dashboard from '../pages/Dashboard'
 import Employees from '../pages/Employees'
-// import StaffDetails from '../pages/staff/StaffDetails'
-// import BreacdCrumb from './BreadCrumb'
 import Header from './Header'
 import Sidebar from './Sidebar'
-// import logourl from '../../assets/images/logo_white.png'
+
 export default function Main() {
     
     return (
