@@ -8,12 +8,14 @@ import DeleteClient from './DeleteClient';
 import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 import { RiDeleteBinFill } from "react-icons/ri";
 import UpdateClients from './UpdateClient';
+import ActivateClient from './ActivateClient';
 
 export default function ClientsTable() {
     const [isLoading, setisLoading] = useState(false);
     const [newclientmodalShow, setnewclientmodalShow] = React.useState(false);
     const [AddServiceModal, setAddServiceModal] = React.useState(false);
     const [DeleteClientModal, setDeleteClientModal] = React.useState(false);
+    const [ActivateClientModal, setActivateClientModal] = useState(false)
     const [UpdateClientModal, setUpdateClientModal] = React.useState(false);
     const [clientUpdate, setClientUpdate] = useState({});
     const [Client, setClient] = useState([]);
@@ -79,6 +81,15 @@ export default function ClientsTable() {
             }}
         ><RiDeleteBinFill /></Button>)
     }
+    function activateclient(client) {
+        return (<Button className='btn-sm d-flex'
+            title='Delete'
+            onClick={() => {
+                setClientUpdate(client);
+                setActivateClientModal(true);
+            }}
+        ><RiDeleteBinFill /></Button>)
+    }
 
     function Editclient(client) {
         return (<Button className='btn-sm d-flex'
@@ -96,6 +107,7 @@ export default function ClientsTable() {
             setUpdateClientModal(false);
             setDeleteClientModal(false);
             setAddServiceModal(false);
+            setActivateClientModal(false);
         }, 100);
     }
     return <>
@@ -171,7 +183,7 @@ export default function ClientsTable() {
                                             <td>{client.amount}</td>
                                             <td>{getactiveclient(client)}</td>
                                             <td>{Editclient(client)}</td>
-                                            <td>{deleteclient(client)}</td>
+                                            <td>{activateclient(client)}</td>
                                         </tr>)
                                     })
                                 }
@@ -196,6 +208,13 @@ export default function ClientsTable() {
                 data={{ title: "Delete Client", component: <DeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
                 show={DeleteClientModal}
                 onHide={() => setDeleteClientModal(false)}
+                modalsize="md"
+
+            />
+            <CustomModal
+                data={{ title: "Delete Client", component: <ActivateClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
+                show={ActivateClientModal}
+                onHide={() => setActivateClientModal(false)}
                 modalsize="md"
 
             />

@@ -50,6 +50,14 @@ const initialAltContact = {
   regex: /(?=.{10})(?=.*[0-9]+)/g,
   required: true
 };
+const initialServiceHrs = {
+  key: "clientAltContact",
+  value: "",
+  error: false,
+  touched: false,
+  regex: /(?=.{10})(?=.*[0-9]+)/g,
+  required: true
+};
 // client bill amount by number
 const initialclientAmount = {
   key: "clientAmount",
@@ -71,6 +79,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
   const [clientArea, setclientArea] = useState(initialclientArea);
   const [clientContact, setclientContact] = useState(initialContact);
   const [clientAltContact, setclientAltContact] = useState(initialAltContact);
+  const [serviceHrs, setserviceHrs] = useState(initialServiceHrs)
   const [clientAmount, setclientAmount] = useState(initialclientAmount);
   const [areaOptions, setAreaOptions] = useState(null)
 
@@ -124,6 +133,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
     setclientArea({ ...clientArea, error: validate(clientArea), touched: true });
     setclientContact({ ...clientContact, error: validate(clientContact), touched: true });
     setclientAltContact({ ...clientAltContact, error: validate(clientAltContact), touched: true });
+    setserviceHrs({ ...serviceHrs, error: validate(serviceHrs), touched: true });
     setclientAmount({ ...clientAmount, error: validate(clientAmount), touched: true });
 
 
@@ -135,6 +145,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
         clientArea: clientArea.value.value,
         clientContact: clientContact.value,
         clientAltContact: clientAltContact.value,
+        serviceHrs: serviceHrs.value,
         clientAmount: clientAmount.value
       }
 
@@ -157,6 +168,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
         setclientArea(initialclientArea)
         setclientContact(initialContact);
         setclientAltContact(initialAltContact);
+        setserviceHrs(initialServiceHrs);
         setclientAmount(initialclientAmount);
         setIsSubmitting(false);
       }, 1000);
@@ -190,6 +202,10 @@ const AddClients = ({ getClientdata, afterclose }) => {
   useEffect(() => {
     setclientAltContact({ ...clientAltContact, error: validate(clientAltContact) })
   }, [clientAltContact.value])
+
+  useEffect(() => {
+    setserviceHrs({ ...serviceHrs, error: validate(serviceHrs) })
+  }, [serviceHrs.value])
 
   useEffect(() => {
     setclientAmount({ ...clientAmount, error: validate(clientAmount) })
@@ -281,6 +297,22 @@ const AddClients = ({ getClientdata, afterclose }) => {
                     placeholder="Enter Alternate Contact"
                     onChange={(e) => setclientAltContact({ ...clientAltContact, value: e.target.value })}
                     onBlur={() => setclientAltContact({ ...clientAltContact, touched: true })}
+                  />
+                  {isError(clientAltContact) && <p className='text-danger'>{clientAltContact.error}</p>}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextcontact">
+                <Col sm="12">
+                  <Form.Label>Enter Service Hours</Form.Label>
+                  <SelectDropdown
+                    name="clientArea"
+                    value={clientArea.value}
+                    data={{ list: areaOptions }}
+                    isMulti={false}
+                    isSearchable={true}
+                    onChange={(e) => {
+                      setclientArea({ ...clientArea, value: e })
+                    }}
                   />
                   {isError(clientAltContact) && <p className='text-danger'>{clientAltContact.error}</p>}
                 </Col>

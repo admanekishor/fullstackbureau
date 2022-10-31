@@ -18,7 +18,7 @@ export default function ClientRecord(props) {
 
 
     useEffect(() => {
-        
+
         getclientDetails()
     }, [])
 
@@ -51,7 +51,12 @@ export default function ClientRecord(props) {
 
     return (
         <div>
-
+            <CustomModal
+                data={{ title: "Add New Employee", component: <PrintBill printClient={printClient} setprintClient={setprintClient} /> }}
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                modalsize="lg"
+            />
             <div className='text-center'>
                 {
                     isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
