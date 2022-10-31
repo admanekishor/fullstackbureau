@@ -74,10 +74,16 @@ export default function Areas() {
     const options = {
         filter: true,
         filterType: 'dropdown',
-        responsive: "scroll",
-        serverSide: true,
-        // rowsPerPage: 7,
-        // rowsPerPageOptions: [7],
+        responsive: "standard",
+        serverSide: false,
+        downloadOptions: {
+            filename: 'excel-format.csv',
+            separator: ';',
+            filterOptions: {
+                useDisplayedColumnsOnly: true,
+                useDisplayedRowsOnly: true,
+            }
+        },
         onRowClick: ((rowMeta) => {
             setSelected(rowMeta)
             // console.log(rowData, rowMeta);
@@ -122,7 +128,7 @@ export default function Areas() {
                 setAddLocationModal={setAddLocationModal}
             /> */}
             <CustomModal
-                data={{ title: "Add New Area", component: <AddLocation  getAreas={getAreas} /> }}
+                data={{ title: "Add New Area", component: <AddLocation getAreas={getAreas} /> }}
                 show={AddLocationModal}
                 onHide={() => setAddLocationModal(false)}
             />
