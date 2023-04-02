@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
+const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
+
 
   const initialName = {
     key: "clientName",
@@ -28,7 +30,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
   // client area by select option regex
   const initialclientArea = {
     key: "clientArea",
-    value: "",
+    value: clientUpdate.areacode,
     error: false,
     touched: false,
     regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
@@ -52,6 +54,14 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
     regex: /(?=.{10})(?=.*[0-9]+)/g,
     required: true
   };
+  const initialServiceHrs = {
+    key: "ServiceHrs",
+    value: clientUpdate.servicehrs,
+    error: false,
+    touched: false,
+    regex: /(?=.{10})(?=.*[0-9]+)/g,
+    required: true
+  };
   // client bill amount by number
   const initialclientAmount = {
     key: "clientAmount",
@@ -62,17 +72,25 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
     required: true
   };
 
-  console.log("clientUpdate", clientUpdate);
+  // console.log("client updatre", clientUpdate)
 
+  const auth = useContext(Authcontext);
+  // console.log("Auth", auth.state)
   const [clientName, setclientName] = useState(initialName);
   const [clientAddress, setclientAddress] = useState(initialAddress);
   const [clientArea, setclientArea] = useState(initialclientArea);
   const [clientContact, setclientContact] = useState(initialContact);
   const [clientAltContact, setclientAltContact] = useState(initialAltContact);
+  const [serviceHrs, setserviceHrs] = useState(initialServiceHrs)
+
   const [clientAmount, setclientAmount] = useState(initialclientAmount);
+
   const [areaOptions, setAreaOptions] = useState(null)
-  // areacode
+  const [Workinghrs, setWorkinghrs] = useState(null)
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+
 
   const validate = (obj) => {
     let error;
@@ -91,8 +109,9 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
     await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
 
       var localareas = [];
-      var selected = []
+      var selected = [];
       res.data.result.map((item) => {
+
         if (clientUpdate.areacode === item.id) {
           selected.push({
             value: item.id,
@@ -107,11 +126,39 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
             value: item.id,
             label: item.areaname,
           });
-        setAreaOptions(localareas)
       });
-      // console.log("clientArea", clientArea)
+      setAreaOptions(localareas)
     })
 
+  }
+
+
+  var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+  var opt = [];
+  var selected = [];
+
+  async function WorkingTime() {
+
+
+
+    for (let i = 0; i < options.length; i++) {
+
+      if (clientUpdate.servicehrs === i) {
+        selected.push({
+          value: i,
+          label: i,
+        })
+
+        setWorkinghrs({ ...Workinghrs, value: selected })
+      }
+
+      opt.push({
+        label: options[i],
+        value: options[i]
+      })
+    }
+    // console.log("working hrs", opt)
+    setWorkinghrs(opt)
   }
 
   const notify = () => toast.success("Changes Done!", {
@@ -132,18 +179,19 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
     setclientArea({ ...clientArea, error: validate(clientArea), touched: true });
     setclientContact({ ...clientContact, error: validate(clientContact), touched: true });
     setclientAltContact({ ...clientAltContact, error: validate(clientAltContact), touched: true });
+    setserviceHrs({ ...serviceHrs, error: validate(serviceHrs), touched: true });
     setclientAmount({ ...clientAmount, error: validate(clientAmount), touched: true });
 
 
 
     if (!clientName.error && !clientAddress.error && !clientArea.error && !clientContact.error && !clientAltContact.error && !clientAmount.error) {
       const empData = {
-        clientId: clientUpdate.id,
         clientName: clientName.value,
         clientAddress: clientAddress.value,
         clientArea: clientArea.value.value,
         clientContact: clientContact.value,
         clientAltContact: clientAltContact.value,
+        serviceHrs: serviceHrs.value,
         clientAmount: clientAmount.value
       }
 
@@ -153,7 +201,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
         // console.log("res", res);
         getClientdata();
         notify()
-        afterclose()
+        afterclose();
         return res
       }).catch((err) => {
         console.log("err", ...err)
@@ -166,6 +214,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
         setclientArea(initialclientArea)
         setclientContact(initialContact);
         setclientAltContact(initialAltContact);
+        setserviceHrs(initialServiceHrs);
         setclientAmount(initialclientAmount);
         setIsSubmitting(false);
       }, 1000);
@@ -177,6 +226,7 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
   useEffect(() => {
     getAreas();
+    WorkingTime();
   }, []);
 
 
@@ -199,6 +249,10 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
   useEffect(() => {
     setclientAltContact({ ...clientAltContact, error: validate(clientAltContact) })
   }, [clientAltContact.value])
+
+  useEffect(() => {
+    setserviceHrs({ ...serviceHrs, error: validate(serviceHrs) })
+  }, [serviceHrs.value])
 
   useEffect(() => {
     setclientAmount({ ...clientAmount, error: validate(clientAmount) })
@@ -286,10 +340,28 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Label>Enter Client Alt. Contact</Form.Label>
                   <Form.Control type="text"
                     name="clientAltContact"
-                    value={clientAltContact.value === clientContact.value ? clientContact.value : clientAltContact.value}
+                    value={clientAltContact.value}
                     placeholder="Enter Alternate Contact"
                     onChange={(e) => setclientAltContact({ ...clientAltContact, value: e.target.value })}
                     onBlur={() => setclientAltContact({ ...clientAltContact, touched: true })}
+                  />
+                  {isError(clientAltContact) && <p className='text-danger'>{clientAltContact.error}</p>}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextcontact">
+                <Col sm="12">
+                  <Form.Label>Enter Service Hours</Form.Label>
+                  <SelectDropdown
+                    name="clientArea"
+                    value={serviceHrs.value}
+                    data={{
+                      list: Workinghrs
+                    }}
+                    isMulti={false}
+                    isSearchable={true}
+                    onChange={(e) => {
+                      setserviceHrs({ ...serviceHrs, value: e })
+                    }}
                   />
                   {isError(clientAltContact) && <p className='text-danger'>{clientAltContact.error}</p>}
                 </Col>
@@ -300,7 +372,6 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
                   <Form.Control type="text"
                     name="initialclientAmount"
                     value={clientAmount.value}
-                    // value={clientUpdate.amount}
                     placeholder="Enter Discuss Amount"
                     onChange={(e) => setclientAmount({ ...clientAmount, value: e.target.value })}
                     onBlur={() => setclientAmount({ ...clientAmount, touched: true })}
@@ -322,4 +393,19 @@ const UpdateClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
 }
 
-export default UpdateClients;
+export default AddClients;
+
+
+const formstyle = {
+  border: '1px solid',
+  // width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  width: '30vw',
+  margin: '0 auto',
+}
+const forminputfield = {
+  margin: '10px'
+}

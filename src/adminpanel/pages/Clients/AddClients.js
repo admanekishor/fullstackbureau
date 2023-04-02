@@ -51,7 +51,7 @@ const initialAltContact = {
   required: true
 };
 const initialServiceHrs = {
-  key: "clientAltContact",
+  key: "ServiceHrs",
   value: "",
   error: false,
   touched: false,
@@ -80,10 +80,14 @@ const AddClients = ({ getClientdata, afterclose }) => {
   const [clientContact, setclientContact] = useState(initialContact);
   const [clientAltContact, setclientAltContact] = useState(initialAltContact);
   const [serviceHrs, setserviceHrs] = useState(initialServiceHrs)
+
   const [clientAmount, setclientAmount] = useState(initialclientAmount);
+
   const [areaOptions, setAreaOptions] = useState(null)
+  const [Workinghrs, setWorkinghrs] = useState(null)
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
 
 
   const validate = (obj) => {
@@ -113,6 +117,21 @@ const AddClients = ({ getClientdata, afterclose }) => {
       setAreaOptions(localareas)
     })
 
+  }
+
+
+  var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+  var opt = [];
+  async function test() {
+    for (let i = 0; i < options.length; i++) {
+      
+      opt.push({
+        label:  options[i],
+        value:  options[i]
+      })
+    }
+    // console.log("working hrs", opt)
+    setWorkinghrs(opt)
   }
 
   const notify = () => toast.success("Changes Done!", {
@@ -180,6 +199,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
 
   useEffect(() => {
     getAreas();
+    test();
   }, []);
 
 
@@ -306,12 +326,14 @@ const AddClients = ({ getClientdata, afterclose }) => {
                   <Form.Label>Enter Service Hours</Form.Label>
                   <SelectDropdown
                     name="clientArea"
-                    value={clientArea.value}
-                    data={{ list: areaOptions }}
+                    value={serviceHrs.value}
+                    data={{
+                      list: Workinghrs
+                    }}
                     isMulti={false}
                     isSearchable={true}
                     onChange={(e) => {
-                      setclientArea({ ...clientArea, value: e })
+                      setserviceHrs({ ...serviceHrs, value: e })
                     }}
                   />
                   {isError(clientAltContact) && <p className='text-danger'>{clientAltContact.error}</p>}

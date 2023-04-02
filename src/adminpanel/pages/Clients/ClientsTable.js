@@ -10,6 +10,8 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import UpdateClients from './UpdateClient';
 import ActivateClient from './ActivateClient';
 
+const MainURL = "http://www.muktainursesbureau.in/API";
+
 export default function ClientsTable() {
     const [isLoading, setisLoading] = useState(false);
     const [newclientmodalShow, setnewclientmodalShow] = React.useState(false);
@@ -30,14 +32,14 @@ export default function ClientsTable() {
     var activeclent = [];
     async function getClientdata() {
         setisLoading(true)
-        // await axios.get('http://www.muktainursesbureau.in/API//clients').then((res) => {
-        await axios.get('http://www.muktainursesbureau.in/API/clients.php').then((res) => {
+       
+        await axios.get(MainURL + '/' + 'clients.php').then((res) => {
             setClient(res.data)
             // console.log("client", Client);
             setisLoading(false)
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-        await axios.get('http://www.muktainursesbureau.in/API/activeclients.php').then((resII) => {
+        await axios.get(MainURL + '/' + 'activeclients.php').then((resII) => {
 
             if (resII.data) {
 
@@ -48,7 +50,7 @@ export default function ClientsTable() {
                 setactiveClient([])
             }
         })
-        await axios.get('http://www.muktainursesbureau.in/API/InActiveClients.php').then((resIII) => {
+        await axios.get(MainURL + '/' + 'InActiveClients.php').then((resIII) => {
             setInactiveClient(resIII.data)
             // console.log("client", Client);
             setisLoading(false)
@@ -68,7 +70,11 @@ export default function ClientsTable() {
                 }}
             ><FaCheck size={15} /></Button>)
         } else {
-            return <Button className='btn-sm btn-danger d-flex' title='Activated'> <FaCheck size={15} /></Button>
+            return (<Button
+                className='btn-sm btn-danger d-flex'
+                title='Activated'>
+                <FaCheck size={15} />
+            </Button>)
         }
     }
 
@@ -121,7 +127,7 @@ export default function ClientsTable() {
             >
                 <Tab eventKey="ActiveClient" title="Active Clients">
                     <div className='text-center'>
-                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> :
                             <Table striped bordered hover size="sm" responsive>
                                 <thead>
                                     <tr>
@@ -158,7 +164,7 @@ export default function ClientsTable() {
                 </Tab>
                 <Tab eventKey="InActiveClient" title="InActive Clients">
                     <div className='text-center'>
-                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} /> : <Table striped bordered hover size="sm" responsive>
+                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> : <Table striped bordered hover size="sm" responsive>
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -211,13 +217,13 @@ export default function ClientsTable() {
                 modalsize="md"
 
             />
-            <CustomModal
+            {/* <CustomModal
                 data={{ title: "Delete Client", component: <ActivateClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
                 show={ActivateClientModal}
                 onHide={() => setActivateClientModal(false)}
                 modalsize="md"
 
-            />
+            /> */}
 
             <CustomModal
                 data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}

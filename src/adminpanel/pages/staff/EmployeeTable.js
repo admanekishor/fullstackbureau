@@ -4,7 +4,7 @@ import { Button, Table } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import AddNewEmp from '../staff/AddNewEmp';
 import EditEmp from '../staff/EditEmp';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 import { RiDeleteBinFill } from 'react-icons/ri';
 
 
@@ -14,7 +14,8 @@ export default function EmployeeTable() {
     const [NewempmodalShow, setNewempModalShow] = React.useState(false);
     const [EditmodalShow, setEditmodalShow] = React.useState(false);
 
-    const [EmployeeList, setEmployeeList] = useState([]);
+    const [Employee, setEmployee] = useState([]);
+    const [Activestaff, setActivestaff] = useState([])
     const [Empupdate, setEmpupdate] = useState({})
 
     // console.log(props)
@@ -31,9 +32,14 @@ export default function EmployeeTable() {
         setisLoading(true)
         // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
         await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
-            setEmployeeList(res.data.result)
-            // console.log("emplist", EmployeeList);
+            setEmployee(res.data.result)
+            // console.log("emplist", Employee);
             setisLoading(false)
+        })
+        await axios.get('http://www.muktainursesbureau.in/API/activestaff.php').then((resII) => {
+            setActivestaff(resII.data)
+            console.log("emplist", Activestaff);
+            setisLoading(false);
         })
     }
     async function deleteemployee(e) {
@@ -45,7 +51,26 @@ export default function EmployeeTable() {
             getemployeedata()
         })
     }
+    const activestaff = (employee) => {
+        // console.log(employee.id);
+        const activeStaff = Activestaff.map((emp) => emp.id);
+        if (!activeStaff.includes(employee.id)) {
 
+            return (<Button className='btn-sm d-flex'
+                title='Activate'
+                onClick={() => {
+                    setEmpupdate(employee);
+                    // setAddServiceModal(true);
+                }}
+            ><FaCheck size={15} /></Button>)
+        } else {
+            return (<Button
+                className='btn-sm btn-danger d-flex'
+                title='Activated'>
+                <FaCheck size={15} />
+            </Button>)
+        }
+    }
     return <>
         <div>
             <Button size='sm' onClick={() => setNewempModalShow(true)}>+</Button>
@@ -53,7 +78,7 @@ export default function EmployeeTable() {
             <hr />
             <div className='text-center'>
                 {
-                    isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                    isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> :
                         <Table striped bordered hover size="sm" responsive>
                             <thead>
                                 <tr>
@@ -70,7 +95,7 @@ export default function EmployeeTable() {
                             </thead>
                             <tbody>
                                 {
-                                    EmployeeList.map((employee, i) => {
+                                    Employee.map((employee, i) => {
                                         return (<tr key={i + 1}>
                                             <td>{i + 1}</td>
                                             <td>{employee.name}</td>
@@ -78,7 +103,10 @@ export default function EmployeeTable() {
                                             <td>{employee.age}</td>
                                             <td>{employee.gender}</td>
                                             <td>{employee.contact}</td>
-                                            <td>{employee.active ? "Active" : "InActive"}</td>
+                                            <td>{
+                                                // employee.active ? "Active" : "InActive"
+                                                activestaff(employee)
+                                            }</td>
                                             <td>{employee.specialityname}</td>
                                             <td valign='middle'>
                                                 {/* <div className='d-flex justify-content-center align-items-center'> */}

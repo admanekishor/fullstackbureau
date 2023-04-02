@@ -26,7 +26,7 @@ export default function Clientvisits() {
         setisLoading(true)
         await axios.get('http://www.muktainursesbureau.in/API/clientvisit.php').then((res) => {
 
-            // console.log("res", res)
+            console.log("res", res)
             if (res.data) {
                 setVisit(res.data)
                 setisLoading(!true)
@@ -67,7 +67,7 @@ export default function Clientvisits() {
         <div className="text-center">
             {/* <Button size='sm' onClick={() => setModalShow(true)}>+</Button> */}
 
-            {isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+            {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> :
                 <Table striped bordered hover size="sm" responsive>
                     <thead>
                         <tr>

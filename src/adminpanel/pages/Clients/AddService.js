@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const MainURL = "http://www.muktainursesbureau.in/API";
 
 const initialService = {
   key: "empService",
@@ -84,9 +85,9 @@ const AddService = ({ clientUpdate, getClientdata, afterclose }) => {
         clientId: clientUpdate.id,
         startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }
-    
+
       console.log("empData", empData);
-      axios.post('http://www.muktainursesbureau.in/API/insertclientvisit.php', empData).then((res) => {
+      axios.post(MainURL + '/' + 'insertclientvisit.php', empData).then((res) => {
         console.log(res.data)
         getClientdata()
         notify()
@@ -112,11 +113,18 @@ const AddService = ({ clientUpdate, getClientdata, afterclose }) => {
 
   useEffect(() => {
     getspeciality();
+    getPrevData();
   }, []);
 
-
+  const Prevdata = { clientId: clientUpdate.id }
+  async function getPrevData() {
+    console.log(Prevdata)
+    await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
+      console.log("first", res)
+    })
+  }
   async function getspeciality() {
-    await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
+    await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
       var arr = [];
       res.data.result.map((item) => {
         arr.push(
@@ -135,9 +143,9 @@ const AddService = ({ clientUpdate, getClientdata, afterclose }) => {
 
     // console.log("specialitydata", specialitydata);
 
-    axios.post('http://www.muktainursesbureau.in/API/getstaffbyspeciality.php', specialitydata).then((res) => {
-      
-    console.log("speciality", res);
+    axios.post(MainURL + '/' + 'getstaffbyspeciality.php', specialitydata).then((res) => {
+
+      console.log("speciality", res);
 
       var staffs = [];
       res.data.result.map((option) => {

@@ -59,7 +59,7 @@ export default function ClientRecord(props) {
             />
             <div className='text-center'>
                 {
-                    isLoading ? <img src={require('../../../assets/images/loader.gif')} /> :
+                    isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> :
                         <Table striped bordered hover size="sm" responsive>
                             <thead>
                                 <tr>

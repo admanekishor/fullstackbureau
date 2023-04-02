@@ -80,7 +80,7 @@ export default function AddLocation({ getAreas, afterclose }) {
             console.log("empData", empData);
 
             axios.post('http://www.muktainursesbureau.in/API/Insertarea.php', empData).then((res) => {
-                // console.log("res", res);
+                console.log("res", res);
                 getAreas();
                 notify()
                 afterclose();
