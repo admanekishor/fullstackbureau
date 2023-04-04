@@ -56,7 +56,16 @@ export default function ClientsTable() {
             setisLoading(false)
         })
     }
-
+    useEffect(() => {
+        getclientPrevData();
+    }, []);
+    
+async function getclientPrevData(){
+    
+    await axios.get(MainURL + '/' + 'selectedclientvisit.php').then((PrevData) => {
+        return PrevData;
+    })
+}
 
     function getactiveclient(client) {
         activeclent = activeClient.map((item) => item.id)
@@ -67,6 +76,7 @@ export default function ClientsTable() {
                 onClick={() => {
                     setClientUpdate(client);
                     setAddServiceModal(true);
+                    getclientPrevData(client)
                 }}
             ><FaCheck size={15} /></Button>)
         } else {
@@ -226,7 +236,7 @@ export default function ClientsTable() {
             /> */}
 
             <CustomModal
-                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
+                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} getclientPrevData={getclientPrevData} afterclose={afterclose} /> }}
                 show={AddServiceModal}
                 onHide={() => setAddServiceModal(false)}
                 modalsize="md"

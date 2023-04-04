@@ -60,7 +60,7 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
     value: InitialHour,
     error: false,
     touched: false,
-    regex: /^((-0)|(0))$/,
+    regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
     required: true
   };
   // client bill amount by number
@@ -73,7 +73,7 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
     required: true
   };
 
-  // console.log("client updatre", clientUpdate)
+  console.log("client updatre", clientUpdate)
 
   const auth = useContext(Authcontext);
   // console.log("Auth", auth.state)
@@ -198,12 +198,13 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
 
     if (!clientName.error && !clientAddress.error && !clientArea.error && !clientContact.error && !clientAltContact.error && !serviceHrs.error && !clientAmount.error) {
       const empData = {
+        clientId :clientUpdate.id,
         clientName: clientName.value,
         clientAddress: clientAddress.value,
-        clientArea: clientArea.value,
+        clientArea: clientArea.value.value,
         clientContact: clientContact.value,
         clientAltContact: clientAltContact.value,
-        serviceHrs: serviceHrs.value,
+        serviceHrs: serviceHrs.value.value,
         clientAmount: clientAmount.value
       }
 

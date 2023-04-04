@@ -19,8 +19,8 @@ export default function Clientvisits() {
     // const [getAction, setgetAction] = useState(null)
     useEffect(() => {
         getclientvisitdata()
-        // console.log("Visit Updated")
-    }, [setVisit]);
+        console.log("Visit dashboard Updated")
+    }, []);
 
     const getclientvisitdata = async () => {
         setisLoading(true)

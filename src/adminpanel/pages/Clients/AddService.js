@@ -29,7 +29,7 @@ const initialClientvisitor = {
 };
 
 
-const AddService = ({ clientUpdate, getClientdata, afterclose }) => {
+const AddService = ({ clientUpdate, getClientdata, getclientPrevData, afterclose }) => {
   const auth = useContext(Authcontext);
 
   const [clientVisitor, setclientVisitor] = useState(initialClientvisitor);
@@ -41,6 +41,7 @@ const AddService = ({ clientUpdate, getClientdata, afterclose }) => {
   // const [availablestaffII, setavailablestaffII] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+console.log("getclientPrevData", getclientPrevData);
 
   const validate = (obj) => {
     let error;
