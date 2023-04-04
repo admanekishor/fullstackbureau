@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
+const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.servicehrs + " " + " Hour"};
 
   const initialName = {
     key: "clientName",
@@ -55,11 +56,11 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
     required: true
   };
   const initialServiceHrs = {
-    key: "ServiceHrs",
-    value: clientUpdate.servicehrs,
+    key: "serviceHrs",
+    value: InitialHour,
     error: false,
     touched: false,
-    regex: /(?=.{10})(?=.*[0-9]+)/g,
+    regex: /^((-0)|(0))$/,
     required: true
   };
   // client bill amount by number
@@ -132,33 +133,44 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
   }
 
+  useEffect(() => {
+    WorkingTime();
+  }, [])
 
-  var options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
-  var opt = [];
-  var selected = [];
+
 
   async function WorkingTime() {
 
+    var options = [];
+    var opt = [];
+    var selected = [];
+    for (let i = 1; i <= 24; i++) {
+      options.push({
+        id: i,
+        name: i
+      });
 
+    }
+    options.map((item) => {
 
-    for (let i = 0; i < options.length; i++) {
-
-      if (clientUpdate.servicehrs === i) {
+      if (clientUpdate.servicehrs === item.id) {
         selected.push({
-          value: i,
-          label: i,
+          value: item.id,
+          label: item.name + " " + "Hour"
         })
 
-        setWorkinghrs({ ...Workinghrs, value: selected })
+        setserviceHrs({ ...serviceHrs, value: selected })
       }
+      console.log("serviceHrs", serviceHrs.value);
 
       opt.push({
-        label: options[i],
-        value: options[i]
-      })
-    }
-    // console.log("working hrs", opt)
+        value: item.id,
+        label: item.name + " " + "Hour"
+      });
+    });
+
     setWorkinghrs(opt)
+
   }
 
   const notify = () => toast.success("Changes Done!", {
@@ -184,18 +196,18 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
 
 
-    if (!clientName.error && !clientAddress.error && !clientArea.error && !clientContact.error && !clientAltContact.error && !clientAmount.error) {
+    if (!clientName.error && !clientAddress.error && !clientArea.error && !clientContact.error && !clientAltContact.error && !serviceHrs.error && !clientAmount.error) {
       const empData = {
         clientName: clientName.value,
         clientAddress: clientAddress.value,
-        clientArea: clientArea.value.value,
+        clientArea: clientArea.value,
         clientContact: clientContact.value,
         clientAltContact: clientAltContact.value,
         serviceHrs: serviceHrs.value,
         clientAmount: clientAmount.value
       }
 
-      // console.log("empData", empData);
+      console.log("empData", empData);
 
       axios.post('http://www.muktainursesbureau.in/API/editclient.php', empData).then((res) => {
         // console.log("res", res);
@@ -226,7 +238,7 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
   useEffect(() => {
     getAreas();
-    WorkingTime();
+
   }, []);
 
 
@@ -352,18 +364,14 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
                 <Col sm="12">
                   <Form.Label>Enter Service Hours</Form.Label>
                   <SelectDropdown
-                    name="clientArea"
+                    name="serviceHrs"
                     value={serviceHrs.value}
-                    data={{
-                      list: Workinghrs
-                    }}
+                    data={{ list: Workinghrs }}
                     isMulti={false}
                     isSearchable={true}
-                    onChange={(e) => {
-                      setserviceHrs({ ...serviceHrs, value: e })
-                    }}
+                    onChange={(e) => setserviceHrs({ ...serviceHrs, value: e })}
                   />
-                  {isError(clientAltContact) && <p className='text-danger'>{clientAltContact.error}</p>}
+                  {isError(serviceHrs) && <p className='text-danger'>{serviceHrs.error}</p>}
                 </Col>
               </Form.Group>
               <Form.Group as={Row} className="mb-3" controlId="formPlaintextcontact">
