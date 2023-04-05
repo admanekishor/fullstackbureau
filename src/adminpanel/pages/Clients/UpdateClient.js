@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
-const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.servicehrs + " " + " Hour"};
+
 
   const initialName = {
     key: "clientName",
@@ -55,6 +55,9 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
     regex: /(?=.{10})(?=.*[0-9]+)/g,
     required: true
   };
+
+  const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.servicehrs + " " + " Hour"};
+  
   const initialServiceHrs = {
     key: "serviceHrs",
     value: InitialHour,
@@ -106,21 +109,31 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
 
   const isError = obj => obj.error && obj.touched && obj.required;
 
+  
+  useEffect(() => {
+    getAreas();
+
+  }, [clientUpdate.areacode]);
+
+
   async function getAreas() {
     await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
 
+    console.log("areas", res);
+
       var localareas = [];
-      var selected = [];
+      // var selected = {};
       res.data.result.map((item) => {
 
         if (clientUpdate.areacode === item.id) {
-          selected.push({
+         const AreaSelected ={
             value: item.id,
             label: item.areaname,
-          })
+          }
 
-          setclientArea({ ...clientArea, value: selected })
+          setclientArea({ ...clientArea, value: AreaSelected })
         }
+        console.log("clientArea", clientArea);
 
         localareas.push(
           {
@@ -129,6 +142,8 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
           });
       });
       setAreaOptions(localareas)
+
+      console.log("clientArea.value", clientArea.value)
     })
 
   }
@@ -236,11 +251,6 @@ const InitialHour = {value: clientUpdate.servicehrs, label: clientUpdate.service
     }
   }
 
-
-  useEffect(() => {
-    getAreas();
-
-  }, []);
 
 
   useEffect(() => {

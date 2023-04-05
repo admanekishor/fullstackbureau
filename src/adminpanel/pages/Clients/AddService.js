@@ -29,7 +29,7 @@ const initialClientvisitor = {
 };
 
 
-const AddService = ({ clientUpdate, getClientdata, getclientPrevData, afterclose }) => {
+const AddService = ({ clientUpdate, getClientdata, clientprevData, afterclose }) => {
   const auth = useContext(Authcontext);
 
   const [clientVisitor, setclientVisitor] = useState(initialClientvisitor);
@@ -41,7 +41,7 @@ const AddService = ({ clientUpdate, getClientdata, getclientPrevData, afterclose
   // const [availablestaffII, setavailablestaffII] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-console.log("getclientPrevData", getclientPrevData);
+console.log("getclientprevData", clientprevData);
 
   const validate = (obj) => {
     let error;
@@ -117,13 +117,15 @@ console.log("getclientPrevData", getclientPrevData);
     getPrevData();
   }, []);
 
-  const Prevdata = { clientId: clientUpdate.id }
   async function getPrevData() {
-    console.log(Prevdata)
+    const Prevdata = { clientId: clientUpdate.id }
+    console.log("Prevdata", Prevdata)
+
     await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
       console.log("first", res)
     })
   }
+  
   async function getspeciality() {
     await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
       var arr = [];
