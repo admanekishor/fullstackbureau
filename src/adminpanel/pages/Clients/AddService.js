@@ -10,38 +10,44 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const MainURL = "http://www.muktainursesbureau.in/API";
 
-const initialService = {
-  key: "empService",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
-  required: true
-};
-
-const initialClientvisitor = {
-  key: "clientVisitor",
-  value: "",
-  error: false,
-  touched: false,
-  regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
-  required: true
-};
 
 
-const AddService = ({ clientUpdate, getClientdata, clientprevData, afterclose }) => {
+const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
+
+  console.log("clientUpdate", clientUpdate);
+
+  const initialService = {
+    key: "SpecialityType",
+    value: "",
+    error: false,
+    touched: false,
+    regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
+    required: true
+  };
+
+  const initialWorkingStaff = {
+    key: "WorkingStaff",
+    value: "",
+    error: false,
+    touched: false,
+    regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
+    required: true
+  };
+
   const auth = useContext(Authcontext);
 
-  const [clientVisitor, setclientVisitor] = useState(initialClientvisitor);
-  const [empService, setempService] = useState(initialService)
+  const [SpecialityType, setSpecialityType] = useState(initialService)
+  const [WorkingStaff, setWorkingStaff] = useState(initialWorkingStaff);
   const [startDate, setstartDate] = useState(new Date())
 
+  const [selectedSpeciality, setselectedSpeciality] = useState([]);
   const [specialityoption, setSpecialityoption] = useState(null)
+
   const [availableStaff, setavailableStaff] = useState([]);
   // const [availablestaffII, setavailablestaffII] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-console.log("getclientprevData", clientprevData);
+  const [PrevData, setPrevData] = useState([]);
 
   const validate = (obj) => {
     let error;
@@ -55,6 +61,86 @@ console.log("getclientprevData", clientprevData);
 
 
   const isError = obj => obj.error && obj.touched && obj.required;
+
+
+  useEffect(() => {
+    getspeciality();
+    getPrevData()
+  }, []);
+
+  
+  async function getPrevData() {
+    const Prevdata = { clientId: clientUpdate.id }
+    console.log("PrevdataApi", Prevdata)
+
+    await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
+        console.log("Prevdata", res.data);
+
+        if (res.data) {
+            res.data.map((item)=>{
+                setPrevData(item)
+            })
+            
+        }
+    })
+    // console.log("PrevData", PrevData)
+}
+
+  async function getspeciality() {
+    await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
+        var arr = [];
+        res.data.result.map((item) => {
+          if (PrevData.speciality_id === item.id) {
+            const SelectedArr = {
+              value: item.id,
+              label: item.name
+            }
+            setselectedSpeciality({ ...selectedSpeciality, value: SelectedArr })
+          }
+          arr.push(
+            {
+              value: item.id,
+              label: item.name,
+            });
+        });
+        setSpecialityoption(arr)
+      
+      // console.log("selectedSpeciality", selectedSpeciality.value)
+    }).catch((err) => {
+      console.log("Error", err);
+    })
+
+  }
+
+  async function getstaff(e) {
+    const specialitydata = { specialityId: e.value }
+
+    // console.log("specialitydata", specialitydata);
+
+    axios.post(MainURL + '/' + 'getstaffbyspeciality.php', specialitydata).then((res) => {
+
+      // console.log("speciality", res);
+
+      var staffs = [];
+        res.data.result.map((option) => {
+          if (PrevData.staff_id === option.id) {
+            const SelectedStaff = {
+              value: option.id,
+              label: option.name
+            }
+          setWorkingStaff({ ...WorkingStaff, value: SelectedStaff })
+          }
+          staffs.push({
+            value: option.id,
+            label: option.name,
+          });
+
+        });
+        setavailableStaff(staffs);
+      
+
+    })
+  }
 
 
   const notify = () => toast.success("Changes Done!", {
@@ -71,23 +157,24 @@ console.log("getclientprevData", clientprevData);
     e.preventDefault();
     setIsSubmitting(true);
 
-    setempService({ ...empService, error: validate(empService), touched: true });
-    setclientVisitor({ ...clientVisitor, error: validate(clientVisitor), touched: true });
+    setSpecialityType({ ...SpecialityType, error: validate(SpecialityType), touched: true });
+    setWorkingStaff({ ...WorkingStaff, error: validate(WorkingStaff), touched: true });
 
 
 
-    if (!clientVisitor.error && !empService.error) {
+    if (!WorkingStaff.error && !SpecialityType.error) {
 
 
       const empData = {
 
-        clientVisitor: clientVisitor.value,
-        empService: empService.value,
+        WorkingStaff: WorkingStaff.value,
+        SpecialityType: SpecialityType.value,
         clientId: clientUpdate.id,
         startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }
 
       console.log("empData", empData);
+
       axios.post(MainURL + '/' + 'insertclientvisit.php', empData).then((res) => {
         console.log(res.data)
         getClientdata()
@@ -101,8 +188,8 @@ console.log("getclientprevData", clientprevData);
 
       setTimeout(() => {
 
-        setempService(initialService);
-        setclientVisitor(initialClientvisitor);
+        setSpecialityType(initialService);
+        setWorkingStaff(initialWorkingStaff);
         setIsSubmitting(false);
       }, 1000);
     } else {
@@ -113,62 +200,12 @@ console.log("getclientprevData", clientprevData);
 
 
   useEffect(() => {
-    getspeciality();
-    getPrevData();
-  }, []);
-
-  async function getPrevData() {
-    const Prevdata = { clientId: clientUpdate.id }
-    console.log("Prevdata", Prevdata)
-
-    await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
-      console.log("first", res)
-    })
-  }
-  
-  async function getspeciality() {
-    await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
-      var arr = [];
-      res.data.result.map((item) => {
-        arr.push(
-          {
-            value: item.id,
-            label: item.name,
-          });
-      });
-      setSpecialityoption(arr)
-    })
-
-  }
-
-  async function getstaff(e) {
-    const specialitydata = { specialityId: e.value }
-
-    // console.log("specialitydata", specialitydata);
-
-    axios.post(MainURL + '/' + 'getstaffbyspeciality.php', specialitydata).then((res) => {
-
-      console.log("speciality", res);
-
-      var staffs = [];
-      res.data.result.map((option) => {
-        staffs.push({
-          value: option.id,
-          label: option.name,
-        });
-
-      });
-      setavailableStaff(staffs)
-    })
-  }
+    setSpecialityType({ ...SpecialityType, error: validate(SpecialityType) })
+  }, [])
 
   useEffect(() => {
-    setempService({ ...empService, error: validate(empService) })
-  }, [empService.value])
-
-  useEffect(() => {
-    setclientVisitor({ ...clientVisitor, error: validate(clientVisitor) })
-  }, [clientVisitor.value])
+    setWorkingStaff({ ...WorkingStaff, error: validate(WorkingStaff) })
+  }, [])
 
 
 
@@ -200,32 +237,34 @@ console.log("getclientprevData", clientprevData);
                 <Col sm="12">
                   <Form.Label>Select Require Service</Form.Label>
                   <SelectDropdown
+                    value={selectedSpeciality.value}
                     data={{ list: specialityoption }}
                     isMulti={false}
                     isSearchable={false}
                     onChange={(e) => {
-                      setempService({ ...empService, value: e.value })
+                      setSpecialityType({ ...SpecialityType, value: e })
                       getstaff(e)
                     }}
                   />
-                  {isError(empService) && <p className='text-danger'>{empService.error}</p>}
+                  {isError(SpecialityType) && <p className='text-danger'>{SpecialityType.error}</p>}
                 </Col>
               </Form.Group>
               <Form.Group as={Row} className="mb-3" controlId="formPlaintextaddress">
                 <Col sm="12">
                   <Form.Label>Select Staff</Form.Label>
                   <SelectDropdown
+                    value={WorkingStaff.value}
                     data={{ list: availableStaff }}
                     isMulti={false}
                     isSearchable={false}
                     onChange={(e) => {
-                      console.log("getstaff", e)
-                      setclientVisitor({ ...clientVisitor, value: e.value })
+                      // console.log("getstaff", e)
+                      setWorkingStaff({ ...WorkingStaff, value: e })
 
                     }}
                     isDisabled={!availableStaff ? true : false}
                   />
-                  {isError(clientVisitor) && <p className='text-danger'>{clientVisitor.error}</p>}
+                  {isError(WorkingStaff) && <p className='text-danger'>{WorkingStaff.error}</p>}
                 </Col>
               </Form.Group>
             </Col>

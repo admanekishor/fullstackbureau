@@ -23,6 +23,10 @@ export default function ClientsTable() {
     const [Client, setClient] = useState([]);
     const [activeClient, setactiveClient] = useState([]);
     const [InactiveClient, setInactiveClient] = useState([]);
+
+    // set selected client working staff
+    
+
     // console.log(props)
     useEffect(() => {
         getClientdata()
@@ -32,7 +36,7 @@ export default function ClientsTable() {
     var activeclent = [];
     async function getClientdata() {
         setisLoading(true)
-       
+
         await axios.get(MainURL + '/' + 'clients.php').then((res) => {
             setClient(res.data)
             // console.log("client", Client);
@@ -58,6 +62,9 @@ export default function ClientsTable() {
     }
 
 
+
+    // console.log("SelectedWorkStaff", SelectSplType);
+
     function getactiveclient(client) {
         activeclent = activeClient.map((item) => item.id)
         if (!activeclent.includes(client.id)) {
@@ -66,6 +73,7 @@ export default function ClientsTable() {
                 title='Activate'
                 onClick={() => {
                     setClientUpdate(client);
+                    // getPrevData(client.id)
                     setAddServiceModal(true);
                 }}
             ><FaCheck size={15} /></Button>)

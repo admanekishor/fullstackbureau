@@ -83,7 +83,7 @@ let Footer = () => {
                                 <h6>
                                     {/* <FaPhoneAlt /> */}
                                     9834301398</h6>
-                                <p>Dattawadi 999/129, <br /> Pune, Maharashtra, Pin Code: 411030</p>
+                                <p>Dattawadi, <br /> Pune, Maharashtra, Pin Code: 411030</p>
                                 <p>Email : <a href="mailto:shital@muktainursesbureau.in" style={{ textDecoration: 'none', color: '#fff' }} >shital@muktainursesbureau.in</a></p>
                                 <ul className="quickList textCenter">
 
