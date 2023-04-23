@@ -12,27 +12,38 @@ const MainURL = "http://www.muktainursesbureau.in/API";
 
 
 
-const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
+const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterclose }) => {
 
-  console.log("clientUpdate", clientUpdate);
+  console.log("clientUpdate", PrevData);
 
-  const initialService = {
+  const Initialspeciality = {
+    value: PrevData.speciality_id,
+    label: PrevData.spaciality_name
+  }
+
+  const InitialWorker = {
+    value: PrevData.staff_id,
+    label: PrevData.staff_name
+  }
+
+  let initialService = {
     key: "SpecialityType",
-    value: "",
+    value: Initialspeciality,
     error: false,
     touched: false,
     regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
     required: true
   };
 
-  const initialWorkingStaff = {
+  let initialWorkingStaff = {
     key: "WorkingStaff",
-    value: "",
+    value: InitialWorker,
     error: false,
     touched: false,
     regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
     required: true
   };
+
 
   const auth = useContext(Authcontext);
 
@@ -47,7 +58,9 @@ const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
   // const [availablestaffII, setavailablestaffII] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [PrevData, setPrevData] = useState([]);
+  // const [PrevData, setPrevData] = useState([]);
+
+
 
   const validate = (obj) => {
     let error;
@@ -65,46 +78,33 @@ const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
 
   useEffect(() => {
     getspeciality();
-    getPrevData()
+  }, [PrevData]);
+
+  useEffect(() => {
+    getPrevData(clientUpdate)
   }, []);
-
-  
-  async function getPrevData() {
-    const Prevdata = { clientId: clientUpdate.id }
-    console.log("PrevdataApi", Prevdata)
-
-    await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
-        console.log("Prevdata", res.data);
-
-        if (res.data) {
-            res.data.map((item)=>{
-                setPrevData(item)
-            })
-            
-        }
-    })
-    // console.log("PrevData", PrevData)
-}
 
   async function getspeciality() {
     await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
-        var arr = [];
-        res.data.result.map((item) => {
-          if (PrevData.speciality_id === item.id) {
-            const SelectedArr = {
-              value: item.id,
-              label: item.name
-            }
-            setselectedSpeciality({ ...selectedSpeciality, value: SelectedArr })
+      var arr = [];
+      res.data.result.map((item) => {
+        if (PrevData.speciality_id === item.id) {
+          const SelectedArr = {
+            value: item.id,
+            label: item.name
           }
-          arr.push(
-            {
-              value: item.id,
-              label: item.name,
-            });
-        });
-        setSpecialityoption(arr)
-      
+          getstaff(  SelectedArr )
+
+          setselectedSpeciality({ ...selectedSpeciality, value: SelectedArr })
+        }
+        arr.push(
+          {
+            value: item.id,
+            label: item.name,
+          });
+      });
+      setSpecialityoption(arr)
+
       // console.log("selectedSpeciality", selectedSpeciality.value)
     }).catch((err) => {
       console.log("Error", err);
@@ -122,22 +122,22 @@ const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
       // console.log("speciality", res);
 
       var staffs = [];
-        res.data.result.map((option) => {
-          if (PrevData.staff_id === option.id) {
-            const SelectedStaff = {
-              value: option.id,
-              label: option.name
-            }
-          setWorkingStaff({ ...WorkingStaff, value: SelectedStaff })
-          }
-          staffs.push({
+      res.data.result.map((option) => {
+        if (PrevData.staff_id === option.id) {
+          const SelectedStaff = {
             value: option.id,
-            label: option.name,
-          });
-
+            label: option.name
+          }
+          setWorkingStaff({ ...WorkingStaff, value: SelectedStaff })
+        }
+        staffs.push({
+          value: option.id,
+          label: option.name,
         });
-        setavailableStaff(staffs);
-      
+
+      });
+      setavailableStaff(staffs);
+
 
     })
   }
@@ -167,8 +167,8 @@ const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
 
       const empData = {
 
-        WorkingStaff: WorkingStaff.value,
-        SpecialityType: SpecialityType.value,
+        WorkingStaff: WorkingStaff.value.value,
+        SpecialityType: SpecialityType.value.value,
         clientId: clientUpdate.id,
         startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }
@@ -208,6 +208,12 @@ const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
   }, [])
 
 
+  //   useEffect(()=>{
+
+  // alert("1"+JSON.stringify(selectedSpeciality))
+
+  //   },[selectedSpeciality])
+
 
   return (
     <>
@@ -242,6 +248,7 @@ const AddService = ({ clientUpdate, getClientdata , afterclose }) => {
                     isMulti={false}
                     isSearchable={false}
                     onChange={(e) => {
+                      // alert(JSON.stringify(e))
                       setSpecialityType({ ...SpecialityType, value: e })
                       getstaff(e)
                     }}

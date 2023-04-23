@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Button, Table, Tab, Tabs } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
@@ -23,9 +23,10 @@ export default function ClientsTable() {
     const [Client, setClient] = useState([]);
     const [activeClient, setactiveClient] = useState([]);
     const [InactiveClient, setInactiveClient] = useState([]);
-
+    // setprevdata
+    const [PrevData, setPrevData] = useState([]);
     // set selected client working staff
-    
+
 
     // console.log(props)
     useEffect(() => {
@@ -61,6 +62,28 @@ export default function ClientsTable() {
         })
     }
 
+
+    const getPrevData = useCallback(async (props) => {
+            {
+                console.log("props", props)
+                const Prevdata = { clientId: props.id }
+                // console.log("PrevdataApi", Prevdata)
+
+                await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
+                    console.log("Prevdata", res.data);
+
+                    if (res.data) {
+                        res.data.map((item) => {
+                            setPrevData(item)
+                        })
+
+                    }
+                })
+                // console.log("PrevData", PrevData)
+            }
+        },
+        [PrevData],
+    )
 
 
     // console.log("SelectedWorkStaff", SelectSplType);
@@ -234,7 +257,7 @@ export default function ClientsTable() {
             /> */}
 
             <CustomModal
-                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
+                data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} getPrevData={getPrevData} PrevData={PrevData} afterclose={afterclose} /> }}
                 show={AddServiceModal}
                 onHide={() => setAddServiceModal(false)}
                 modalsize="md"
