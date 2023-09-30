@@ -47,16 +47,16 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
                 workingDays: daycalculate(printClient.start_date, printClient.end_date),
                 // workingDays: "30 Days",
                 servicemonth: new Date().toUTCString().slice(7, 12),
-                // servicemonth: "Jan",
-                workinghour: "24 hr",
+                // servicemonth: "July",
+                workinghour: "2 hr",
                 amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
                 // amount: "21,300/-"
             }
         ],
         signatureTxt: {
             message:
-                "Sheetal Vishnu Admane",
-            subtxt: "(CEO)"
+                "",
+            subtxt: "Sign"
         },
     };
 
@@ -222,11 +222,11 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
                                             </div>
 
                                             <div
-                                                className="leading-relaxed mt-5 text-sm font-weight-bold pt-5 col-4"
+                                                className="leading-relaxed mt-5 text-sm font-weight-bold pt-5 col-12"
 
                                             >
-                                                <p className="text-center"><strong>{value.signatureTxt.message}</strong><br />
-                                                    <strong>{value.signatureTxt.subtxt}</strong></p>
+                                                {/* <p className="float-end"><strong>{value.signatureTxt.message}</strong><br />
+                                                    <strong>{value.signatureTxt.subtxt}</strong></p> */}
                                             </div>
                                             {/* <div
                                                 className="leading-relaxed text-sm"

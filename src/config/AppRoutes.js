@@ -82,7 +82,7 @@ const AppRoutes = () => {
                     </Route>
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/admin" element={state.isSignedIn ? <Main /> : <Navigate to="/login" replace />} />
+                    <Route path="/admin/*" element={state.isSignedIn ? <Main /> : <Navigate to="/login" replace />} />
 
                     <Route path='*' element={<NotFoundPage />} />
                 </Routes>

@@ -6,6 +6,9 @@ import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
 import SelectDropdown from '../../component/SelectDropdown';
 import { FaPrint } from 'react-icons/fa';
+// import Calendar from 'react-calendar';
+// import 'react-calendar/dist/Calendar.css';
+import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
 
 export default function ClientRecord(props) {
     const { GetClientId } = props;
@@ -16,6 +19,15 @@ export default function ClientRecord(props) {
     const [modalShow, setModalShow] = useState(false);
     const [workingDays, setworkingDays] = useState(0);
 
+    const [clientId, setclientId] = useState(GetClientId)
+    const [payMode, setpayMode] = useState('');
+    const [selecteddate, setselectedDate] = useState(new Date());
+
+    // const [paymentDetails, setpaymentDetails] = useState({
+    //     clientId: GetClientId,
+    //     payDate: new Date(),
+    //     paymode: "",
+    // })
 
     useEffect(() => {
 
@@ -31,6 +43,7 @@ export default function ClientRecord(props) {
         // console.log(clientId)
         setisLoading(true)
         axios.post('http://www.muktainursesbureau.in/API/singleclient.php', clientData).then((res) => {
+
             setVisit(res.data)
             setisLoading(false)
             console.log("res", res.data);
@@ -48,6 +61,22 @@ export default function ClientRecord(props) {
 
     }
 
+
+    const getPaymentDetails = ((e) => {
+        const visitid = e.target.dataset.id;
+
+        // const customdate = selecteddate.toString().split('-').reverse().join('-');
+        const payvisitdata = { visitid: visitid, c_id: clientId, payMode: payMode, paydate: selecteddate };
+        console.log("data", payvisitdata);
+
+        axios.post('http://www.muktainursesbureau.in/API/paybill.php', payvisitdata).then((res) => {
+            console.log(res.data)
+          
+        }).catch((err) => {
+            console.log("err", ...err)
+        })
+
+    })
 
     return (
         <div>
@@ -69,8 +98,12 @@ export default function ClientRecord(props) {
 
                                     <th>start date</th>
                                     <th>Service Days</th>
+                                    <th>date</th>
                                     <th>action</th>
-                                    <th>pending</th>
+                                    <th>paid type</th>
+                                    <th>payment date</th>
+                                    <th>submit</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,8 +141,28 @@ export default function ClientRecord(props) {
                                             </td>
                                             <td>
                                                 {
-                                                    record.ispaid ? "Pending" : ""
+                                                    record.ispaid === '0' ?
+
+                                                        <select className='form-select' onChange={((e) => setpayMode(e.target.value))}>
+                                                            <option value="">select payment mode</option>
+                                                            <option value="1">Cash</option>
+                                                            <option value="2">Cheque</option>
+                                                            <option value="3">UPI</option>
+                                                            <option value="4">Net banking</option>
+                                                        </select> : ""
                                                 }
+                                            </td>
+                                            <td>
+
+                                                <input type="date" className='form-control'
+                                                    value={selecteddate}
+                                                    onChange={(e) => setselectedDate(e.target.value)}
+                                                ></input>
+                                            </td>
+                                            <td>
+                                                <button className='btn btn-primary' data-id={record.id} onClick={getPaymentDetails}>
+                                                    pay
+                                                </button>
                                             </td>
                                         </tr>)
                                     })

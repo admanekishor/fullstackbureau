@@ -88,12 +88,13 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
     await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
       var arr = [];
       res.data.result.map((item) => {
+        console.log("speciality_id", PrevData.speciality_id)
         if (PrevData.speciality_id === item.id) {
           const SelectedArr = {
             value: item.id,
             label: item.name
           }
-          getstaff(  SelectedArr )
+          getstaff(SelectedArr)
 
           setselectedSpeciality({ ...selectedSpeciality, value: SelectedArr })
         }
@@ -168,7 +169,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
       const empData = {
 
         WorkingStaff: WorkingStaff.value.value,
-        SpecialityType: SpecialityType.value.value,
+        SpecialityType: SpecialityType.value.value === undefined ? selectedSpeciality.value.value : "",
         clientId: clientUpdate.id,
         startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }

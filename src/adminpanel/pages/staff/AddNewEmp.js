@@ -232,6 +232,21 @@ const AddNewEmp = ({ getemployeedata }) => {
                   {isError(empAge) && <p className='text-danger'>{empAge.error}</p>}
                 </Col>
               </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextage">
+                <Col sm="12">
+                  <img url="" />
+                </Col>
+                <Col sm="12">
+                  <Form.Control type="file"
+                    name="empAge"
+                  />
+                  <br/>
+                  <Button className='float-start btn-sm' variant="danger" type="submit" disabled={isSubmitting}>
+                    Upload!
+                  </Button>
+                  {/* {isError(empAge) && <p className='text-danger'>{empAge.error}</p>} */}
+                </Col>
+              </Form.Group>
             </Col>
             <Col>
               <Form.Group as={Row} className="mb-3" controlId="formPlaintextgender">

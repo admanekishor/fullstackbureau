@@ -27,23 +27,22 @@ export default function ClientsBilling() {
 
     console.log("visit", Visit);
 
-    const daycalculate = (start_date, end_date) => {
-        const start = new Date(start_date);
-        const end = new Date(end_date);
-        let dayCount = 0
-        while (end > start) {
-            dayCount++
-            start.setDate(start.getDate() + 1)
-        }
-        return dayCount;
-
-    }
+    // const daycalculate = (start_date, end_date) => {
+    //     const start = new Date(start_date);
+    //     const end = new Date(end_date);
+    //     let dayCount = 0
+    //     while (end > start) {
+    //         dayCount++
+    //         start.setDate(start.getDate() + 1)
+    //     }
+    //     return dayCount;
+    // }
 
     return (
         <div>
             <br />
             <CustomModal
-                data={{ title: "Add New Employee", component: <ClientRecord GetClientId={GetClientId} /> }}
+                data={{ title: "Show Client Payment Details", component: <ClientRecord GetClientId={GetClientId} /> }}
                 show={ClientmodalShow}
                 onHide={() => setClientModalShow(false)}
                 modalsize="lg"
@@ -55,10 +54,12 @@ export default function ClientsBilling() {
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    {/* <th>paid type</th> */}
                                     <th>Client Name</th>
-                                    <th>Address</th>
 
-                                    <th>start date</th>
+                                    {/* <th>Address</th>
+
+                                    <th>start date</th> */}
                                     {/* <th>Service Days</th> */}
                                     {/* <th>action</th> */}
                                     {/* <th>pending</th> */}
@@ -67,25 +68,32 @@ export default function ClientsBilling() {
                             <tbody>
                                 {
                                     Visit.map((record, i) => {
-                                        const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-                                            <Button size='sm' onClick={onClick} ref={ref}>
-                                                {value}
-                                            </Button>
-                                        ));
+                                        // const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+                                        //     <Button size='sm' onClick={onClick} ref={ref}>
+                                        //         {value}
+                                        //     </Button>
+                                        // ));
 
                                         return (<tr key={i}>
                                             <td>{i + 1}</td>
+                                            {/* <td>
+                                                <p>paid</p>
+                                            </td> */}
                                             <td><label onClick={() => {
                                                 setGetClientId(record.clientbillid)
                                                 // setprintClient(record.clientbillid)
                                                 setClientModalShow(true)
                                             }}>
-                                                {record.client_name}
+                                                {
+                                                    record.ispaid == 0 ?
+                                                        <span class="badge bg-secondary">New</span> : ""
+                                                
+                                             }   {record.client_name}
                                             </label>
                                             </td>
-                                            <td>{record.client_address}</td>
+                                            {/* <td>{record.client_address}</td>
 
-                                            <td>{record.start_date}</td>
+                                            <td>{record.start_date}</td> */}
                                             {/* <td>
 
                                                         {

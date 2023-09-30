@@ -5,10 +5,11 @@ import CustomModal from '../../component/CustomModal';
 import AddClients from './AddClients';
 import AddService from './AddService';
 import DeleteClient from './DeleteClient';
-import { FaCheck, FaPencilAlt } from 'react-icons/fa';
+import { FaCheck, FaPencilAlt, FaTrashRestore } from 'react-icons/fa';
 import { RiDeleteBinFill } from "react-icons/ri";
 import UpdateClients from './UpdateClient';
 import ActivateClient from './ActivateClient';
+import UndeleteClient from './UndeleteClient';
 
 const MainURL = "http://www.muktainursesbureau.in/API";
 
@@ -17,6 +18,7 @@ export default function ClientsTable() {
     const [newclientmodalShow, setnewclientmodalShow] = React.useState(false);
     const [AddServiceModal, setAddServiceModal] = React.useState(false);
     const [DeleteClientModal, setDeleteClientModal] = React.useState(false);
+    const [UndeleteClientModal, setUndeleteClientModal] = React.useState(false);
     const [ActivateClientModal, setActivateClientModal] = useState(false)
     const [UpdateClientModal, setUpdateClientModal] = React.useState(false);
     const [clientUpdate, setClientUpdate] = useState({});
@@ -65,7 +67,7 @@ export default function ClientsTable() {
 
     const getPrevData = useCallback(async (props) => {
             {
-                console.log("props", props)
+                // console.log("props", props)
                 const Prevdata = { clientId: props.id }
                 // console.log("PrevdataApi", Prevdata)
 
@@ -117,6 +119,15 @@ export default function ClientsTable() {
                 setDeleteClientModal(true);
             }}
         ><RiDeleteBinFill /></Button>)
+    }
+    function undeleteclient(client) {
+        return (<Button className='btn-sm d-flex'
+            title='Restore'
+            onClick={() => {
+                setClientUpdate(client);
+                setUndeleteClientModal(true);
+            }}
+        ><FaTrashRestore /></Button>)
     }
     function activateclient(client) {
         return (<Button className='btn-sm d-flex'
@@ -193,7 +204,7 @@ export default function ClientsTable() {
                         }
                     </div>
                 </Tab>
-                <Tab eventKey="InActiveClient" title="InActive Clients">
+                <Tab eventKey="InActiveClient" title="Closed Clients">
                     <div className='text-center'>
                         {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> : <Table striped bordered hover size="sm" responsive>
                             <thead>
@@ -220,7 +231,7 @@ export default function ClientsTable() {
                                             <td>{client.amount}</td>
                                             <td>{getactiveclient(client)}</td>
                                             <td>{Editclient(client)}</td>
-                                            <td>{activateclient(client)}</td>
+                                            <td>{undeleteclient(client)}</td>
                                         </tr>)
                                     })
                                 }
@@ -245,6 +256,13 @@ export default function ClientsTable() {
                 data={{ title: "Delete Client", component: <DeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
                 show={DeleteClientModal}
                 onHide={() => setDeleteClientModal(false)}
+                modalsize="md"
+
+            />
+            <CustomModal
+                data={{ title: "UnDelete Client", component: <UndeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
+                show={UndeleteClientModal}
+                onHide={() => setUndeleteClientModal(false)}
                 modalsize="md"
 
             />
