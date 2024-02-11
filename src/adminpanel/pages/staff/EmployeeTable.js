@@ -16,7 +16,7 @@ export default function EmployeeTable() {
 
     const [Employee, setEmployee] = useState([]);
     const [Activestaff, setActivestaff] = useState([])
-    const [Empupdate, setEmpupdate] = useState({})
+    const [updateEmployee, setupdateEmployee] = useState({})
 
     // console.log(props)
     useEffect(() => {
@@ -33,12 +33,12 @@ export default function EmployeeTable() {
         // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
         await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
             setEmployee(res.data.result)
-            // console.log("emplist", Employee);
+            console.log("emplist", Employee);
             setisLoading(false)
         })
         await axios.get('http://www.muktainursesbureau.in/API/activestaff.php').then((resII) => {
             setActivestaff(resII.data)
-            console.log("emplist", Activestaff);
+            // console.log("emplist", Activestaff);
             setisLoading(false);
         })
     }
@@ -56,21 +56,28 @@ export default function EmployeeTable() {
         const activeStaff = Activestaff.map((emp) => emp.id);
         if (!activeStaff.includes(employee.id)) {
 
-            return (<Button className='btn-sm d-flex'
+            return (<Button className='btn-sm'
                 title='Activate'
                 onClick={() => {
-                    setEmpupdate(employee);
+                    setupdateEmployee(employee);
                     // setAddServiceModal(true);
                 }}
-            ><FaCheck size={15} /></Button>)
+            ><FaCheck size={16} /></Button>)
         } else {
             return (<Button
-                className='btn-sm btn-danger d-flex'
+                className='btn-sm btn-danger'
                 title='Activated'>
-                <FaCheck size={15} />
+                <FaCheck size={16} />
             </Button>)
         }
     }
+const editEmployee = (employee)=>{
+  return  <Button className='btn-sm' onClick={() => {
+        setupdateEmployee(employee)
+        setEditmodalShow(true)
+    }}><FaPencilAlt size={16} /></Button>
+}
+    
     return <>
         <div>
             <Button size='sm' onClick={() => setNewempModalShow(true)}>+</Button>
@@ -88,9 +95,9 @@ export default function EmployeeTable() {
                                     <th>Age</th>
                                     <th>Gender</th>
                                     <th>Contact</th>
-                                    <th>Active</th>
+                                    {/* <th>Active</th> */}
                                     <th>Speciality</th>
-                                    <th colSpan={2}>Action</th>
+                                    <th colSpan={3}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,18 +110,14 @@ export default function EmployeeTable() {
                                             <td>{employee.age}</td>
                                             <td>{employee.gender}</td>
                                             <td>{employee.contact}</td>
-                                            <td>{
-                                                // employee.active ? "Active" : "InActive"
+                                            <td>{employee.specialityname}</td>
+                                            <td valign='middle'>{
                                                 activestaff(employee)
                                             }</td>
-                                            <td>{employee.specialityname}</td>
                                             <td valign='middle'>
-                                                {/* <div className='d-flex justify-content-center align-items-center'> */}
-                                                <Button className='btn-sm' onClick={() => {
-                                                    setEmpupdate(employee)
-                                                    setEditmodalShow(true)
-                                                }}><FaPencilAlt /></Button>
-                                                {/* </div> */}
+                                             
+                                               {editEmployee(employee)}
+                                              
                                             </td>
                                             <td valign='middle'>
                                                 <Button className='btn-sm' onClick={() => {
@@ -144,7 +147,7 @@ export default function EmployeeTable() {
             />
 
             <CustomModal
-                data={{ title: "Edit Staff", component: <EditEmp Empupdate={Empupdate} setEmpupdate={setEmpupdate} /> }}
+                data={{ title: "Edit Staff", component: <EditEmp updateEmployee={updateEmployee} setupdateEmployee={setupdateEmployee} /> }}
                 show={EditmodalShow}
                 onHide={() => setEditmodalShow(false)}
                 modalSize="md"

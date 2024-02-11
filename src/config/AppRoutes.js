@@ -6,7 +6,6 @@ import About from '../bureau/About';
 import Typesofcare from '../bureau/Typesofcare';
 import Contact from '../bureau/Contact';
 import Login from '../adminpanel/pages/Login';
-import { Action } from 'history';
 import NotFoundPage from '../bureau/NotFoundPage';
 
 export const Authcontext = createContext();

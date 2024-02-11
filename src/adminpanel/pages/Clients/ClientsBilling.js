@@ -25,7 +25,7 @@ export default function ClientsBilling() {
         })
     }, [])
 
-    console.log("visit", Visit);
+    // console.log("visit", Visit);
 
     // const daycalculate = (start_date, end_date) => {
     //     const start = new Date(start_date);
@@ -42,7 +42,7 @@ export default function ClientsBilling() {
         <div>
             <br />
             <CustomModal
-                data={{ title: "Show Client Payment Details", component: <ClientRecord GetClientId={GetClientId} /> }}
+                data={{ title: "Show Client month of work Details", component: <ClientRecord GetClientId={GetClientId} /> }}
                 show={ClientmodalShow}
                 onHide={() => setClientModalShow(false)}
                 modalsize="lg"
@@ -56,24 +56,12 @@ export default function ClientsBilling() {
                                     <th>#</th>
                                     {/* <th>paid type</th> */}
                                     <th>Client Name</th>
-
-                                    {/* <th>Address</th>
-
-                                    <th>start date</th> */}
-                                    {/* <th>Service Days</th> */}
-                                    {/* <th>action</th> */}
-                                    {/* <th>pending</th> */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     Visit.map((record, i) => {
-                                        // const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-                                        //     <Button size='sm' onClick={onClick} ref={ref}>
-                                        //         {value}
-                                        //     </Button>
-                                        // ));
-
+                                        
                                         return (<tr key={i}>
                                             <td>{i + 1}</td>
                                             {/* <td>
@@ -84,39 +72,10 @@ export default function ClientsBilling() {
                                                 // setprintClient(record.clientbillid)
                                                 setClientModalShow(true)
                                             }}>
-                                                {
-                                                    record.ispaid == 0 ?
-                                                        <span class="badge bg-secondary">New</span> : ""
-                                                
-                                             }   {record.client_name}
+                                                  {record.client_name}
                                             </label>
                                             </td>
-                                            {/* <td>{record.client_address}</td>
-
-                                            <td>{record.start_date}</td> */}
-                                            {/* <td>
-
-                                                        {
-                                                            daycalculate(record.start_date, record.end_date)
-                                                        }
-                                                    </td> */}
-
-                                            {/* <td>{record.end_date}</td> */}
-                                            {/* <td>
-                                                        {
-                                                            record.start_date && record.end_date
-                                                                ? <Button size="sm" title="Print" onClick={() => {
-                                                                    setprintClient(record)
-                                                                    setClientModalShow(true)
-                                                                }}><FaPrint /></Button> : ""
-
-                                                        }
-                                                    </td> */}
-                                            {/* <td>
-                                                        {
-                                                            record.ispaid ? "Pending" : ""
-                                                        }
-                                                    </td> */}
+                                           
                                         </tr>)
                                     })
                                 }

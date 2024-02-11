@@ -62,12 +62,13 @@ export default function Sidebar() {
         // }
     };
 
-    return <>
-        <div style={{ height: '90vh', background: '#343a40' }}>
+    return (
+        <div key={1} style={{ height: '90vh', background: '#343a40' }}>
             <ListGroup defaultActiveKey="clientvisit" variant="flush">
 
-                {routes.map(({ path, name }) => (
+                {routes.map(({ path, name, i }) => (
                     <ListGroup.Item
+                        key={i}
                         variant={URLstring == path
                             .split("/")
                             .slice(0, 2)
@@ -81,7 +82,7 @@ export default function Sidebar() {
                             to={path}
                             className="sidebarMenu"
                             onClick={geturlstring(path)}
-                            style={{textDecoration:'none', color:'#333'}}
+                            style={{ textDecoration: 'none', color: '#333' }}
                         >
                             {name}
                         </Link>
@@ -89,5 +90,5 @@ export default function Sidebar() {
                 ))}
             </ListGroup>
         </div>
-    </>
+    )
 }

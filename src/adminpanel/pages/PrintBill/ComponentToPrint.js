@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Table } from "react-bootstrap";
 
 const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref) => {
+console.log("printClient", printClient);
 
     const daycalculate = (start_date, end_date) => {
         const start = new Date(start_date);
@@ -46,9 +47,9 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
                 email: "-",
                 workingDays: daycalculate(printClient.start_date, printClient.end_date),
                 // workingDays: "30 Days",
-                servicemonth: new Date().toUTCString().slice(7, 12),
-                // servicemonth: "July",
-                workinghour: "2 hr",
+                // servicemonth: new Date().toUTCString().slice(7, 12),
+                servicemonth: "DEC",
+                workinghour: "5 hr",
                 amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
                 // amount: "21,300/-"
             }
@@ -88,7 +89,7 @@ const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref)
                                             Bill Invoice
                                         </h2>
                                     </div>
-                                    <div className="flex flex-wrap w-full p-5">
+                                    <div className="flex flex-wrap w-full p-2">
                                         <div className="">
                                             <p className="float-end"><strong className="text-md bold title-font text-gray-500 tracking-widest text-end">
                                                 Date: {value.basicDetails.date}

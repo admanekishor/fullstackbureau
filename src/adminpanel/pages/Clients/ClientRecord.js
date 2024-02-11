@@ -60,6 +60,16 @@ export default function ClientRecord(props) {
         return dayCount;
 
     }
+    const currentMonth = (start_date, end_date) => {
+        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        const start = new Date(start_date);
+        const end = new Date(end_date);
+        let dayCount = month[end.getUTCMonth()];
+
+        return dayCount;
+
+    }
 
 
     const getPaymentDetails = ((e) => {
@@ -71,7 +81,7 @@ export default function ClientRecord(props) {
 
         axios.post('http://www.muktainursesbureau.in/API/paybill.php', payvisitdata).then((res) => {
             console.log(res.data)
-          
+
         }).catch((err) => {
             console.log("err", ...err)
         })
@@ -81,7 +91,7 @@ export default function ClientRecord(props) {
     return (
         <div>
             <CustomModal
-                data={{ title: "Add New Employee", component: <PrintBill printClient={printClient} setprintClient={setprintClient} /> }}
+                data={{ title: "Print Bill of Employee", component: <PrintBill printClient={printClient} setprintClient={setprintClient} /> }}
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 modalsize="lg"
@@ -92,23 +102,38 @@ export default function ClientRecord(props) {
                         <Table striped bordered hover size="sm" responsive>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Client Name</th>
-                                    <th>Address</th>
+                                    <th colSpan={4}>
+                                        {
+                                            Visit.map((record, i) => {
+                                                if(i == 0){
 
-                                    <th>start date</th>
+                                                    return record.client_name
+                                                }
+                                            })
+                                        }
+                                    </th>
+                                </tr>
+                                <tr>
+
+                                    <th>#</th>
+                                    {/* <th>Client Name</th> */}
+                                    {/* <th>Address</th> */}
+
+                                    <th>Service Month</th>
                                     <th>Service Days</th>
-                                    <th>date</th>
+                                    {/* <th>date</th> */}
                                     <th>action</th>
-                                    <th>paid type</th>
+                                    {/* <th>paid type</th>
                                     <th>payment date</th>
-                                    <th>submit</th>
+                                    <th>submit</th> */}
 
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     Visit.map((record, i) => {
+                                        console.log("Visit", Visit);
+                                        
                                         const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
                                             <Button size='sm' onClick={onClick} ref={ref}>
                                                 {value}
@@ -117,10 +142,16 @@ export default function ClientRecord(props) {
 
                                         return (<tr key={i}>
                                             <td>{i + 1}</td>
-                                            <td>{record.client_name}</td>
-                                            <td>{record.client_address}</td>
+                                            {/* <td>{record.client_name}</td> */}
+                                            {/* <td>{record.client_address}</td> */}
 
-                                            <td>{record.start_date}</td>
+                                            {/* <td>{record.start_date}</td> */}
+                                            <td>
+
+                                                {
+                                                    currentMonth(record.start_date, record.end_date)
+                                                }
+                                            </td>
                                             <td>
 
                                                 {
@@ -128,7 +159,7 @@ export default function ClientRecord(props) {
                                                 }
                                             </td>
 
-                                            <td>{record.end_date}</td>
+                                            {/* <td>{record.end_date}</td> */}
                                             <td>
                                                 {
                                                     record.start_date && record.end_date
@@ -139,7 +170,7 @@ export default function ClientRecord(props) {
 
                                                 }
                                             </td>
-                                            <td>
+                                            {/* <td>
                                                 {
                                                     record.ispaid === '0' ?
 
@@ -163,7 +194,7 @@ export default function ClientRecord(props) {
                                                 <button className='btn btn-primary' data-id={record.id} onClick={getPaymentDetails}>
                                                     pay
                                                 </button>
-                                            </td>
+                                            </td> */}
                                         </tr>)
                                     })
                                 }

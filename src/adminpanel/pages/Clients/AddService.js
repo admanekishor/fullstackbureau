@@ -169,12 +169,12 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
       const empData = {
 
         WorkingStaff: WorkingStaff.value.value,
-        SpecialityType: SpecialityType.value.value === undefined ? selectedSpeciality.value.value : "",
+        SpecialityType: SpecialityType.value.value === undefined ? selectedSpeciality.value.value : SpecialityType.value.value,
         clientId: clientUpdate.id,
         startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }
 
-      console.log("empData", empData);
+      console.log("empData", empData);  
 
       axios.post(MainURL + '/' + 'insertclientvisit.php', empData).then((res) => {
         console.log(res.data)

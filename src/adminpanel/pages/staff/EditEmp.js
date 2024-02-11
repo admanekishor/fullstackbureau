@@ -4,12 +4,12 @@ import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
 
-const EditEmp = ({ Empupdate }) => {
+const EditEmp = ({ updateEmployee }) => {
 
 
   const initialName = {
     key: "empName",
-    value: Empupdate.name,
+    value: updateEmployee.name,
     error: false,
     touched: false,
     regex: /^[A-Za-z]/,
@@ -18,7 +18,7 @@ const EditEmp = ({ Empupdate }) => {
 
   const initialAddress = {
     key: "empAddress",
-    value: Empupdate.address,
+    value: updateEmployee.address,
     error: false,
     touched: false,
     regex: /^[A-Za-z0-9]/,
@@ -27,24 +27,24 @@ const EditEmp = ({ Empupdate }) => {
 
   const initialAge = {
     key: "empAge",
-    value: Empupdate.age,
+    value: updateEmployee.age,
     error: false,
     touched: false,
     regex: /^[0-9]/,
     required: true
   };
 
-  // const initialGender = {
-  //   key: "empGender",
-  //   value: "",
-  //   error: false,
-  //   touched: false,
-  //   regex: /^[a-z]/,
-  //   required: true
-  // };
+  const initialGender = {
+    key: "empGender",
+    value: "",
+    error: false,
+    touched: false,
+    regex: /^[a-z]/,
+    required: true
+  };
   const initialContact = {
     key: "empContact",
-    value: Empupdate.contact,
+    value: updateEmployee.contact,
     error: false,
     touched: false,
     regex: /(?=.{10})(?=.*[0-9]+)/g,
@@ -52,20 +52,20 @@ const EditEmp = ({ Empupdate }) => {
   };
   const initialService = {
     key: "empService",
-    value: Empupdate.specialityname,
+    value: updateEmployee.specialityid,
     error: false,
     touched: false,
-    regex: /^[A-Za-z]/,
+    regex: /^(("\d{1,7}")(,"\d{1,7}")*)?/,
     required: true
   };
 
-  // console.log("Empupdate", Empupdate.specialityname);
+  // console.log("updateEmployee", updateEmployee);
 
   const auth = useContext(Authcontext);
   const [empName, setempName] = useState(initialName);
   const [empAddress, setempAddress] = useState(initialAddress);
   const [empAge, setempAge] = useState(initialAge);
-  // const [empGender, setempGender] = useState({...initialGender, value:Empupdate.gender});
+  const [empGender, setempGender] = useState({...initialGender, value:updateEmployee.gender});
   const [empContact, setempContact] = useState(initialContact);
   const [empService, setempService] = useState(initialService);
   const [specialityOptions, setspecialityOptions] = useState(null);
@@ -97,28 +97,29 @@ const EditEmp = ({ Empupdate }) => {
     setempName({ ...empName, error: validate(empName), touched: true });
     setempAddress({ ...empAddress, error: validate(empAddress), touched: true });
     setempAge({ ...empAge, error: validate(empAge), touched: true });
-    // setempGender({ ...empGender, error: validate(empGender), touched: true });
+    setempGender({ ...empGender, error: validate(empGender), touched: true });
     setempContact({ ...empContact, error: validate(empContact), touched: true });
     setempService({ ...empService, error: validate(empService), touched: true });
 
     if (!empName.error && !empAddress.error && !empAddress.error && !empAge.error && !empContact.error && !empService.error) {
       const empData = {
-        empName: empName.value,
+        employeeid: updateEmployee.id,
+        employeeName: empName.value,
         empAddress: empAddress.value,
         empAge: empAge.value,
-        // empGender: empGender.value,
+        empGender: empGender.value,
         empContact: empContact.value,
-        empService: empService.value,
+        empService: empService.value.value,
       }
       // console.log("empData", empData)
       // setValidated(true)
       // console.log("empData", empData);
-      // axios.post('http://www.muktainursesbureau.in/API//api/employee/insert', empData).then((res) => {
-      //   console.log(res.data)
-      //   return res
-      // }).catch((err) => {
-      //   console.log("err", ...err)
-      // })
+      axios.post('http://www.muktainursesbureau.in/API/editemployee.php', empData).then((res) => {
+        // console.log(res.data)
+        return res
+      }).catch((err) => {
+        console.log("err", ...err)
+      })
 
       setTimeout(() => {
         setempName(initialName);
@@ -137,30 +138,30 @@ const EditEmp = ({ Empupdate }) => {
 
   useEffect(() => {
     getspeciality()
-  }, [])
+  }, [updateEmployee.specialityid])
 
   async function getspeciality() {
     await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
       // console.log(res.data)
-      var selected = [];
-      var specialityList = [];
+       var specialityList = [];
       res.data.result.map((item) => {
 
-        if (Empupdate.specialityname === item.name) {
-          selected.push({
+        if (updateEmployee.specialityid === item.id) {
+          const selected = {
             value: item.id,
-            label: item.name
-          })
+            label: item.name,
+          }
           setempService({ ...empService, value: selected })
         }
+        // console.log("empService", empService)
+
         specialityList.push({
           value: item.id,
           label: item.name
         })
-        setspecialityOptions(specialityList)
       })
-    }).catch((err) => {
-      console.log("err", ...err)
+      setspecialityOptions(specialityList)
+      console.log("empService", empService.value.value)
     })
 
   }
@@ -175,9 +176,9 @@ const EditEmp = ({ Empupdate }) => {
     setempAge({ ...empAge, error: validate(empAge) })
   }, [empAge.value])
 
-  // useEffect(() => {
-  //   setempGender({ ...empGender, error: validate(empGender) })
-  // }, [empGender.value])
+  useEffect(() => {
+    setempGender({ ...empGender, error: validate(empGender) })
+  }, [empGender.value])
 
   useEffect(() => {
     setempContact({ ...empContact, error: validate(empContact) })
@@ -242,10 +243,10 @@ const EditEmp = ({ Empupdate }) => {
             <Col>
               <Form.Group as={Row} className="mb-3" controlId="formPlaintextgender">
                 <Col sm="12">
-                  {/* <Form.Label>{Empupdate.gender}</Form.Label> */}
+                  {/* <Form.Label>{updateEmployee.gender}</Form.Label> */}
                   <Form.Control type="text"
                     name="empGender"
-                    value={Empupdate.gender}
+                    value={updateEmployee.gender}
                     disabled
                   />
 
@@ -276,12 +277,12 @@ const EditEmp = ({ Empupdate }) => {
                     data={{ list: specialityOptions }}
                     isMulti={false}
                     isSearchable={true}
-                    onChange={(e) => {
+                    onChange={(e) =>
                       setempService({ ...empService, value: e })
-                      getspeciality(e)
-                    }}
+                      // getspeciality(e)
+                    }
                   />
-                  
+
                   {isError(empService) && <p className='text-danger'>{empService.error}</p>}
                 </Col>
               </Form.Group>
