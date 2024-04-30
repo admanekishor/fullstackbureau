@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Table } from "react-bootstrap";
+import '../../../assets/css/print_report.scss';
 
 const ComponentToPrint = React.forwardRef(({ printClient, setprintClient }, ref) => {
 console.log("printClient", printClient);
@@ -22,7 +23,10 @@ console.log("printClient", printClient);
     const mm = today.getMonth() + 1;
     const yy = today.getFullYear();
 
-    console.log("today", mm)
+    
+    var currentdate = new Date(Date.parse(printClient.start_date));
+    console.log("today", currentdate.toLocaleDateString(undefined, { month: 'long'}))
+
     const value = {
         basicDetails: {
             CompanyName: "Muktai Nurses Bureau ",
@@ -47,11 +51,15 @@ console.log("printClient", printClient);
                 email: "-",
                 workingDays: daycalculate(printClient.start_date, printClient.end_date),
                 // workingDays: "30 Days",
-                // servicemonth: new Date().toUTCString().slice(7, 12),
-                servicemonth: "DEC",
-                workinghour: "5 hr",
+                //servicemonth: new Date().toUTCString().slice(7, 12),
+                servicemonth: currentdate.toLocaleDateString(undefined, { month: 'long'}),
+                //servicemonth: "March",
+                speciality: printClient.spaciality_name,
+                employee: printClient.staff_name,
+                // workinghour: "12 hr",
+                workinghour: printClient.client_srvsHrs + " " + "Hours",
                 amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
-                // amount: "21,300/-"
+                //amount: "20,000"
             }
         ],
         signatureTxt: {
@@ -100,7 +108,7 @@ console.log("printClient", printClient);
                                                     <Table className="table table-bordered" style={{ border: '1px solid' }}>
                                                         <thead>
                                                             <tr>
-                                                                <th colSpan="3">
+                                                                <th colSpan="4">
                                                                     {" "}
                                                                     <p className="p-0 m-0">Client Details</p>
                                                                 </th>
@@ -112,7 +120,7 @@ console.log("printClient", printClient);
                                                             <tbody key={i}>
 
                                                                 <tr>
-                                                                    <td rowSpan="3">
+                                                                    <td colspan="2" rowspan="2">
                                                                         {" "}
                                                                         <p className="m-0">
                                                                             <strong>
@@ -141,18 +149,9 @@ console.log("printClient", printClient);
                                                                         <p className="m-0">{workItem.contact}</p>
                                                                     </td>
                                                                 </tr>
+                                                                
                                                                 <tr>
-                                                                    <th>
-                                                                        {" "}
-                                                                        <p className="m-0">Email</p>
-                                                                    </th>
-                                                                    <td>
-                                                                        {" "}
-                                                                        <p className="m-0">{workItem.email}</p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>
+                                                                    <th colSpan={2}>
                                                                         {" "}
                                                                         <p className="m-0">Description</p>
                                                                     </th>
@@ -167,7 +166,7 @@ console.log("printClient", printClient);
 
                                                                 </tr>
                                                                 <tr>
-                                                                    <th>
+                                                                    <th colSpan={2}>
                                                                         {" "}
                                                                         <p className="m-0"> Working Days ({workItem.workingDays})</p>
                                                                     </th>
@@ -188,26 +187,31 @@ console.log("printClient", printClient);
                                                                     <td>&nbsp;</td>
                                                                 </tr> */}
                                                                 <tr>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td></td>
+                                                                    {/* <th>
+                                                                    {" "}
+                                                                        <p className="m-0">{workItem.employee} {workItem.speciality}</p>
+                                                                    </th> */}
+                                                                    <td colSpan={2}></td>
                                                                     <td>&nbsp;</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <th rowSpan="3">
+                                                                    <th colSpan={2} rowSpan={4}>
                                                                         <p className="m-0">Comments or Special Instructions:</p>
-
+                                                                        {/* <p className="m-0">employee: {workItem.employee} working as {workItem.speciality}</p> */}
                                                                     </th>
-                                                                    <th rowSpan="3">
+                                                                    <th rowSpan="4">
                                                                         {" "}
                                                                         <p className="m-0">Subtotal</p>
                                                                         <p className="m-0">Tax</p>
                                                                         <p className="m-0">Total</p>
                                                                     </th>
-                                                                    <td>
-                                                                        <p></p>
-                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                {/* <tr>
+                                                                    <td><p></p></td>
+                                                                </tr> */}
+                                                                <tr>
+                                                                    <td><p></p></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><p></p></td>

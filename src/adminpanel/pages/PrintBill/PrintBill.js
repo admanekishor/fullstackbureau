@@ -6,18 +6,19 @@ import ComponentToPrint from "./ComponentToPrint";
 export default function PrintBill({printClient, setprintClient}) {
 
     console.log("PrintBill", printClient);
-    const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
+    const [dimensions, setDimensions] = React.useState({ width: 500, height: 500 });
 
     const componentRef = useRef();
-    const handlePrint = useReactToPrint({
-        pageStyle: `@media print {
-            @page {
-              size: ${dimensions.width}mm ${dimensions.height}mm;
-              margin: 0;
-            }
-          }`,
-      content: () => componentRef.current
-    });
+const handlePrint = useReactToPrint({
+  pageStyle: `@media print {
+      @page {
+        size: ${dimensions.width}mm ${dimensions.height}mm;
+        margin: 0;
+      }
+    }`,
+  content: () => componentRef.current,
+//   onAfterPrint: () => handleResetPrint()
+});
   
     return (
         <>

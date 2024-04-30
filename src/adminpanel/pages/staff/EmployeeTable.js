@@ -33,15 +33,16 @@ export default function EmployeeTable() {
         // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
         await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
             setEmployee(res.data.result)
-            console.log("emplist", Employee);
+            //console.log("emplist", res.data);
             setisLoading(false)
         })
         await axios.get('http://www.muktainursesbureau.in/API/activestaff.php').then((resII) => {
             setActivestaff(resII.data)
-            // console.log("emplist", Activestaff);
+           // console.log("emplist", resII.data);
             setisLoading(false);
         })
     }
+    
     async function deleteemployee(e) {
         const empData = { empId: e }
         // console.log("deleted id", empData);
