@@ -9,6 +9,7 @@ import Employees from '../pages/Employees'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import { Route, Routes } from 'react-router-dom'
+import ClientVisits from '../pages/Clients/Clientvisits'
 
 
 
@@ -17,6 +18,11 @@ const routes = [
         path: "",
         name: "Dashboard",
         element: <Dashboard />,
+    },
+    {
+        path: "clientvisits",
+        name: "Client Visits",
+        element: <ClientVisits />,
     },
     {
         path: "clients",

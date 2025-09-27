@@ -49,7 +49,7 @@ console.log("printClient", printClient);
                 contact: printClient.client_contact,
                 // contact: "9860572488",
                 email: "-",
-                workingDays: daycalculate(printClient.start_date, printClient.end_date),
+                workingDays: daycalculate(printClient.start_date, printClient.end_date + 1),
                 // workingDays: "30 Days",
                 //servicemonth: new Date().toUTCString().slice(7, 12),
                 servicemonth: currentdate.toLocaleDateString(undefined, { month: 'long'}),

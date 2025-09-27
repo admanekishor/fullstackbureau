@@ -14,7 +14,7 @@ const MainURL = "http://www.muktainursesbureau.in/API";
 
 const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterclose }) => {
 
-  console.log("clientUpdate", PrevData);
+  // console.log("clientUpdate", PrevData);
 
   const Initialspeciality = {
     value: PrevData.speciality_id,
@@ -85,7 +85,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
   }, []);
 
   async function getspeciality() {
-    await axios.get(MainURL + '/' + 'speciality.php').then((res) => {
+    await axios.get(MainURL + '/speciality.php').then((res) => {
       var arr = [];
       res.data.result.map((item) => {
         console.log("speciality_id", PrevData.speciality_id)
@@ -118,7 +118,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
 
     // console.log("specialitydata", specialitydata);
 
-    axios.post(MainURL + '/' + 'getstaffbyspeciality.php', specialitydata).then((res) => {
+    axios.post(MainURL + '/getstaffbyspeciality.php', specialitydata).then((res) => {
 
       // console.log("speciality", res);
 
@@ -170,13 +170,13 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
 
         WorkingStaff: WorkingStaff.value.value,
         SpecialityType: SpecialityType.value.value === undefined ? selectedSpeciality.value.value : SpecialityType.value.value,
-        clientId: clientUpdate.id,
+        clientId: PrevData.client_id,
         startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
       }
 
       console.log("empData", empData);  
 
-      axios.post(MainURL + '/' + 'insertclientvisit.php', empData).then((res) => {
+      axios.post(MainURL + '/insertclientvisit.php', empData).then((res) => {
         console.log(res.data)
         getClientdata()
         notify()

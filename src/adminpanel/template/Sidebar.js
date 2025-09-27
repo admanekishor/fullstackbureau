@@ -6,6 +6,7 @@ import Clients from '../pages/Clients';
 import Employees from '../pages/Employees';
 import Areas from '../pages/Locations/Areas';
 import ClientsBilling from '../pages/Clients/ClientsBilling';
+import ClientVisits from '../pages/Clients/Clientvisits';
 // import { Authcontext } from '../Auth/Auth';
 
 
@@ -14,6 +15,11 @@ const routes = [
         path: "",
         name: "Dashboard",
         element: <Dashboard />,
+    },
+    {
+        path: "clientvisits",
+        name: "Client Visits",
+        element: <ClientVisits />,
     },
     {
         path: "clients",
@@ -68,7 +74,7 @@ export default function Sidebar() {
 
                 {routes.map(({ path, name, i }) => (
                     <ListGroup.Item
-                        key={i}
+                        key={path || i}
                         variant={URLstring == path
                             .split("/")
                             .slice(0, 2)

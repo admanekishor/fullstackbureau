@@ -66,26 +66,22 @@ export default function ClientsTable() {
 
 
     const getPrevData = useCallback(async (props) => {
-            {
-                // console.log("props", props)
-                const Prevdata = { clientId: props.id }
-                // console.log("PrevdataApi", Prevdata)
+        // console.log("props", props)
+        const Prevdata = { clientId: props.id }
+        // console.log("PrevdataApi", Prevdata)
 
-                await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
-                    console.log("Prevdata", res.data);
+        await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
+            console.log("Prevdata", res.data);
 
-                    if (res.data) {
-                        res.data.map((item) => {
-                            setPrevData(item)
-                        })
-
-                    }
+            if (res.data) {
+                res.data.map((item) => {
+                    setPrevData(item)
                 })
-                // console.log("PrevData", PrevData)
+
             }
-        },
-        [PrevData],
-    )
+        })
+        // console.log("PrevData", PrevData)
+    }, []);
 
 
     // console.log("SelectedWorkStaff", SelectSplType);
