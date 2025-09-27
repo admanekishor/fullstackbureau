@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Table } from "react-bootstrap";
 import '../../../assets/css/print_report.scss';
 
@@ -57,7 +57,7 @@ console.log("printClient", printClient);
                 speciality: printClient.spaciality_name,
                 employee: printClient.staff_name,
                 // workinghour: "12 hr",
-                workinghour: printClient.client_srvsHrs + " " + "Hours",
+                workinghour: printClient.client_srvsHrs,
                 amount: printClient.client_amount * daycalculate(printClient.start_date, printClient.end_date),
                 //amount: "20,000"
             }

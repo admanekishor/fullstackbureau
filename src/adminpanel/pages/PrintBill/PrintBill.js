@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
-import { Button } from "react-bootstrap";
+import React, { useRef } from "react";
+// import { Button } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
 import ComponentToPrint from "./ComponentToPrint";
 
 export default function PrintBill({printClient, setprintClient}) {
 
     console.log("PrintBill", printClient);
-    const [dimensions, setDimensions] = React.useState({ width: 500, height: 500 });
+    const [dimensions] = React.useState({ width: 500, height: 500 });
 
     const componentRef = useRef();
 const handlePrint = useReactToPrint({
