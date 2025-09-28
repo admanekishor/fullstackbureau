@@ -7,20 +7,22 @@ import PrintBill from '../PrintBill/PrintBill';
 import SelectDropdown from '../../component/SelectDropdown';
 import { FaPrint } from 'react-icons/fa';
 import ClientRecord from './ClientRecord';
+import CustomTable from '../../component/CustomTable';
+
 export default function ClientsBilling() {
     const [isLoading, setisLoading] = useState(false);
-    const [Visit, setVisit] = useState([]);
+    const [Bills, setBills] = useState([]);
     // const [getMonth, setMonth] = useState(new Date());
     // const [printClient, setprintClient] = useState("");
     const [GetClientId, setGetClientId] = useState(null);
-    const [ClientmodalShow, setClientModalShow] = useState(false);
+    const [ClientRecordmodalShow, setClientRecordModalShow] = useState(false);
     const [workingDays, setworkingDays] = useState(0);
 
 
     useEffect(() => {
         setisLoading(true)
         axios.get('http://www.muktainursesbureau.in/API/singleclient.php').then((res) => {
-            setVisit(res.data)
+            setBills(res.data)
             setisLoading(false)
         })
     }, [])
@@ -43,44 +45,38 @@ export default function ClientsBilling() {
             <br />
             <CustomModal
                 data={{ title: "Show Client month of work Details", component: <ClientRecord GetClientId={GetClientId} /> }}
-                show={ClientmodalShow}
-                onHide={() => setClientModalShow(false)}
+                show={ClientRecordmodalShow}
+                onHide={() => setClientRecordModalShow(false)}
                 modalsize="lg"
             />
             <div className='text-center'>
                 {
                     isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> :
-                        <Table striped bordered hover size="sm" responsive>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    {/* <th>paid type</th> */}
-                                    <th>Client Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    Visit.map((record, i) => {
-                                        
-                                        return (<tr key={i}>
-                                            <td>{i + 1}</td>
-                                            {/* <td>
-                                                <p>paid</p>
-                                            </td> */}
-                                            <td><label onClick={() => {
-                                                setGetClientId(record.clientbillid)
-                                                // setprintClient(record.clientbillid)
-                                                setClientModalShow(true)
-                                            }}>
-                                                  {record.client_name}
-                                            </label>
-                                            </td>
-                                           
-                                        </tr>)
-                                    })
-                                }
-                            </tbody>
-                        </Table>
+                        <CustomTable
+                            title="Billings"
+                            data={Bills}
+                            columns={["client_name"]} // only these columns
+                            renderers={{
+                                client_name: (row) => (
+                                    <span
+                                        style={{ color: "blue", cursor: "pointer", textDecoration: "underline" }}
+                                        onClick={() => {
+                                            setGetClientId(row.clientbillid);
+                                            setClientRecordModalShow(true);
+                                        }}
+                                    >
+                                        {row.client_name}
+                                    </span>
+                                ),
+                            }}
+                        // actions={[
+                        //   {
+                        //     label: "View",
+                        //     onClick: (row) => { alert('View billing for ' + row.clientName); },
+                        //     className: "btn btn-sm btn-primary",
+                        //   }
+                        // ]}
+                        />
                 }
             </div>
 

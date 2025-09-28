@@ -1,5 +1,4 @@
 
-import Clientvisits from './Clients/Clientvisits';
 import InfoCards from './InfoCards';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CustomTable from '../component/CustomTable';
@@ -10,13 +9,16 @@ import DatePicker from 'react-datepicker';
 import CustomModal from '../component/CustomModal';
 import { FaCheck } from 'react-icons/fa';
 import AddService from './Clients/AddService';
+import UpdateClients from './Clients/UpdateClient';
+import DeleteClient from './Clients/DeleteClient';
+import ClientRecord from './Clients/ClientRecord';
 
 const MainURL = "http://www.muktainursesbureau.in/API";
 
 export default function Dashboard() {
   const [Visits, setVisits] = useState([]);
   const [clients, setClients] = useState([]);
-  // const [Visit, setVisit] = useState([]);
+  const [Bills, setBills] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [modalShow, setModalShow] = useState(false);
   const [selectedVisitId, setSelectedVisitId] = useState(null);
@@ -31,6 +33,12 @@ export default function Dashboard() {
   const [InactiveClient, setInactiveClient] = useState([]);
   const [Client, setClient] = useState([]);
   const [PrevData, setPrevData] = useState([]);
+  const [UpdateClientModal, setUpdateClientModal] = useState(false);
+  const [DeleteClientModal, setDeleteClientModal] = useState(false);
+  const [setActivateClientModal] = useState(false);
+  // for client billing record
+  const [ClientRecordmodalShow, setClientRecordModalShow] = useState(false);
+  const [GetClientId, setGetClientId] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -105,7 +113,15 @@ export default function Dashboard() {
     }
   },
     [PrevData],)
+  // get client billing
+  useEffect(() => {
+    setIsLoading(true)
+    axios.get('http://www.muktainursesbureau.in/API/singleclient.php').then((res) => {
+      setBills(res.data)
+      setIsLoading(false)
+    })
 
+  }, [])
   async function getClientdata() {
     setIsLoading(true)
 
@@ -161,8 +177,8 @@ export default function Dashboard() {
     </Row>
     <br />
     <Row>
-      <Col lg={6} md={12}>
-        <CustomTable
+      <Col lg={5} md={12}>
+        {isLoading ? <img src={require('../../assets/images/loader.gif')} width="5%" /> : <CustomTable
           title="Client Visits"
           data={Visits}
           columns={["client_name", "start_date", "staff_name"]} // only these columns
@@ -175,47 +191,77 @@ export default function Dashboard() {
             },
           ]}
         />
+        }
 
       </Col>
-      <Col lg={6} md={12}>
-        <CustomTable
-          title="Clients"
-          data={clients}
-          columns={["name"]} // only these columns
-          actions={[
-            {
-              label: <FaCheck size={15} />,
-              onClick: (row) => {
-                setClientUpdate(row.id);
-                setAddServiceModal(true);
-                getPrevData(row.id)
+      <Col lg={4} md={12}>
+        {isLoading ? <img src={require('../../assets/images/loader.gif')} width="5%" /> :
+          <CustomTable
+            title="Clients"
+            data={clients}
+            columns={["name"]} // only these columns
+            actions={[
+              {
+                label: <FaCheck size={15} />,
+                onClick: (row) => {
+                  setClientUpdate(row.id);
+                  setAddServiceModal(true);
+                  getPrevData(row.id)
+                },
+                className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
               },
-              className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
-            },
-            {
-              label: "Edit",
-              onClick: (row) => console.log("Edit", row.id),
-              className: "btn btn-sm btn-warning",
-            },
-            {
-              label: "Delete",
-              onClick: (row) => console.log("Delete", row.id),
-              className: "btn btn-sm btn-danger",
-            },
-          ]}
-        />
-        {/* <CustomTable
-              title="Employees"
-              data={employees}
-              columns={["id", "name", "department"]} // only these columns
-            />
-            <CustomTable
-              title="Billings"
-              data={billings}
-              columns={["id", "clientName", "amount"]} // only these columns
-            /> */}
+              {
+                label: "Edit",
+                onClick: (row) => {
+                  setClientUpdate(row);
+                  setUpdateClientModal(true);
+                },
+                className: "btn btn-sm btn-warning",
+              },
+              {
+                label: "Delete",
+                onClick: (row) => {
+                  setClientUpdate(row);
+                  setDeleteClientModal(true);
+                },
+                className: "btn btn-sm btn-danger",
+              },
+            ]}
+          />
+        }
+
+      </Col>
+      <Col lg={3} md={12}>
+        {isLoading ? <img src={require('../../assets/images/loader.gif')} width="5%" /> :
+          <CustomTable
+            title="Billings"
+            data={Bills}
+            columns={["client_name"]} // only these columns
+            renderers={{
+              client_name: (row) => (
+                <span
+                  style={{ color: "blue", cursor: "pointer", textDecoration: "underline" }}
+                  onClick={() => {
+                    setGetClientId(row.clientbillid);
+                    setClientRecordModalShow(true);
+                  }}
+                >
+                  {row.client_name}
+                </span>
+              ),
+            }}
+          // actions={[
+          //   {
+          //     label: "View",
+          //     onClick: (row) => { alert('View billing for ' + row.clientName); },
+          //     className: "btn btn-sm btn-primary",
+          //   }
+          // ]}
+          />
+        }
       </Col>
     </Row>
+    {/* Custom Models for Close Client Visit*/}
     <CustomModal
       data={{
         title: "Select End Date", component: (
@@ -262,12 +308,34 @@ export default function Dashboard() {
       show={modalShow}
       onHide={() => setModalShow(false)}
     />
+    {/* Custom Model for Activate Client Visit */}
     <CustomModal
       data={{ title: "Activate Service", component: <AddService getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} getPrevData={getPrevData} PrevData={PrevData} afterclose={afterclose} /> }}
       show={AddServiceModal}
       onHide={() => setAddServiceModal(false)}
       modalsize="md"
 
+    />
+    {/* Custom Model for update Client Details */}
+    <CustomModal
+      data={{ title: "Update Client", component: <UpdateClients getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
+      show={UpdateClientModal}
+      onHide={() => setUpdateClientModal(false)}
+    />
+    {/* Custom Model for Delete Client */}
+    <CustomModal
+      data={{ title: "Delete Client", component: <DeleteClient getClientdata={getClientdata} setClientUpdate={setClientUpdate} clientUpdate={clientUpdate} afterclose={afterclose} /> }}
+      show={DeleteClientModal}
+      onHide={() => setDeleteClientModal(false)}
+      modalsize="md"
+
+    />
+    {/* Custom Model for client Billing Record */}
+    <CustomModal
+      data={{ title: "Show Client month of work Details", component: <ClientRecord GetClientId={GetClientId} /> }}
+      show={ClientRecordmodalShow}
+      onHide={() => setClientRecordModalShow(false)}
+      modalsize="lg"
     />
   </>;
 }

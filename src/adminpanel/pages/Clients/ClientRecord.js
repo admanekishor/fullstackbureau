@@ -4,13 +4,15 @@ import { Button, Table, Tab, Tabs } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
-import SelectDropdown from '../../component/SelectDropdown';
+
 import { FaPrint } from 'react-icons/fa';
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
 
 export default function ClientRecord(props) {
+    console.log("ClientRecord props", props);
+    
     const { GetClientId } = props;
     const [isLoading, setisLoading] = useState(false);
     const [Visit, setVisit] = useState([]);

@@ -10,6 +10,7 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import UpdateClients from './UpdateClient';
 import ActivateClient from './ActivateClient';
 import UndeleteClient from './UndeleteClient';
+import CustomTable from '../../component/CustomTable';
 
 const MainURL = "http://www.muktainursesbureau.in/API";
 
@@ -166,73 +167,75 @@ export default function ClientsTable() {
                 <Tab eventKey="ActiveClient" title="Active Clients">
                     <div className='text-center'>
                         {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> :
-                            <Table striped bordered hover size="sm" responsive>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Address</th>
-                                        <th>area</th>
-                                        <th>Contact</th>
-                                        <th>Amount</th>
-                                        <th colSpan={3}>Action</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <CustomTable
+                                title="Clients"
+                                data={Client}
+                                columns={["name", "address", "contact", "amount"]} // only these columns
+                                actions={[
                                     {
-                                        Client.map((client, i) => {
-                                            return (<tr key={i + 1}>
-                                                <td>{i + 1}</td>
-                                                <td>{client.name}</td>
-                                                <td>{client.address}</td>
-                                                <td>{client.areacode}</td>
-                                                <td>{client.contact}</td>
-                                                <td>{client.amount}</td>
-                                                <td>{getactiveclient(client)}</td>
-                                                <td>{Editclient(client)}</td>
-                                                <td>{deleteclient(client)}</td>
-                                            </tr>)
-                                        })
-                                    }
-                                </tbody>
-                            </Table>
+                                        label: <FaCheck size={15} />,
+                                        onClick: (row) => {
+                                            setClientUpdate(row.id);
+                                            setAddServiceModal(true);
+                                            getPrevData(row.id)
+                                        },
+                                        className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
+                                    },
+                                    {
+                                        label: "Edit",
+                                        onClick: (row) => {
+                                            setClientUpdate(row);
+                                            setUpdateClientModal(true);
+                                        },
+                                        className: "btn btn-sm btn-warning",
+                                    },
+                                    {
+                                        label: "Delete",
+                                        onClick: (row) => {
+                                            setClientUpdate(row);
+                                            setDeleteClientModal(true);
+                                        },
+                                        className: "btn btn-sm btn-danger",
+                                    },
+                                ]}
+                            />
                         }
                     </div>
                 </Tab>
                 <Tab eventKey="InActiveClient" title="Closed Clients">
                     <div className='text-center'>
-                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> : <Table striped bordered hover size="sm" responsive>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>area</th>
-                                    <th>Contact</th>
-                                    <th>Amount</th>
-                                    <th colSpan={3}>Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
+                        {isLoading ? <img src={require('../../../assets/images/loader.gif')} width="5%" /> : <CustomTable
+                            title="Clients"
+                            data={InactiveClient}
+                            columns={["name", "address", "contact", "amount"]} // only these columns
+                            actions={[
                                 {
-                                    InactiveClient.map((client, i) => {
-                                        return (<tr key={i + 1}>
-                                            <td>{i + 1}</td>
-                                            <td>{client.name}</td>
-                                            <td>{client.address}</td>
-                                            <td>{client.areacode}</td>
-                                            <td>{client.contact}</td>
-                                            <td>{client.amount}</td>
-                                            <td>{getactiveclient(client)}</td>
-                                            <td>{Editclient(client)}</td>
-                                            <td>{undeleteclient(client)}</td>
-                                        </tr>)
-                                    })
-                                }
-                            </tbody>
-                        </Table>}
+                                    label: <FaCheck size={15} />,
+                                    onClick: (row) => {
+                                        setClientUpdate(row.id);
+                                        setAddServiceModal(true);
+                                        getPrevData(row.id)
+                                    },
+                                    className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
+                                },
+                                {
+                                    label: "Edit",
+                                    onClick: (row) => {
+                                        setClientUpdate(row);
+                                        setUpdateClientModal(true);
+                                    },
+                                    className: "btn btn-sm btn-warning",
+                                },
+                                {
+                                    label: "Restore",
+                                    onClick: (row) => {
+                                        setClientUpdate(row);
+                                        setUndeleteClientModal(true);
+                                    },
+                                    className: "btn btn-sm btn-danger",
+                                },
+                            ]}
+                        />}
                     </div>
                 </Tab>
             </Tabs>

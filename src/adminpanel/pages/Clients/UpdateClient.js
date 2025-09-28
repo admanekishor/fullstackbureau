@@ -133,7 +133,7 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
           setclientArea({ ...clientArea, value: AreaSelected })
         }
-        console.log("clientArea", clientArea);
+        // console.log("clientArea", clientArea);
 
         localareas.push(
           {
@@ -143,7 +143,7 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
       });
       setAreaOptions(localareas)
 
-      console.log("clientArea.value", clientArea.value)
+      // console.log("clientArea.value", clientArea.value)
     })
 
   }
