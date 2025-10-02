@@ -11,8 +11,7 @@ import UpdateClients from './UpdateClient';
 import ActivateClient from './ActivateClient';
 import UndeleteClient from './UndeleteClient';
 import CustomTable from '../../component/CustomTable';
-
-const MainURL = "http://www.muktainursesbureau.in/API";
+import API_URLS from '../../../api/api.js';
 
 export default function ClientsTable() {
     const [isLoading, setisLoading] = useState(false);
@@ -41,13 +40,13 @@ export default function ClientsTable() {
     async function getClientdata() {
         setisLoading(true)
 
-        await axios.get(MainURL + '/' + 'clients.php').then((res) => {
+        await axios.get(API_URLS.clients).then((res) => {
             setClient(res.data)
             // console.log("client", Client);
             setisLoading(false)
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-        await axios.get(MainURL + '/' + 'activeclients.php').then((resII) => {
+        await axios.get(API_URLS.ActiveClients).then((resII) => {
 
             if (resII.data) {
 
@@ -58,7 +57,7 @@ export default function ClientsTable() {
                 setactiveClient([])
             }
         })
-        await axios.get(MainURL + '/' + 'InActiveClients.php').then((resIII) => {
+        await axios.get(API_URLS.inActiveClients).then((resIII) => {
             setInactiveClient(resIII.data)
             // console.log("client", Client);
             setisLoading(false)
@@ -71,7 +70,7 @@ export default function ClientsTable() {
         const Prevdata = { clientId: props.id }
         // console.log("PrevdataApi", Prevdata)
 
-        await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
+        await axios.post(API_URLS.SelectedClientVisit, Prevdata).then((res) => {
             console.log("Prevdata", res.data);
 
             if (res.data) {

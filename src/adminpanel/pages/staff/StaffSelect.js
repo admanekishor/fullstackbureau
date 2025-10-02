@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import SelectDropdown from '../../component/SelectDropdown';
+import API_URLS from '../../../api/api';
 
 export default function StaffSelect({setclientVisitor, clientVisitor}) {
 
@@ -10,7 +11,7 @@ export default function StaffSelect({setclientVisitor, clientVisitor}) {
     }, []);
 
     async function getstaff() {
-        await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
+        await axios.get(API_URLS.Staff).then((res) => {
             var arr = [];
             res.data.map((item) => {
                 arr.push(

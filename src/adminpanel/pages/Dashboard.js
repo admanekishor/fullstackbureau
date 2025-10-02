@@ -12,6 +12,7 @@ import AddService from './Clients/AddService';
 import UpdateClients from './Clients/UpdateClient';
 import DeleteClient from './Clients/DeleteClient';
 import ClientRecord from './Clients/ClientRecord';
+import API_URLS from '../../api/api';
 
 const MainURL = "http://www.muktainursesbureau.in/API";
 
@@ -43,12 +44,12 @@ export default function Dashboard() {
   useEffect(() => {
     let isMounted = true;
 
-    axios.get('http://www.muktainursesbureau.in/API/clientvisit.php')
+    axios.get(API_URLS.clientVisit)
       .then(res => {
         if (isMounted) setVisits(res.data);
       });
 
-    axios.get(MainURL + '/' + 'clients.php').then((res) => {
+    axios.get(API_URLS.clients).then((res) => {
       if (isMounted) {
         setClients(res.data)
         setIsLoading(false)
@@ -74,7 +75,7 @@ export default function Dashboard() {
     if (includeEndDate) {
       finalEndDate.setDate(finalEndDate.getDate() + 1);
     }
-    axios.post('http://www.muktainursesbureau.in/API/updateclientvisit.php', {
+    axios.post(API_URLS.updateClientVisit, {
       visitId: selectedVisitId,
       endDate: finalEndDate.toISOString().slice(0, 10) // format as YYYY-MM-DD
     })
@@ -82,7 +83,7 @@ export default function Dashboard() {
         // Optionally show a success message
         setModalShow(false);
         // Refresh the visit data
-        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php')
+        axios.get(API_URLS.clientVisit)
           .then(res => {
             setVisits(res.data);
             setIsLoading(false);
@@ -99,7 +100,7 @@ export default function Dashboard() {
       const Prevdata = { clientId: client }
       // console.log("PrevdataApi", Prevdata)
 
-      await axios.post(MainURL + '/' + 'selectedclientvisit.php', Prevdata).then((res) => {
+      await axios.post(API_URLS.SelectedClientVisit, Prevdata).then((res) => {
         console.log("Prevdata", res.data);
 
         if (res.data) {
@@ -116,7 +117,7 @@ export default function Dashboard() {
   // get client billing
   useEffect(() => {
     setIsLoading(true)
-    axios.get('http://www.muktainursesbureau.in/API/singleclient.php').then((res) => {
+    axios.get(API_URLS.SingleClient).then((res) => {
       setBills(res.data)
       setIsLoading(false)
     })
@@ -125,13 +126,13 @@ export default function Dashboard() {
   async function getClientdata() {
     setIsLoading(true)
 
-    await axios.get(MainURL + '/' + 'clients.php').then((res) => {
+    await axios.get(API_URLS.clients).then((res) => {
       setClient(res.data)
       // console.log("client", Client);
       setIsLoading(false)
     })
     // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
-    await axios.get(MainURL + '/' + 'activeclients.php').then((resII) => {
+    await axios.get(API_URLS.ActiveClients).then((resII) => {
 
       if (resII.data) {
 
@@ -142,7 +143,7 @@ export default function Dashboard() {
         setactiveClient([])
       }
     })
-    await axios.get(MainURL + '/' + 'InActiveClients.php').then((resIII) => {
+    await axios.get(API_URLS.inActiveClients).then((resIII) => {
       setInactiveClient(resIII.data)
       // console.log("client", Client);
       setIsLoading(false)

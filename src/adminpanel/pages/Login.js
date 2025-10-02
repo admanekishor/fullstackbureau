@@ -7,6 +7,7 @@ import { Authcontext } from '../../config/AppRoutes';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Helmet from 'react-helmet';
+import API_URLS from '../../api/api';
 export default function Login() {
 
     const user = useContext(Authcontext);
@@ -22,7 +23,7 @@ export default function Login() {
     const navigate = useNavigate();
     async function submitHandler(data) {
         //  await axios.post('http://www.muktainursesbureau.in/API//api/login', userdetails).then((res) => {
-        await axios.post('http://www.muktainursesbureau.in/API/login.php', data).then((res) => {
+        await axios.post(API_URLS.Login, data).then((res) => {
 
             // console.log("res login1", res.data);
 

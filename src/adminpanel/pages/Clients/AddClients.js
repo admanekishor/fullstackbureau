@@ -5,6 +5,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import API_URLS from '../../../api/api';
 
 const initialName = {
   key: "clientName",
@@ -104,7 +105,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
   const isError = obj => obj.error && obj.touched && obj.required;
 
   async function getAreas() {
-    await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
+    await axios.get(API_URLS.Areas).then((res) => {
 
       var localareas = [];
       res.data.result.map((item) => {
@@ -170,7 +171,7 @@ const AddClients = ({ getClientdata, afterclose }) => {
 
       // console.log("empData", empData);
 
-      axios.post('http://www.muktainursesbureau.in/API/insertclient.php', empData).then((res) => {
+      axios.post(API_URLS.Insertclient, empData).then((res) => {
         // console.log("res", res);
         getClientdata();
         notify()

@@ -9,6 +9,7 @@ import { FaPrint } from 'react-icons/fa';
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
+import API_URLS from '../../../api/api';
 
 export default function ClientRecord(props) {
     console.log("ClientRecord props", props);
@@ -44,7 +45,7 @@ export default function ClientRecord(props) {
         }
         // console.log(clientId)
         setisLoading(true)
-        axios.post('http://www.muktainursesbureau.in/API/singleclient.php', clientData).then((res) => {
+        axios.post(API_URLS.SingleClient, clientData).then((res) => {
 
             setVisit(res.data)
             setisLoading(false)
@@ -81,7 +82,7 @@ export default function ClientRecord(props) {
         const payvisitdata = { visitid: visitid, c_id: clientId, payMode: payMode, paydate: selecteddate };
         console.log("data", payvisitdata);
 
-        axios.post('http://www.muktainursesbureau.in/API/paybill.php', payvisitdata).then((res) => {
+        axios.post(API_URLS.Paybill, payvisitdata).then((res) => {
             console.log(res.data)
 
         }).catch((err) => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Table } from 'react-bootstrap';
 import CustomModal from '../../component/CustomModal';
 import AddNew from '../staff/AddNewEmp';
+import API_URLS from '../../../api/api';
 
 
 export default function StaffTable() {
@@ -13,7 +14,7 @@ export default function StaffTable() {
 
     // console.log(props)
     useEffect(() => {
-        axios.get('http://www.muktainursesbureau.in/API//staffdetails').then((res) => {
+        axios.get(API_URLS.Staffdetails).then((res) => {
         // axios.get('http://www.muktainursesbureau.in/API/staffdetails.php').then((res) => {
             setEmployeeList(res.data.result)
             console.log("stafftable", EmployeeList);

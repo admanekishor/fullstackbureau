@@ -8,6 +8,7 @@ import SelectDropdown from '../../component/SelectDropdown';
 import { FaPrint } from 'react-icons/fa';
 import ClientRecord from './ClientRecord';
 import CustomTable from '../../component/CustomTable';
+import API_URLS from '../../../api/api';
 
 export default function ClientsBilling() {
     const [isLoading, setisLoading] = useState(false);
@@ -21,7 +22,7 @@ export default function ClientsBilling() {
 
     useEffect(() => {
         setisLoading(true)
-        axios.get('http://www.muktainursesbureau.in/API/singleclient.php').then((res) => {
+        axios.get(API_URLS.SingleClient).then((res) => {
             setBills(res.data)
             setisLoading(false)
         })

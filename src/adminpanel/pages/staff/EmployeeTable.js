@@ -6,6 +6,7 @@ import AddNewEmp from '../staff/AddNewEmp';
 import EditEmp from '../staff/EditEmp';
 import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 import { RiDeleteBinFill } from 'react-icons/ri';
+import API_URLS from '../../../api/api';
 
 
 export default function EmployeeTable() {
@@ -31,12 +32,12 @@ export default function EmployeeTable() {
     async function getemployeedata() {
         setisLoading(true)
         // await axios.get('http://www.muktainursesbureau.in/API//staff').then((res) => {
-        await axios.get('http://www.muktainursesbureau.in/API/staff.php').then((res) => {
+        await axios.get(API_URLS.Staff).then((res) => {
             setEmployee(res.data.result)
             //console.log("emplist", res.data);
             setisLoading(false)
         })
-        await axios.get('http://www.muktainursesbureau.in/API/activestaff.php').then((resII) => {
+        await axios.get(API_URLS.Activestaff).then((resII) => {
             setActivestaff(resII.data)
            // console.log("emplist", resII.data);
             setisLoading(false);
@@ -47,7 +48,7 @@ export default function EmployeeTable() {
         const empData = { empId: e }
         // console.log("deleted id", empData);
         //    await axios.post('http://www.muktainursesbureau.in/API//staff/delete', empData).then((res) => {
-        await axios.post('http://www.muktainursesbureau.in/API/deletestaff.php', empData).then((res) => {
+        await axios.post(API_URLS.Deletestaff, empData).then((res) => {
             // console.log("deleted res", res);
             getemployeedata()
         })

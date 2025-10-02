@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import API_URLS from '../../api/api';
 
 const initialUsername = {
     key: "Username",
@@ -71,7 +72,7 @@ export default function UpdatePassword({ getClientdata, props }) {
 
             // console.log("empData", empData);
 
-            axios.post('http://www.muktainursesbureau.in/API/updatepassword.php', empData).then((res) => {
+            axios.post(API_URLS.Updatepassword, empData).then((res) => {
                 // console.log("res", res);
                 getClientdata();
                 //   notify()
