@@ -5,6 +5,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import API_URLS from '../../../api/api';
 
 
 const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
@@ -117,7 +118,7 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
 
 
   async function getAreas() {
-    await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
+    await axios.get(API_URLS.Areas).then((res) => {
 
     console.log("areas", res);
 
@@ -223,9 +224,9 @@ const AddClients = ({ clientUpdate, getClientdata, afterclose }) => {
         clientAmount: clientAmount.value
       }
 
-      console.log("empData", empData);
+      //console.log("empData", empData);
 
-      axios.post('http://www.muktainursesbureau.in/API/editclient.php', empData).then((res) => {
+      axios.post(API_URLS.Editclient, empData).then((res) => {
         // console.log("res", res);
         getClientdata();
         notify()

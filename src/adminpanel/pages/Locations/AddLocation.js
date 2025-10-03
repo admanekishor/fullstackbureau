@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
+import API_URLS from '../../../api/api';
 
 
 const initialAreaName = {
@@ -79,7 +80,7 @@ export default function AddLocation({ getAreas, afterclose }) {
 
             console.log("empData", empData);
 
-            axios.post('http://www.muktainursesbureau.in/API/Insertarea.php', empData).then((res) => {
+            axios.post(API_URLS.Insertarea, empData).then((res) => {
                 console.log("res", res);
                 getAreas();
                 notify()

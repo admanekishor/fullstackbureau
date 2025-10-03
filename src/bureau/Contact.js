@@ -21,7 +21,7 @@ let Contact = () => {
                 <meta itemProp="name" content="Muktai Nurses Bureau, Contact Us" />
                 <meta itemProp="description" content="Deliver the best possible caregiving services to fit each client" />
                 <meta itemProp="image" content={logourl} />
-                <meta property="og:url" content="http://www.muktainursesbureau.in/" />
+                <meta property="og:url" content="https://www.muktainursesbureau.in/" />
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content="Muktai Nurses Bureau" />
                 <meta property="og:description" content="Deliver the best possible caregiving services to fit each client" />

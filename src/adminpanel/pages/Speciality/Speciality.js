@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import SelectDropdown from '../../component/SelectDropdown';
+import API_URLS from '../../../api/api';
 
 
 export default function Speciality() {
@@ -16,7 +17,7 @@ export default function Speciality() {
   }, []);
 
   async function getspeciality() {
-  await  axios.get('http://www.muktainursesbureau.in/API//speciality').then((res) => {
+  await  axios.get(API_URLS.Speciality).then((res) => {
       // console.log("res", res.data)
       var arr = [];
       res.data.map((item) => {

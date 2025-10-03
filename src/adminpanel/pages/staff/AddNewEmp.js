@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
-
+import API_URLS from '../../../api/api';
 
 
 const initialName = {
@@ -81,7 +81,7 @@ const AddNewEmp = ({ getemployeedata }) => {
 
   async function getspeciality() {
     // await axios.get('http://localhost:9000/speciality').then((res) => {
-    await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
+    await axios.get(API_URLS.speciality).then((res) => {
       var arr = [];
       res.data.result.map((item) => {
         arr.push(

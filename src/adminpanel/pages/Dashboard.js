@@ -14,8 +14,6 @@ import DeleteClient from './Clients/DeleteClient';
 import ClientRecord from './Clients/ClientRecord';
 import API_URLS from '../../api/api';
 
-const MainURL = "http://www.muktainursesbureau.in/API";
-
 export default function Dashboard() {
   const [Visits, setVisits] = useState([]);
   const [clients, setClients] = useState([]);

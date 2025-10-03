@@ -1,4 +1,4 @@
-const BASE_URL = "http://www.muktainursesbureau.in/API";
+const BASE_URL = "https://www.muktainursesbureau.in/API";
 
 const API_URLS = {
     SingleClient: `${BASE_URL}/singleclient.php`,
@@ -20,6 +20,15 @@ const API_URLS = {
     Areas: `${BASE_URL}/areas.php`,
     Paybill: `${BASE_URL}/paybill.php`,
     Activateclient: `${BASE_URL}/activateclient.php`,
+    Speciality: `${BASE_URL}/speciality.php`,
+    Getstaffbyspeciality: `${BASE_URL}/getstaffbyspeciality.php`,
+    Deleteclient: `${BASE_URL}/deleteclient.php`,
+    Editclient: `${BASE_URL}/editclient.php`,
+    Updatearea: `${BASE_URL}/updatearea.php`,
+    Editemployee: `${BASE_URL}/editemployee.php`,
+    Insertarea: `${BASE_URL}/Insertarea.php`,
+    
+
 
     // Add more as needed
 };

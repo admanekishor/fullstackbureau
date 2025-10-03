@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import CustomModal from '../../component/CustomModal';
 import axios from 'axios';
 import CustomTable from '../../component/CustomTable';
+import API_URLS from '../../../api/api';
 
 const ClientVisits = () => {
     const [Visits, setVisits] = useState([]);
@@ -29,7 +30,7 @@ const ClientVisits = () => {
     useEffect(() => {
         // Fetch data here and setVisit, setIsLoading(false) when done
         // Example:
-        axios.get('http://www.muktainursesbureau.in/API/clientvisit.php')
+        axios.get(API_URLS.clientVisit)
             .then(res => {
                 setVisits(res.data);
                 setIsLoading(false);
@@ -45,7 +46,7 @@ const ClientVisits = () => {
         if (includeEndDate) {
             finalEndDate.setDate(finalEndDate.getDate() + 1);
         }
-        axios.post('http://www.muktainursesbureau.in/API/updateclientvisit.php', {
+        axios.post(API_URLS.updateClientVisit, {
             visitId: selectedVisitId,
             endDate: finalEndDate.toISOString().slice(0, 10) // format as YYYY-MM-DD
         })
@@ -53,7 +54,7 @@ const ClientVisits = () => {
                 // Optionally show a success message
                 setModalShow(false);
                 // Refresh the visit data
-                axios.get('http://www.muktainursesbureau.in/API/clientvisit.php')
+                axios.get(API_URLS.clientVisit)
                     .then(res => {
                         setVisits(res.data);
                         setIsLoading(false);

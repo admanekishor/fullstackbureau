@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Authcontext } from '../../../config/AppRoutes'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import SelectDropdown from '../../component/SelectDropdown';
+import API_URLS from '../../../api/api';
 
 const EditEmp = ({ updateEmployee }) => {
 
@@ -114,7 +115,7 @@ const EditEmp = ({ updateEmployee }) => {
       // console.log("empData", empData)
       // setValidated(true)
       // console.log("empData", empData);
-      axios.post('http://www.muktainursesbureau.in/API/editemployee.php', empData).then((res) => {
+      axios.post(API_URLS.Editemployee, empData).then((res) => {
         // console.log(res.data)
         return res
       }).catch((err) => {
@@ -141,7 +142,7 @@ const EditEmp = ({ updateEmployee }) => {
   }, [updateEmployee.specialityid])
 
   async function getspeciality() {
-    await axios.get('http://www.muktainursesbureau.in/API/speciality.php').then((res) => {
+    await axios.get(API_URLS.Speciality).then((res) => {
       // console.log(res.data)
        var specialityList = [];
       res.data.result.map((item) => {

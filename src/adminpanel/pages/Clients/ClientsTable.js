@@ -68,7 +68,7 @@ export default function ClientsTable() {
     const getPrevData = useCallback(async (props) => {
         // console.log("props", props)
         const Prevdata = { clientId: props.id }
-        // console.log("PrevdataApi", Prevdata)
+        console.log("PrevdataApi", Prevdata)
 
         await axios.post(API_URLS.SelectedClientVisit, Prevdata).then((res) => {
             console.log("Prevdata", res.data);
@@ -81,7 +81,7 @@ export default function ClientsTable() {
             }
         })
         // console.log("PrevData", PrevData)
-    }, []);
+    }, [PrevData]);
 
 
     // console.log("SelectedWorkStaff", SelectSplType);
@@ -176,7 +176,7 @@ export default function ClientsTable() {
                                         onClick: (row) => {
                                             setClientUpdate(row.id);
                                             setAddServiceModal(true);
-                                            getPrevData(row.id)
+                                            getPrevData(row)
                                         },
                                         className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
                                     },

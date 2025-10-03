@@ -10,6 +10,7 @@ import AddLocation from './AddLocation';
 import CustomModal from '../../component/CustomModal';
 import Updatelocation from './Updatelocation';
 import { FaPencilAlt } from 'react-icons/fa';
+import API_URLS from '../../../api/api';
 
 export default function Areas() {
     const [Areas, setAreas] = useState([]);
@@ -94,7 +95,7 @@ export default function Areas() {
     };
 
     async function getAreas() {
-        await axios.get('http://www.muktainursesbureau.in/API/areas.php').then((res) => {
+        await axios.get(API_URLS.Areas).then((res) => {
 
             // console.log("res", res)
             var localareas = [];

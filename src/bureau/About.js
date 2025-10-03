@@ -14,13 +14,13 @@ let About = () => {
         <div>
             <Helmet>
                 <title>Muktai Nurses Bureau | about</title>
-                <link rel="canonical" href="http://muktainursesbureau.in/about" />
+                <link rel="canonical" href="https://muktainursesbureau.in/about" />
                 <meta name="description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients." />
                 <meta name="keywords" content="Muktai Nurses Bureau, about us, our services, our team" />
                 <meta itemProp="name" content="Muktai Nurses Bureau and Carying Services" />
                 <meta itemProp="description" content="Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />
                 <meta itemProp="image" content={logourl} />
-                <meta property="og:url" content="http://muktainursesbureau.in/about" />
+                <meta property="og:url" content="https://muktainursesbureau.in/about" />
                 <meta property="og:type" content="website" />
                 <meta property="og:title" content="Muktai Nurses Bureau" />
                 <meta property="og:description" content="Muktai Nurses Bureau is Provide Carying Services, to survive criticle condition patients, like senior citizen, cancer, Paralize, etc Patients" />

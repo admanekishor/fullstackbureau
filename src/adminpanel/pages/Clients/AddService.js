@@ -7,14 +7,11 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const MainURL = "http://www.muktainursesbureau.in/API";
-
-
+import API_URLS from '../../../api/api';
 
 const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterclose }) => {
 
-  // console.log("clientUpdate", PrevData);
+  console.log("clientUpdate", PrevData);
 
   const Initialspeciality = {
     value: PrevData.speciality_id,
@@ -85,7 +82,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
   }, []);
 
   async function getspeciality() {
-    await axios.get(MainURL + '/speciality.php').then((res) => {
+    await axios.get(API_URLS.Speciality).then((res) => {
       var arr = [];
       res.data.result.map((item) => {
         console.log("speciality_id", PrevData.speciality_id)
@@ -118,7 +115,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
 
     // console.log("specialitydata", specialitydata);
 
-    axios.post(MainURL + '/getstaffbyspeciality.php', specialitydata).then((res) => {
+    axios.post(API_URLS.Getstaffbyspeciality, specialitydata).then((res) => {
 
       // console.log("speciality", res);
 
@@ -176,7 +173,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
 
       console.log("empData", empData);  
 
-      axios.post(MainURL + '/insertclientvisit.php', empData).then((res) => {
+      axios.post(API_URLS.insertClientVisit, empData).then((res) => {
         console.log(res.data)
         getClientdata()
         notify()
