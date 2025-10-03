@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import API_URLS from '../../../api/api';
 
 
 const initialService = {
@@ -86,7 +87,7 @@ const ActivateClient = ({ clientUpdate, getClientdata, afterclose }) => {
       }
     
       console.log("empData", empData);
-      axios.post('http://www.muktainursesbureau.in/API/activateclient.php', empData).then((res) => {
+      axios.post(API_URLS.Activateclient, empData).then((res) => {
         console.log(res.data)
         getClientdata()
         notify()

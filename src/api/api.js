@@ -19,6 +19,7 @@ const API_URLS = {
     Updatepassword: `${BASE_URL}/updatepassword.php`,
     Areas: `${BASE_URL}/areas.php`,
     Paybill: `${BASE_URL}/paybill.php`,
+    Activateclient: `${BASE_URL}/activateclient.php`,
 
     // Add more as needed
 };
