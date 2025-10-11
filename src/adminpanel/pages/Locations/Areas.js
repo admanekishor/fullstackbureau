@@ -96,21 +96,25 @@ export default function Areas() {
 
     async function getAreas() {
         await axios.get(API_URLS.Areas).then((res) => {
-
-            // console.log("res", res)
-            var localareas = [];
-            res.data.result.map((item) => {
-
-                localareas.push(
-                    {
+            // Axios automatically parses JSON, no JSON.parse needed
+            console.log(res.data); // Object: {status: "200", result: [...]}
+            const localareas = [];
+            if (res.data.status === "200") {
+                res.data.result.map(item => {
+                    localareas.push({
                         id: item.id,
                         areaname: item.areaname,
                         pincode: item.pincode,
                     });
-                setAreas(localareas)
-            });
-            // console.log("clientArea", Areas)
-        })
+                });
+                setAreas(localareas);
+            } else {
+                console.log(res.data.message);
+            }
+        }).catch((err) => {
+            console.error("Error fetching areas:", err);
+        });
+        // console.log("clientArea", Areas)
     }
     return (
         <>
