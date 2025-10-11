@@ -15,6 +15,7 @@ import ClientRecord from './Clients/ClientRecord';
 import API_URLS from '../../api/api';
 
 export default function Dashboard() {
+  const [VisitsCount, setVisitsCount] = useState([0]);
   const [Visits, setVisits] = useState([]);
   const [clients, setClients] = useState([]);
   const [Bills, setBills] = useState([]);
@@ -42,6 +43,10 @@ export default function Dashboard() {
   useEffect(() => {
     let isMounted = true;
 
+    axios.get(API_URLS.totalActiveClients)
+      .then(res => {
+         setVisitsCount(Number(res.data.total_active_clients));
+      });
     axios.get(API_URLS.clientVisit)
       .then(res => {
         if (isMounted) setVisits(res.data);
@@ -115,8 +120,8 @@ export default function Dashboard() {
   // get client billing
   useEffect(() => {
     setIsLoading(true)
-    axios.get(API_URLS.SingleClient).then((res) => {
-      setBills(res.data)
+    axios.get(API_URLS.Quickbilling).then((res) => {
+      setBills(res.data.result)
       setIsLoading(false)
     })
 
@@ -171,7 +176,7 @@ export default function Dashboard() {
     <Row>
       <Col>
 
-        <InfoCards />
+        <InfoCards VisitsCount={VisitsCount} />
       </Col>
     </Row>
     <br />

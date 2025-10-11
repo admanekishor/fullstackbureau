@@ -1,6 +1,7 @@
 const BASE_URL = "https://www.muktainursesbureau.in/API";
 
 const API_URLS = {
+    totalActiveClients: `${BASE_URL}/total_active_clients.php`,
     SingleClient: `${BASE_URL}/singleclient.php`,
     clientVisit: `${BASE_URL}/clientvisit.php`,
     updateClientVisit: `${BASE_URL}/updateclientvisit.php`,
@@ -27,6 +28,7 @@ const API_URLS = {
     Updatearea: `${BASE_URL}/updatearea.php`,
     Editemployee: `${BASE_URL}/editemployee.php`,
     Insertarea: `${BASE_URL}/Insertarea.php`,
+    Quickbilling: `${BASE_URL}/Quickbilling.php`,
     
 
 
