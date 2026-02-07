@@ -11,7 +11,7 @@ import API_URLS from '../../../api/api';
 
 const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterclose }) => {
 
-  console.log("clientUpdate", PrevData);
+  console.log('AddService props - clientUpdate:', clientUpdate, 'PrevData:', PrevData);
 
   const Initialspeciality = {
     value: PrevData.speciality_id,
@@ -78,8 +78,11 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
   }, [PrevData]);
 
   useEffect(() => {
-    getPrevData(clientUpdate)
-  }, []);
+    // When the selected client changes, fetch previous visit data
+    if (clientUpdate) {
+      getPrevData(clientUpdate);
+    }
+  }, [clientUpdate, getPrevData]);
 
   async function getspeciality() {
     await axios.get(API_URLS.Speciality).then((res) => {
@@ -163,13 +166,33 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
     if (!WorkingStaff.error && !SpecialityType.error) {
 
 
-      const empData = {
+      // Resolve values safely (PrevData may not be populated yet)
+      const resolveOptionValue = (opt) => {
+        if (opt === null || opt === undefined) return null;
+        if (Array.isArray(opt)) return resolveOptionValue(opt[0]);
+        if (typeof opt === 'object') {
+          if ('value' in opt) return resolveOptionValue(opt.value);
+          if ('id' in opt) return resolveOptionValue(opt.id);
+          // fallback: if object directly contains numeric keys
+        }
+        return opt;
+      };
 
-        WorkingStaff: WorkingStaff.value.value,
-        SpecialityType: SpecialityType.value.value === undefined ? selectedSpeciality.value.value : SpecialityType.value.value,
-        clientId: PrevData.client_id,
-        startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
+      const clientId = PrevData?.client_id || PrevData?.clientId || clientUpdate?.id || clientUpdate?.client_id || null;
+
+      if (!clientId) {
+        console.warn('AddService: clientId is missing. PrevData:', PrevData, 'clientUpdate:', clientUpdate);
       }
+
+      const workingStaffId = resolveOptionValue(WorkingStaff?.value);
+      const specialityId = (SpecialityType && resolveOptionValue(SpecialityType.value)) || (selectedSpeciality && resolveOptionValue(selectedSpeciality.value));
+
+      const empData = {
+        WorkingStaff: workingStaffId ? Number(workingStaffId) : null,
+        SpecialityType: specialityId ? Number(specialityId) : null,
+        clientId: clientId ? Number(clientId) : null,
+        startDate: startDate.toISOString().slice(0, 19).replace('T', ' ')
+      };
 
       console.log("empData", empData);  
 

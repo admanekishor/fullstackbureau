@@ -32,7 +32,7 @@ export default function Dashboard() {
   const [activeClient, setactiveClient] = useState([]);
   const [InactiveClient, setInactiveClient] = useState([]);
   const [Client, setClient] = useState([]);
-  const [PrevData, setPrevData] = useState([]);
+  const [PrevData, setPrevData] = useState({});
   const [UpdateClientModal, setUpdateClientModal] = useState(false);
   const [DeleteClientModal, setDeleteClientModal] = useState(false);
   const [setActivateClientModal] = useState(false);
@@ -98,25 +98,32 @@ export default function Dashboard() {
       });
   };
   const getPrevData = useCallback(async (client) => {
-    {
-      console.log("props", client)
-      const Prevdata = { clientId: client }
-      // console.log("PrevdataApi", Prevdata)
-
-      await axios.post(API_URLS.SelectedClientVisit, Prevdata).then((res) => {
-        console.log("Prevdata", res.data);
-
-        if (res.data) {
-          res.data.map((item) => {
-            setPrevData(item)
-          })
-
-        }
-      })
-      // console.log("PrevData", PrevData)
+    if (!client) {
+      setPrevData({});
+      return;
     }
-  },
-    [PrevData],)
+    const clientId = client.id ?? client.client_id ?? client;
+    if (!clientId) {
+      setPrevData({});
+      return;
+    }
+
+    const payload = { clientId };
+    try {
+      const res = await axios.post(API_URLS.SelectedClientVisit, payload);
+      // Prefer first item when API returns an array, otherwise use object
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        setPrevData(res.data[0]);
+      } else if (res.data && typeof res.data === 'object') {
+        setPrevData(res.data);
+      } else {
+        setPrevData({});
+      }
+    } catch (err) {
+      console.error('getPrevData error', err);
+      setPrevData({});
+    }
+  }, []);
   // get client billing
   useEffect(() => {
     setIsLoading(true)
@@ -208,9 +215,9 @@ export default function Dashboard() {
               {
                 label: <FaCheck size={15} />,
                 onClick: (row) => {
-                  setClientUpdate(row.id);
+                  setClientUpdate(row);
+                  getPrevData(row);
                   setAddServiceModal(true);
-                  getPrevData(row.id)
                 },
                 className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
               },

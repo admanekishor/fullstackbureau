@@ -1,4 +1,24 @@
-const BASE_URL = "https://www.muktainursesbureau.in/API";
+import axios from 'axios';
+
+// Use environment variable for local development, fallback to production URL
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://www.muktainursesbureau.in/API";
+
+// Convenience axios instance pre-configured with baseURL and defaults
+const axiosInstance = axios.create({
+    baseURL: BASE_URL,
+    timeout: 15000,
+    headers: { 'Content-Type': 'application/json' },
+});
+
+// Basic response interceptor to log and normalize errors
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        // Log to console (could be extended to remote logging)
+        console.error('API error:', error?.response?.status, error?.response?.data || error.message);
+        return Promise.reject(error);
+    }
+);
 
 const API_URLS = {
     totalActiveClients: `${BASE_URL}/total_active_clients.php`,
@@ -29,10 +49,7 @@ const API_URLS = {
     Editemployee: `${BASE_URL}/editemployee.php`,
     Insertarea: `${BASE_URL}/Insertarea.php`,
     Quickbilling: `${BASE_URL}/Quickbilling.php`,
-    
-
-
-    // Add more as needed
 };
 
+export { axiosInstance };
 export default API_URLS;

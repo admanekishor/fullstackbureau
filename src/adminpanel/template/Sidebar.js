@@ -87,7 +87,7 @@ export default function Sidebar() {
                         <Link
                             to={path}
                             className="sidebarMenu"
-                            onClick={geturlstring(path)}
+                            onClick={() => geturlstring(path)}
                             style={{ textDecoration: 'none', color: '#333' }}
                         >
                             {name}

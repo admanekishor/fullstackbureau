@@ -7,7 +7,7 @@ export default function InfoCards({ VisitsCount }) {
     //     title: '', price: '',
 
     // }])
-    console.log("VisitsCount", VisitsCount);
+    //console.log("VisitsCount", VisitsCount);
 
     var obj = [
         {

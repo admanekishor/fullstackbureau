@@ -26,7 +26,7 @@ export default function ClientsTable() {
     const [activeClient, setactiveClient] = useState([]);
     const [InactiveClient, setInactiveClient] = useState([]);
     // setprevdata
-    const [PrevData, setPrevData] = useState([]);
+    const [PrevData, setPrevData] = useState({});
     // set selected client working staff
 
 
@@ -41,9 +41,10 @@ export default function ClientsTable() {
         setisLoading(true)
 
         await axios.get(API_URLS.clients).then((res) => {
-            setClient(res.data)
+            const data = Array.isArray(res.data) ? res.data : [];
+            setClient(data);
             // console.log("client", Client);
-            setisLoading(false)
+            setisLoading(false);
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
         await axios.get(API_URLS.ActiveClients).then((resII) => {
@@ -65,23 +66,29 @@ export default function ClientsTable() {
     }
 
 
-    const getPrevData = useCallback(async (props) => {
-        // console.log("props", props)
-        const Prevdata = { clientId: props.id }
-        console.log("PrevdataApi", Prevdata)
-
-        await axios.post(API_URLS.SelectedClientVisit, Prevdata).then((res) => {
+    const getPrevData = useCallback(async (client) => {
+        if (!client || !client.id) {
+            setPrevData({});
+            return;
+        }
+        const Prevdata = { clientId: client.id };
+        console.log("PrevdataApi", Prevdata);
+        try {
+            const res = await axios.post(API_URLS.SelectedClientVisit, Prevdata);
             console.log("Prevdata", res.data);
-
-            if (res.data) {
-                res.data.map((item) => {
-                    setPrevData(item)
-                })
-
+            // Normalize response: prefer first item when array is returned
+            if (Array.isArray(res.data) && res.data.length > 0) {
+                setPrevData(res.data[0]);
+            } else if (res.data && typeof res.data === 'object') {
+                setPrevData(res.data);
+            } else {
+                setPrevData({});
             }
-        })
-        // console.log("PrevData", PrevData)
-    }, [PrevData]);
+        } catch (err) {
+            console.error('getPrevData error', err);
+            setPrevData({});
+        }
+    }, []);
 
 
     // console.log("SelectedWorkStaff", SelectSplType);
@@ -94,7 +101,7 @@ export default function ClientsTable() {
                 title='Activate'
                 onClick={() => {
                     setClientUpdate(client);
-                    // getPrevData(client.id)
+                    getPrevData(client);
                     setAddServiceModal(true);
                 }}
             ><FaCheck size={15} /></Button>)
@@ -174,9 +181,11 @@ export default function ClientsTable() {
                                     {
                                         label: <FaCheck size={15} />,
                                         onClick: (row) => {
-                                            setClientUpdate(row.id);
+                                            // Pass full client object so modal can display client details
+                                            setClientUpdate(row);
+                                            // Fetch previous visit data for this client
+                                            getPrevData(row);
                                             setAddServiceModal(true);
-                                            getPrevData(row)
                                         },
                                         className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
                                     },
@@ -211,9 +220,9 @@ export default function ClientsTable() {
                                 {
                                     label: <FaCheck size={15} />,
                                     onClick: (row) => {
-                                        setClientUpdate(row.id);
+                                        setClientUpdate(row);
+                                        getPrevData(row);
                                         setAddServiceModal(true);
-                                        getPrevData(row.id)
                                     },
                                     className: (row) => activeClient.map(item => item.id).includes(row.id) ? "btn btn-sm btn-danger" : "btn btn-sm btn-primary",
                                 },
