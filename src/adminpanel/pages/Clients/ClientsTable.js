@@ -43,7 +43,7 @@ export default function ClientsTable() {
         await axios.get(API_URLS.clients).then((res) => {
             const data = Array.isArray(res.data) ? res.data : [];
             setClient(data);
-            // console.log("client", Client);
+            console.log("client", data);
             setisLoading(false);
         })
         // await axios.get('http://www.muktainursesbureau.in/API//activeclients').then((resII) => {
