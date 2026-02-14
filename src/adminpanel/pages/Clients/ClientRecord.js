@@ -5,7 +5,7 @@ import CustomModal from '../../component/CustomModal';
 import PrintBill from '../PrintBill/PrintBill';
 // import CustomModal from '../component/CustomModal';
 
-import { FaPrint } from 'react-icons/fa';
+import { FaPrint, FaRemoveFormat, FaTrash } from 'react-icons/fa';
 // import Calendar from 'react-calendar';
 // import 'react-calendar/dist/Calendar.css';
 import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
@@ -13,19 +13,20 @@ import API_URLS from '../../../api/api';
 
 export default function ClientRecord(props) {
     console.log("ClientRecord props", props);
-    
+
     const { GetClientId } = props;
     const [isLoading, setisLoading] = useState(false);
     const [Visit, setVisit] = useState([]);
     // const [getMonth, setMonth] = useState(new Date());
     const [printClient, setprintClient] = useState("");
     const [modalShow, setModalShow] = useState(false);
+    const [modalType, setModalType] = useState(null);
     const [workingDays, setworkingDays] = useState(0);
 
     const [clientId, setclientId] = useState(GetClientId)
     const [payMode, setpayMode] = useState('');
     const [selecteddate, setselectedDate] = useState(new Date());
-
+    const [deleteRecord, setdeleteRecord] = useState(null);
     // const [paymentDetails, setpaymentDetails] = useState({
     //     clientId: GetClientId,
     //     payDate: new Date(),
@@ -37,21 +38,37 @@ export default function ClientRecord(props) {
         getclientDetails()
     }, [])
 
-    console.log("visit", Visit);
 
     const getclientDetails = () => {
-        const clientData = {
-            clientId: GetClientId,
-        }
-        // console.log(clientId)
-        setisLoading(true)
-        axios.post(API_URLS.SingleClient, clientData).then((res) => {
+        const clientData = { clientId: GetClientId };
 
-            setVisit(res.data)
-            setisLoading(false)
-            console.log("res", res.data);
-        })
-    }
+        setisLoading(true);
+
+        axios.post(API_URLS.SingleClient, clientData)
+            .then((res) => {
+                console.log("API Response:", res.data);
+
+                // If backend returns array directly
+                if (Array.isArray(res.data)) {
+                    setVisit(res.data);
+                }
+                // If backend returns { result: [] }
+                else if (Array.isArray(res.data.result)) {
+                    setVisit(res.data.result);
+                }
+                // If no records
+                else {
+                    setVisit([]);
+                }
+
+                setisLoading(false);
+            })
+            .catch(() => {
+                setVisit([]);
+                setisLoading(false);
+            });
+    };
+    
     const daycalculate = (start_date, end_date) => {
         const start = new Date(start_date);
         const end = new Date(end_date);
@@ -74,6 +91,15 @@ export default function ClientRecord(props) {
 
     }
 
+    const handleDelete = () => {
+        axios.post(API_URLS.deletevisit, { id: deleteRecord.id })
+            .then((res) => {
+                console.log("Delete response:", res.data);
+                setModalShow(false);
+                getclientDetails(); // refresh table
+            })
+            .catch(err => console.log(err));
+    };
 
     const getPaymentDetails = ((e) => {
         const visitid = e.target.dataset.id;
@@ -94,7 +120,27 @@ export default function ClientRecord(props) {
     return (
         <div>
             <CustomModal
-                data={{ title: "Print Bill of Employee", component: <PrintBill printClient={printClient} setprintClient={setprintClient} /> }}
+                data={{
+                    title: modalType === "print" ? "Print Bill" : "Delete Record",
+                    component:
+                        modalType === "print" ? (
+                            <PrintBill
+                                printClient={printClient}
+                                setprintClient={setprintClient}
+                            />
+                        ) : (
+                            <div className="p-3">
+                                <p>Are you sure you want to delete this record?</p>
+                                <Button
+                                    variant="danger"
+                                    size="sm"
+                                    onClick={handleDelete}
+                                >
+                                    Confirm Delete
+                                </Button>
+                            </div>
+                        )
+                }}
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 modalsize="lg"
@@ -108,7 +154,7 @@ export default function ClientRecord(props) {
                                     <th colSpan={4}>
                                         {
                                             Visit.map((record, i) => {
-                                                if(i == 0){
+                                                if (i == 0) {
 
                                                     return record.client_name
                                                 }
@@ -125,7 +171,7 @@ export default function ClientRecord(props) {
                                     <th>Service Month</th>
                                     <th>Service Days</th>
                                     {/* <th>date</th> */}
-                                    <th>action</th>
+                                    <th colSpan={2}>action</th>
                                     {/* <th>paid type</th>
                                     <th>payment date</th>
                                     <th>submit</th> */}
@@ -135,8 +181,7 @@ export default function ClientRecord(props) {
                             <tbody>
                                 {
                                     Visit.map((record, i) => {
-                                        console.log("Visit", Visit);
-                                        
+
                                         const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
                                             <Button size='sm' onClick={onClick} ref={ref}>
                                                 {value}
@@ -167,9 +212,21 @@ export default function ClientRecord(props) {
                                                 {
                                                     record.start_date && record.end_date
                                                         ? <Button size="sm" title="Print" onClick={() => {
-                                                            setprintClient(record)
-                                                            setModalShow(true)
+                                                            setprintClient(record);
+                                                            setModalType("print");
+                                                            setModalShow(true);
                                                         }}><FaPrint /></Button> : ""
+
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    record.start_date && record.end_date
+                                                        ? <Button size="sm" title="Delete" onClick={() => {
+                                                            setdeleteRecord(record);
+                                                            setModalType("delete");
+                                                            setModalShow(true);
+                                                        }}><FaTrash /></Button> : ""
 
                                                 }
                                             </td>

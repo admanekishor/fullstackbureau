@@ -49,6 +49,7 @@ const API_URLS = {
     Editemployee: `${BASE_URL}/editemployee.php`,
     Insertarea: `${BASE_URL}/Insertarea.php`,
     Quickbilling: `${BASE_URL}/Quickbilling.php`,
+    deletevisit: `${BASE_URL}/deletevisit.php`,
 };
 
 export { axiosInstance };
