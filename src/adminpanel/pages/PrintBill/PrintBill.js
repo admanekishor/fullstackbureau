@@ -29,8 +29,7 @@ const handlePrint = useReactToPrint({
                     className="btn btn-primary border border-gray-500 p-2 mb-4 float-end"
                     onClick={handlePrint}
                 >
-                    {" "}
-                    Print Report{" "}
+                    Print Report
                 </button>
             </div>
         </>

@@ -72,9 +72,9 @@ export default function Sidebar() {
         <div key={1} style={{ height: '90vh', background: '#343a40' }}>
             <ListGroup defaultActiveKey="clientvisit" variant="flush">
 
-                {routes.map(({ path, name, i }) => (
+                {routes.map(({ path, name }, index) => (
                     <ListGroup.Item
-                        key={path || i}
+                        key={path || index}
                         variant={URLstring == path
                             .split("/")
                             .slice(0, 2)

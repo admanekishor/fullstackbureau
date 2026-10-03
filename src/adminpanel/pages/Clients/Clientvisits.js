@@ -37,6 +37,7 @@ const ClientVisits = () => {
             });
     }, []);
 
+    console.log("Visits", Visits);
     const updateenddate = () => {
         if (!selectedVisitId) {
             alert('No visit selected');

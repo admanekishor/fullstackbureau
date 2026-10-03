@@ -83,13 +83,11 @@ console.log("printClient", printClient);
                                         </h1>
                                         <p
                                             className="leading-relaxed mb-1"
-                                        // style={{ color: "rgb(255, 179, 62)" }}
                                         >
-                                            {" "}
-                                            {value.basicDetails.location}{" "}
+                                            {value.basicDetails.location}
                                         </p>
-                                        <p className="mb-1">{value.basicDetails.email}{" "}</p>
-                                        <p className="mb-1">Phone: {value.basicDetails.phoneNumber}{" "}</p>
+                                        <p className="mb-1">{value.basicDetails.email}</p>
+                                        <p className="mb-1">Phone: {value.basicDetails.phoneNumber}</p>
 
                                     </div>
                                     <div className="flex flex-wrap w-full px-1">
@@ -109,107 +107,73 @@ console.log("printClient", printClient);
                                                         <thead>
                                                             <tr>
                                                                 <th colSpan="4">
-                                                                    {" "}
                                                                     <p className="p-0 m-0">Client Details</p>
                                                                 </th>
-
                                                             </tr>
                                                         </thead>
 
                                                         {value.clientDetails.map((workItem, i) => (
                                                             <tbody key={i}>
-
                                                                 <tr>
-                                                                    <td colspan="2" rowspan="2">
-                                                                        {" "}
+                                                                    <td colSpan="2" rowSpan="2">
                                                                         <p className="m-0">
                                                                             <strong>
                                                                                 {workItem.clientName}
                                                                             </strong>
                                                                         </p>
-                                                                        {" "}
                                                                         <h5 className="m-0">{workItem.location}</h5>
                                                                     </td>
                                                                     <th style={{ width: "160px" }}>
-                                                                        {" "}
                                                                         <p className="m-0">Invoice Month</p>
                                                                     </th>
                                                                     <td>
-                                                                        {" "}
                                                                         <p className="m-0">{workItem.servicemonth}</p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>
-                                                                        {" "}
                                                                         <p className="m-0">Phone</p>
                                                                     </th>
                                                                     <td>
-                                                                        {" "}
                                                                         <p className="m-0">{workItem.contact}</p>
                                                                     </td>
                                                                 </tr>
-                                                                
                                                                 <tr>
                                                                     <th colSpan={2}>
-                                                                        {" "}
                                                                         <p className="m-0">Description</p>
                                                                     </th>
                                                                     <th>
-                                                                        {" "}
                                                                         <p className="m-0">Service By Hours</p>
                                                                     </th>
                                                                     <th>
-                                                                        {" "}
                                                                         <p className="m-0">Amount</p>
                                                                     </th>
-
                                                                 </tr>
                                                                 <tr>
                                                                     <th colSpan={2}>
-                                                                        {" "}
                                                                         <p className="m-0"> Working Days ({workItem.workingDays})</p>
                                                                     </th>
                                                                     <td>
-                                                                        {" "}
                                                                         <p className="m-0">{workItem.workinghour}</p>
                                                                     </td>
                                                                     <td>
-                                                                        {" "}
-                                                                        <p className="m-0"> {workItem.amount}</p>
+                                                                        <p className="m-0">{workItem.amount}</p>
                                                                     </td>
                                                                 </tr>
-                                                                {/* <tr>
-                                                                    <td>
-
-                                                                    </td>
-                                                                    <td></td>
-                                                                    <td>&nbsp;</td>
-                                                                </tr> */}
                                                                 <tr>
-                                                                    {/* <th>
-                                                                    {" "}
-                                                                        <p className="m-0">{workItem.employee} {workItem.speciality}</p>
-                                                                    </th> */}
                                                                     <td colSpan={2}></td>
                                                                     <td>&nbsp;</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th colSpan={2} rowSpan={4}>
                                                                         <p className="m-0">Comments or Special Instructions:</p>
-                                                                        {/* <p className="m-0">employee: {workItem.employee} working as {workItem.speciality}</p> */}
                                                                     </th>
                                                                     <th rowSpan="4">
-                                                                        {" "}
                                                                         <p className="m-0">Subtotal</p>
                                                                         <p className="m-0">Tax</p>
                                                                         <p className="m-0">Total</p>
                                                                     </th>
-                                                                    
                                                                 </tr>
-                                                                {/* <tr>
-                                                                    <td><p></p></td>
-                                                                </tr> */}
                                                                 <tr>
                                                                     <td><p></p></td>
                                                                 </tr>

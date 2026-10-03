@@ -28,12 +28,16 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
     };
   }, []);
 
+  const isRequestCanceled = (err) =>
+    axios.isCancel(err) ||
+    err?.code === 'ERR_CANCELED' ||
+    err?.name === 'CanceledError';
+
   // ===============================
   // FETCH SPECIALITY
   // ===============================
+  // ===============================
   useEffect(() => {
-    //if (!PrevData?.speciality_id) return;
-
     const controller = new AbortController();
 
     const fetchSpeciality = async () => {
@@ -61,7 +65,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
         }
 
       } catch (err) {
-        if (err.name !== "CanceledError") {
+        if (!isRequestCanceled(err)) {
           console.error(err);
         }
       }
@@ -103,7 +107,7 @@ const AddService = ({ clientUpdate, getClientdata, getPrevData, PrevData, afterc
       }
 
     } catch (err) {
-      if (err.name !== "CanceledError") {
+      if (!isRequestCanceled(err)) {
         console.error(err);
       }
     }
